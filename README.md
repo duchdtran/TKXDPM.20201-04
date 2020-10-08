@@ -24,7 +24,12 @@
 
 <H4>Trần Đình Đức</H4>
 Nguyễn Trương Định: 
-
+<p> <strong>Task 6</strong> </p>
+<p> Trong luồng sự kiện chính hệ thống phải trừ tiền thuê xe trước khi trả cho khách<br>
+  Trong dữ liệu đầu ra sô dư còn lại phải là 650.000đ</p>
+<p> <strong>Task 7</strong> </p>
+<p> Trong các yêu cầu khác: thiếu Hệ thống đa nền tảng phục vụ 24/7</p>
+  
 <H4>Lê Minh Đức</H4>
 Trần Đình Đức:
 
