@@ -27,6 +27,7 @@ Nguyễn Trương Định:
 
 <H4>Lê Minh Đức</H4>
 Trần Đình Đức:
+<p>Làm đầy đủ theo yêu tài liệu mô tả yêu cầu</p>
 
 <H4>Hoàng Văn Đạt</H4>
 Lê Minh Đức:
