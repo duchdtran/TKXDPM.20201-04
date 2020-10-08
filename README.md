@@ -33,4 +33,8 @@ Lê Minh Đức:
 
 <H4>Nguyễn Trương Định</H4>
 Hoàng Văn Đạt:
+<p> <strong>Task 4</strong> </p>
+<p>Làm đầy đủ theo mô tả tài liệu tổng quan dự án.</p>
+<p> <strong>Task 5</strong> </p>
+<p>Làm khá chi tiết, tuy nhiên trong các quy trình Đạt chưa nhắc đến thay đổi giá thuê xe đã được nhắc đến trong tài liệu.</p>
 
