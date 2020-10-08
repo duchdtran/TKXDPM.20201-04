@@ -1,8 +1,8 @@
 # TKXDPM.20201-04
 <H1>LAB01 - SRS-EcoBikeRental</H1>
-<H3>Tasks</H3>
+<H2>Tasks</H2>
 
-<H3>Contributions</H3>
+<H2>Contributions</H2>
 
 <H4>Trần Đình Đức</H4>
   <div>Task 1: View Bike in Station and/or View Bike information.<br>
@@ -17,14 +17,17 @@
   <Div>Task 1: Return bike.<br>
   Task 2: Mục 1 Giới thiệu,Mục 4 Các yêu cầu khác.</Div>
 
-<H3>Revisions</H3>
+<H2>Revisions</H2>
 
 <H4>Trần Đình Đức</H4>
+Nguyễn Trương Định: 
 
 <H4>Lê Minh Đức</H4>
+Trần Đình Đức:
 
 <H4>Hoàng Văn Đạt</H4>
+Lê Minh Đức:
 
 <H4>Nguyễn Trương Định</H4>
-
+Hoàng Văn Đạt:
 
