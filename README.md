@@ -29,10 +29,10 @@ Công việc của mỗi người đã được phân chia trong tab Issues:
 
 ### Trần Đình Đức
 Nguyễn Trương Định: 
-<strong>Task 6</strong> </p>
+<br><strong>Task 6</strong> </p>
 + Trong luồng sự kiện chính hệ thống phải trừ tiền thuê xe trước khi trả cho khách
-  Trong dữ liệu đầu ra sô dư còn lại phải là 650.000đ
-<strong>Task 7</strong> 
++ Trong dữ liệu đầu ra sô dư còn lại phải là 650.000đ
+<br><strong>Task 7</strong> 
 + Trong các yêu cầu khác: thiếu Hệ thống đa nền tảng phục vụ 24/7
   
 ### Lê Minh Đức
@@ -43,8 +43,8 @@ Lê Minh Đức:
 
 ### Nguyễn Trương Định
 Hoàng Văn Đạt:
-<strong>Task 4</strong> 
+<br><strong>Task 4</strong> 
 + Làm đầy đủ theo mô tả tài liệu tổng quan dự án.
-<strong>Task 5</strong> 
+<br><strong>Task 5</strong> 
 + Làm khá chi tiết, tuy nhiên trong các quy trình Đạt chưa nhắc đến thay đổi giá thuê xe đã được nhắc đến trong tài liệu.
 
