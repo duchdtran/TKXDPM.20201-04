@@ -16,18 +16,24 @@ Mọi người đều phải theo dõi thành viên mà mình phụ trách đồ
 
 ### Tuần 1 (Deadline: 20/09/2020)
 Issues 6, 7, 8
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK1
 
 ### Tuần 2 (Deadline: 27/09/2020)
 Issues 2-5, 9-18
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK2
 
 ### Tuần 3 (Deadline: 4/10/2020)
 Issues 19-21
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK3
 
 ### Tuần 4 (Deadline: 11/10/2020)
 Issues 23, 28-32
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK4
 
 ### Tuần 5 (Deadline: 18/10/2020)
 Issues 27
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK5
 
 ### Tuần 6 (Deadline: 25/10/2020)
 Issues 29
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK6
