@@ -32,5 +32,5 @@ Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK5
 ### Tuần 6 (Deadline: 25/10/2020)
 Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK6
 
-### Tuần 6 (Deadline: 1/11/2020)
+### Tuần 7 (Deadline: 1/11/2020)
 Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK7
