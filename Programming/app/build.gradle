@@ -48,6 +48,8 @@ dependencies {
 
     // database
     implementation "androidx.room:room-rxjava2:$rootProject.roomDatabaseVersion"
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
 
     // font
@@ -90,6 +92,12 @@ dependencies {
     // view model
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
+
+    // indicator
+    implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$rootProject.indicatorVersion"
+
+    // Rounded Imgae View
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
 
 configurations.all {

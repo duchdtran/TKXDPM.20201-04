@@ -119,7 +119,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:text="Gần bạn"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+                app:layout_constraintBottom_toTopOf="@+id/btn_view_bike"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
@@ -129,10 +129,10 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:text="Xem thêm"
                 android:textColor="@color/dodger_blue"
-                app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+                app:layout_constraintBottom_toTopOf="@+id/btn_view_bike"
                 app:layout_constraintEnd_toEndOf="parent" />
             <LinearLayout
-                android:id="@+id/relativeLayout"
+                android:id="@+id/btn_view_bike"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

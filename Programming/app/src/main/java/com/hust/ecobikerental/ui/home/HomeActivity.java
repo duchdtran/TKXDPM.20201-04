@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.hust.ecobikerental.R;
+import com.hust.ecobikerental.ui.bike.BikeActivity;
 import com.hust.ecobikerental.ui.scanqr.ScanQRCodeActivity;
 
 public class HomeActivity extends AppCompatActivity {
@@ -18,5 +19,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         findViewById(R.id.btn_scan).setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, ScanQRCodeActivity.class)));
+
+        findViewById(R.id.btn_view_bike).setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, BikeActivity.class)));
     }
 }

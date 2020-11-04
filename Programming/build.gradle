@@ -61,4 +61,7 @@ ext {
     // QR code
     codeScannerVersion = '2.1.0'
     dexterVersion = '6.0.0'
+
+    // Indicator
+    indicatorVersion = '4.1.2'
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bike.description.DescriptionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="Chiếc xe được trang bị khung sườn xe bằng chất liệu hợp kim thép cứng cáp với kỹ thuật hàn hiện đại công nghệ cao cực bền &amp; mịn giúp cho sườn xe liền mạch như một chiếc sườn đúc cao cấp. Nhờ thiết kế kiểu dáng khí động lực học tiên tiến giúp chiếc xe lướt nhẹ như bay trên đường. Ngoài ra, sườn xe còn được uốn cong và vuốt nhỏ về phía sau giúp chiếc xe có kiểu dáng mạnh mẽ và đầy cá tính."
+        />
+
+</FrameLayout>
