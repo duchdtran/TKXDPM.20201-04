@@ -46,7 +46,7 @@
         android:background="@color/white"
         android:layout_marginBottom="32dp"
         android:layout_marginStart="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@+id/input_qr_code"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view2" />
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/input_qr_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"

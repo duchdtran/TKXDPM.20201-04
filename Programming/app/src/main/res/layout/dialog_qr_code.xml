@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="64dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/guild"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Nhập mã phương tiện nằm ở mã QR"/>
+    <com.chaos.view.PinView
+        android:layout_below="@id/guild"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/pinView"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cursorVisible="true"
+        android:inputType="number"
+        android:padding="@dimen/cardview_default_radius"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cursorColor="@color/colorPrimary"
+        app:cursorWidth="2dp"
+        app:itemCount="6"
+        app:itemHeight="48dp"
+        app:itemRadius="10dp"
+        app:itemSpacing="8dp"
+        app:itemWidth="48dp"
+        app:lineColor="@color/dodger_blue"
+        app:lineWidth="2dp"
+        app:viewType="rectangle" />
+</RelativeLayout>

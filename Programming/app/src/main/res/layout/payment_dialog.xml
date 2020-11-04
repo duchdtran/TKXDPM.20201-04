@@ -21,6 +21,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <ImageView
+                android:tint="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_keyboard"/>
@@ -40,11 +41,13 @@
             android:layout_height="2dp"
             android:background="@color/white"/>
         <LinearLayout
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <ImageView
+                android:tint="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_keyboard"/>
@@ -64,4 +67,58 @@
             android:layout_height="2dp"
             android:background="@color/white"/>
     </RadioGroup>
+    <LinearLayout
+        android:id="@+id/add_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:tint="@color/white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm phương thức thanh toán"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="4dp"
+        android:background="@drawable/button_design"
+        android:backgroundTint="@color/white"
+        android:weightSum="10"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Đặt cọc\n100.000đ"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="30dp"
+            android:background="@color/light_gray"/>
+        <TextView
+            android:id="@+id/confirm_payment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Xác nhận thanh toán"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Để thuê xe bạn cần đặt cọc 40% giá trị xe, sau khi trả xe tiền cọc sẽdduowjc trả lại tài khoản của bạn"
+        android:textColor="@color/white"/>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.hust.ecobikerental.ui.bike;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,12 +13,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.hust.ecobikerental.R;
 import com.hust.ecobikerental.data.model.others.Image;
+import com.hust.ecobikerental.ui.bike.payment.PaymentDialog;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeActivity extends AppCompatActivity {
+public class BikeActivity extends AppCompatActivity implements PaymentDialog.BottomSheetListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,14 @@ public class BikeActivity extends AppCompatActivity {
 
         initViewPager();
         initTabLayout();
+
+        findViewById(R.id.rent_bike).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PaymentDialog bottomSheet = new PaymentDialog();
+                bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
+            }
+        });
     }
     void initViewPager(){
         ViewPager2 viewPager2 = findViewById(R.id.viewPagerImage);
@@ -69,6 +79,11 @@ public class BikeActivity extends AppCompatActivity {
         final MyAdapter adapter = new MyAdapter(this, this, tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
+
+    }
+
+    @Override
+    public void onButtonClicked(String text) {
 
     }
 }

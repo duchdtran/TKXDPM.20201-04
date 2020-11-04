@@ -14,6 +14,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 import com.hust.ecobikerental.R;
+import com.hust.ecobikerental.ui.bike.payment.PaymentDialog;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -23,7 +24,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.Scanner;
 
-public class ScanQRCodeActivity extends AppCompatActivity {
+public class ScanQRCodeActivity extends AppCompatActivity implements InputQRCodeDialog.BottomSheetListener{
     CodeScanner codeScanner;
     CodeScannerView scannView;
 
@@ -36,8 +37,12 @@ public class ScanQRCodeActivity extends AppCompatActivity {
 
         codeScanner.setDecodeCallback(result -> runOnUiThread(() -> Toast.makeText(this, result.getText(), Toast.LENGTH_SHORT).show()));
 
-
         scannView.setOnClickListener(v -> codeScanner.startPreview());
+
+        findViewById(R.id.input_qr_code).setOnClickListener(view -> {
+            InputQRCodeDialog bottomSheet = new InputQRCodeDialog();
+            bottomSheet.show(getSupportFragmentManager(), "exampleBottomkkkSheet");
+        });
     }
 
     @Override
@@ -68,4 +73,8 @@ public class ScanQRCodeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onButtonClicked(String text) {
+
+    }
 }

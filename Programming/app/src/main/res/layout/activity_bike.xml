@@ -151,6 +151,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/rent_bike"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
