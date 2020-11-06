@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ecobike_rental/view/AppButton.dart';
+import 'package:ecobike_rental/view/BikeInfoItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -49,118 +50,170 @@ class _HomeState extends State<Home> {
             ),
           ),
         ],
-      ),
-      body: Column(
-        children: [
-          Visibility(
+        bottom: PreferredSize(
+            child: Visibility(
               visible: !_rentBike,
               child: Container(
                 width: double.infinity,
-                height: 200,
                 child: Column(
                   children: [
+                    Divider(height: 3,),
                     SizedBox(
                       width: double.infinity,
-                      height: 100,
+                      height: 170,
                       child: Stack(
-                        children: [_buildContainer()],
+                        children: [
+                          Positioned(
+                            top: 20,
+                            left: 30,
+                            child: _buildContainer(
+                                'Phí thuê', '15.000/h', Colors.yellow),
+                          ),
+                          Positioned(
+                            top: 20,
+                            right: 30,
+                            child: _buildContainer(
+                                'Thời gian', "1h 45' 27\"", Colors.blue),
+                          ),
+                          Positioned(
+                            top: 40,
+                            left: 0,
+                            right: 0,
+                            child: _buildContainer(
+                                'Tổng tiền', '123.000đ', Colors.greenAccent),
+                          ),
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              )),
-          Expanded(
-            child: Stack(
-              children: [
-                GoogleMap(
-                  zoomControlsEnabled: false,
-                  mapType: MapType.normal,
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(20.962056, 105.925219),
-                    zoom: 15,
-                  ),
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                  onCameraMove: (position) {
-                    debugPrint('on cam moce');
-                    setState(() {
-                      _userTap = true;
-                    });
-                  },
-                  onCameraIdle: () {
-                    debugPrint('on cam idle');
-                    _userTap = false;
-                  },
-                ),
-                Positioned(
-                  top: 10,
-                  left: 0,
-                  right: 0,
-                  child: _buildSearchBarWidget(),
-                ),
-                Positioned(
-                    bottom: (_userTap | !_rentBike) ? 20 : 200,
-                    right: 10,
-                    child: SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: FloatingActionButton(
-                        backgroundColor: Colors.white,
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.my_location,
-                          color: Colors.black,
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Thông tin xe'),
+                          Text(
+                            'Hướng dẫn trả xe',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ],
                       ),
-                    )),
-                Positioned(
-                  bottom: 30,
-                  left: 0,
-                  right: 0,
-                  child: Visibility(
-                    visible: !(_userTap | !_rentBike),
-                    child: Column(
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Gần bạn',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Spacer(),
-                            FlatButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Xem thêm',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ),
-                          ],
+                        BikeInfoItem(
+                          label: 'Biển số xe',
+                          value: '34M6-9863',
                         ),
-                        Container(
-                          width: double.infinity,
-                          height: 140,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 3,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 10),
-                                  width: 250,
-                                  height: 120,
-                                  color: Colors.grey,
-                                );
-                              }),
-                        )
+                        BikeInfoItem(
+                          label: 'Lượng pin',
+                          value: '37%',
+                        ),
+                        BikeInfoItem(
+                          label: 'Thời gian còn lại',
+                          value: '37 phút',
+                        ),
                       ],
                     ),
+                    IconButton(
+                      icon: Icon(Icons.keyboard_arrow_up),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            preferredSize: Size.fromHeight(_rentBike ? 0 : 280)),
+      ),
+      body: Stack(
+        children: [
+          GoogleMap(
+            zoomControlsEnabled: false,
+            mapType: MapType.normal,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(20.962056, 105.925219),
+              zoom: 15,
+            ),
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            onCameraMove: (position) {
+              setState(() {
+                _userTap = true;
+              });
+            },
+            onCameraIdle: () {
+              _userTap = false;
+            },
+          ),
+          Positioned(
+            top: 10,
+            left: 0,
+            right: 0,
+            child: _buildSearchBarWidget(),
+          ),
+          Positioned(
+              bottom: (_userTap | !_rentBike) ? 20 : 200,
+              right: 10,
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  onPressed: () {},
+                  child: Icon(
+                    Icons.my_location,
+                    color: Colors.black,
                   ),
                 ),
-              ],
+              )),
+          Positioned(
+            bottom: 30,
+            left: 0,
+            right: 0,
+            child: Visibility(
+              visible: !(_userTap | !_rentBike),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Gần bạn',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Spacer(),
+                      FlatButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Xem thêm',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 140,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            width: 250,
+                            height: 120,
+                            color: Colors.grey,
+                          );
+                        }),
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -169,18 +222,35 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildContainer(){
+  Widget _buildContainer(String label, String value, Color borderColor) {
     return Container(
-      width: 50,
-      height: 50,
+      width: 130,
+      height: 130,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        color: Colors.white,
+        border: Border.all(
+          width: 4.0,
+          color: borderColor,
+        ),
       ),
-      child: Center(
-        child: Text('àasf'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+          Text(
+            value,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          )
+        ],
       ),
     );
   }
+
   Widget _buildSearchBarWidget() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
