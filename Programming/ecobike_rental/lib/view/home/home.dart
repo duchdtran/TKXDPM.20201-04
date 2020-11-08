@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ecobike_rental/view/AppButton.dart';
 import 'package:ecobike_rental/view/BikeInfoItem.dart';
+import 'package:ecobike_rental/view/scanner/Scanner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -57,7 +58,9 @@ class _HomeState extends State<Home> {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    Divider(height: 3,),
+                    Divider(
+                      height: 3,
+                    ),
                     SizedBox(
                       width: double.infinity,
                       height: 170,
@@ -337,7 +340,10 @@ class _HomeState extends State<Home> {
           child: AppButton(
             title: 'Quét mã để thuê xe',
             icon: Icons.scanner,
-            onPress: () {},
+            onPress: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => QRScanner()));
+            },
           ),
         ),
       ),
