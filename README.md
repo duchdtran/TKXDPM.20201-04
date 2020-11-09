@@ -34,3 +34,18 @@ Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK6
 
 ### Tuần 7 (Deadline: 1/11/2020)
 Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK7
+
+### Tuần 8 (Deadline: 8/11/2020)
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK8
+
+### Tuần 9 (Deadline: 15/11/2020)
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK9
+
+### Tuần 10 (Deadline: 22/11/2020)
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK10
+
+### Tuần 11 (Deadline: 29/11/2020)
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK11
+
+### Tuần 12 (Deadline: 6/12/2020)
+Link: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=label%3AHOMEWORK12
