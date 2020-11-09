@@ -1,22 +1,29 @@
 import 'dart:async';
 
-import 'package:ecobike_rental/view/AppButton.dart';
-import 'package:ecobike_rental/view/BikeInfoItem.dart';
-import 'package:ecobike_rental/view/scanner/Scanner.dart';
+import 'package:ecobike_rental/view/app_button.dart';
+import 'package:ecobike_rental/view/bike_info_item.dart';
+import 'package:ecobike_rental/view/scanner/scanner.dart';
+import 'package:ecobike_rental/view/station/station.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+// ignore: must_be_immutable
 class Home extends StatefulWidget {
+  bool _isRent = true;
+  Home();
+  Home.withRented() {
+    _isRent = false;
+  }
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   bool _userTap = false;
-  bool _rentBike = true;
 
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +49,7 @@ class _HomeState extends State<Home> {
           IconButton(
             onPressed: () {
               setState(() {
-                _rentBike = !_rentBike;
+                widget._isRent = !widget._isRent;
               });
             },
             icon: Icon(
@@ -53,7 +60,7 @@ class _HomeState extends State<Home> {
         ],
         bottom: PreferredSize(
             child: Visibility(
-              visible: !_rentBike,
+              visible: !widget._isRent,
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -76,14 +83,14 @@ class _HomeState extends State<Home> {
                             top: 20,
                             right: 30,
                             child: _buildContainer(
-                                'Thời gian', "1h 45' 27\"", Colors.blue),
+                                'Tổng tiền', '123.000đ', Colors.greenAccent),
                           ),
                           Positioned(
                             top: 40,
                             left: 0,
                             right: 0,
                             child: _buildContainer(
-                                'Tổng tiền', '123.000đ', Colors.greenAccent),
+                                'Thời gian', "1h 45' 27\"", Colors.blue),
                           ),
                         ],
                       ),
@@ -123,13 +130,17 @@ class _HomeState extends State<Home> {
                     ),
                     IconButton(
                       icon: Icon(Icons.keyboard_arrow_up),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          widget._isRent = !widget._isRent;
+                        });
+                      },
                     ),
                   ],
                 ),
               ),
             ),
-            preferredSize: Size.fromHeight(_rentBike ? 0 : 280)),
+            preferredSize: Size.fromHeight(widget._isRent ? 0 : 280)),
       ),
       body: Stack(
         children: [
@@ -159,7 +170,7 @@ class _HomeState extends State<Home> {
             child: _buildSearchBarWidget(),
           ),
           Positioned(
-              bottom: (_userTap | !_rentBike) ? 20 : 200,
+              bottom: (_userTap | !widget._isRent) ? 20 : 220,
               right: 10,
               child: SizedBox(
                 width: 40,
@@ -178,7 +189,7 @@ class _HomeState extends State<Home> {
             left: 0,
             right: 0,
             child: Visibility(
-              visible: !(_userTap | !_rentBike),
+              visible: !(_userTap | !widget._isRent),
               child: Column(
                 children: [
                   Row(
@@ -207,11 +218,23 @@ class _HomeState extends State<Home> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 3,
                         itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            width: 250,
-                            height: 120,
-                            color: Colors.grey,
+                          return InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Station())),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              width: 250,
+                              height: 120,
+                              child: Image.network(
+                                'https://i.pinimg.com/564x/b1/bc/3a/b1bc3a01ac9b8e70c4f11ef3b0c9cfae.jpg',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           );
                         }),
                   )
@@ -299,9 +322,9 @@ class _HomeState extends State<Home> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              _buildTraficWidget('Xe đạp đơn', Icons.directions_bike),
-              _buildTraficWidget('Xe đạp đôi', Icons.directions_bike),
-              _buildTraficWidget('Xe đạp điện', Icons.directions_bike),
+              _buildTrafficWidget('Xe đạp đơn', Icons.directions_bike),
+              _buildTrafficWidget('Xe đạp đôi', Icons.directions_bike),
+              _buildTrafficWidget('Xe đạp điện', Icons.directions_bike),
             ],
           ),
         )
@@ -309,7 +332,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildTraficWidget(String title, IconData icon) {
+  Widget _buildTrafficWidget(String title, IconData icon) {
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -339,7 +362,7 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: AppButton(
             title: 'Quét mã để thuê xe',
-            icon: Icons.scanner,
+            icon: Icons.qr_code_scanner,
             onPress: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => QRScanner()));

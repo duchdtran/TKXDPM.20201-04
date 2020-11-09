@@ -24,7 +24,7 @@ class GradientIcon extends StatelessWidget {
         ),
       ),
       shaderCallback: (Rect bounds) {
-        final Rect rect = Rect.fromLTRB(0, 0, size, size);
+        final rect = Rect.fromLTRB(0, 0, size, size);
         return gradient.createShader(rect);
       },
     );

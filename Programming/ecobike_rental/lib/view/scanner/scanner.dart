@@ -1,9 +1,10 @@
-import 'package:ecobike_rental/view/bike/Bike.dart';
-import 'package:ecobike_rental/view/station/station.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pin_view/pin_view.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import '../bike/bike.dart';
+import '../payment/payment.dart';
 
 class QRScanner extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class QRScanner extends StatefulWidget {
 }
 
 class _QRScannerState extends State<QRScanner> {
-  var qrText = '';
+  String qrText = '';
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -20,11 +21,11 @@ class _QRScannerState extends State<QRScanner> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'Quét mã QR để thuê xe',
           style: TextStyle(color: Colors.black, fontSize: 14),
         ),
-        leading: BackButton(
+        leading: const BackButton(
           color: Colors.black,
         ),
       ),
@@ -42,7 +43,7 @@ class _QRScannerState extends State<QRScanner> {
               cutOutSize: 300,
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 100,
             left: 80,
             right: 80,
@@ -63,14 +64,14 @@ class _QRScannerState extends State<QRScanner> {
               children: [
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                     ),
                     height: 2,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     'Hoặc',
                     style: TextStyle(color: Colors.white),
@@ -78,7 +79,7 @@ class _QRScannerState extends State<QRScanner> {
                 ),
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                     ),
                     height: 2,
@@ -92,22 +93,27 @@ class _QRScannerState extends State<QRScanner> {
             left: 0,
             right: 0,
             child: GestureDetector(
-              onTap: () => showMaterialModalBottomSheet(
-                  context: context,
-                  builder: (context, scrollController) => _buildPinCodeWidget(context)),
+              onTap: () {
+                showMaterialModalBottomSheet(
+                    context: context,
+                    builder: (context, scrollController) =>
+                        _buildPinCodeWidget(context),);
+
+              },
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.keyboard,
                       color: Colors.white,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Text(
+                    const Text(
                       'Nhập mã từ bàn phím',
                       style: TextStyle(color: Colors.white),
                     ),
@@ -143,22 +149,25 @@ class _QRScannerState extends State<QRScanner> {
       ),
       child: Wrap(
         children: <Widget>[
-          Center(child: Text('Nhập mã phương tiện của xe')),
+          const Center(child: Text('Nhập mã phương tiện của xe')),
           PinView(
             count: 6,
-            margin: EdgeInsets.all(2.5),
+            margin: const EdgeInsets.all(2.5),
             obscureText: false,
-            style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w500),
-            dashStyle: TextStyle(
+            style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
+            dashStyle: const TextStyle(
                 // dash style
-                fontSize: 25.0,
+                fontSize: 25,
                 color: Colors.grey),
-            submit: (String pin) {
+            submit: (pin) {
               debugPrint('Code pin: $pin');
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Bike()));
+              showMaterialModalBottomSheet(
+                  context: context,
+                  builder: (context, scrollController) => Payment());
             },
-          )
+          ),
         ],
       ),
     );

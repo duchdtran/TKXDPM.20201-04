@@ -1,4 +1,4 @@
-import 'package:ecobike_rental/view/AppButton.dart';
+import 'package:ecobike_rental/view/app_button.dart';
 import 'package:ecobike_rental/view/home/home.dart';
 import 'package:flutter/material.dart';
 
@@ -6,15 +6,14 @@ class Start extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             height: 70,
           ),
-          FlutterLogo(
-            size: 215,
-          ),
+          Image.asset('assets/images/logo.png', height: 215, width: 215,),
           SizedBox(
             height: 20,
           ),

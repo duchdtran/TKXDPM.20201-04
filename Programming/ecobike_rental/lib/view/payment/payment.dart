@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../dialog.dart';
+
 class Payment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class Payment extends StatelessWidget {
       child: Column(
         children: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.keyboard_arrow_down,
               color: Colors.white,
             ),
@@ -26,17 +28,21 @@ class Payment extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
-          _buildPaymentMethodWidget(title: 'Visa - 4321', method: PaymentMethod.visa),
-          _buildPaymentMethodWidget(title: 'Paypal - test123@gmail.com', method: PaymentMethod.paypal),
+          _buildPaymentMethodWidget(
+              title: 'Visa - 4321', method: PaymentMethod.visa),
+          _buildPaymentMethodWidget(
+              title: 'Paypal - test123@gmail.com',
+              method: PaymentMethod.paypal),
           _buildAddPaymentMethodWidget(),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          _buildConfirmPaymentWidget(),
-          SizedBox(
+          _buildConfirmPaymentWidget(context),
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          // ignore: lines_longer_than_80_chars
+          const Text(
             'Để thuê xe bạn cần đặt cọc 40% giá trị xe, sau khi trả xe tiền cọc sẽ được trả lại tài khoản của bạn',
             style: TextStyle(color: Colors.white70),
           ),
@@ -70,9 +76,9 @@ class Payment extends StatelessWidget {
     );
   }
 
-
-  Widget _buildPaymentMethodWidget({String title, PaymentMethod method, Color color = Colors.white}) {
-    PaymentMethod _paymentMethod = PaymentMethod.visa;
+  Widget _buildPaymentMethodWidget(
+      {String title, PaymentMethod method, Color color = Colors.white}) {
+    var _paymentMethod = PaymentMethod.visa;
     return Column(
       children: [
         Row(
@@ -95,7 +101,6 @@ class Payment extends StatelessWidget {
                 value: method,
                 groupValue: _paymentMethod,
                 activeColor: color,
-
                 onChanged: (PaymentMethod value) {
                   _paymentMethod = value;
                 },
@@ -110,48 +115,65 @@ class Payment extends StatelessWidget {
     );
   }
 
-  Widget _buildConfirmPaymentWidget() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Center(
-              child: Column(
-                children: [
-                  Text(
-                    'Đặt cọc',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Text(
-                    '100.000đ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+  Widget _buildConfirmPaymentWidget(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: 'Custom Dialog Demo',
+              descriptions:
+                  'Hii all this is a custom dialog in flutter and  you will be use in your flutter applications',
+              text: 'Yes',
+            );
+          },
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      'Đặt cọc',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    Text(
+                      '100.000đ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Container(
-            color: Colors.grey,
-            width: 1,
-            height: 25,
-          ),
-          Expanded(
-              flex: 7,
-              child: Center(
-                child: Text(
-                  'Xác nhận thanh toán',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              )),
-        ],
+            Container(
+              color: Colors.grey,
+              width: 1,
+              height: 25,
+            ),
+            Expanded(
+                flex: 7,
+                child: Center(
+                  child: Text(
+                    'Xác nhận thanh toán',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }
 }
+
 enum PaymentMethod { visa, paypal }

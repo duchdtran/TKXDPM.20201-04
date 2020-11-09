@@ -1,9 +1,10 @@
+// ignore: file_names
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../gradien_icon.dart';
-import '../payment.dart';
+import '../payment/payment.dart';
 
 class Bike extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _BikeState extends State<Bike> {
 
   int _current = 0;
 
-  List imgList = [
+  List<String> imgList = [
     'https://salt.tikicdn.com/cache/w444/ts/product/a8/56/fc/74b35562a43d3f40956d3bceff558b32.jpg',
     'https://salt.tikicdn.com/cache/w444/ts/product/a8/56/fc/74b35562a43d3f40956d3bceff558b32.jpg',
     'https://salt.tikicdn.com/cache/w444/ts/product/a8/56/fc/74b35562a43d3f40956d3bceff558b32.jpg',
@@ -24,7 +25,7 @@ class _BikeState extends State<Bike> {
   ];
 
   List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+    final result = <T>[];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
@@ -36,7 +37,7 @@ class _BikeState extends State<Bike> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: BackButton(
+        leading: const BackButton(
           color: Colors.black,
         ),
         elevation: 0,
@@ -48,8 +49,8 @@ class _BikeState extends State<Bike> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     'Xe đạp thể thao Fornix FR-303',
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -60,7 +61,7 @@ class _BikeState extends State<Bike> {
                   child: Row(
                     children: [
                       RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                           text: 'Bãi cọ ecopark',
                           style: TextStyle(color: Colors.black),
                           children: [
@@ -70,25 +71,25 @@ class _BikeState extends State<Bike> {
                           ],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       _buildRatingBar(context, 3.5),
-                      Text('(400)'),
+                      const Text('(400)'),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 carouselSlider = CarouselSlider(
-                  height: 200.0,
+                  height: 200,
                   initialPage: 0,
                   enlargeCenterPage: true,
                   autoPlay: true,
                   reverse: false,
                   enableInfiniteScroll: true,
-                  autoPlayInterval: Duration(seconds: 5),
-                  autoPlayAnimationDuration: Duration(milliseconds: 5000),
-                  pauseAutoPlayOnTouch: Duration(seconds: 10),
+                  autoPlayInterval: const Duration(seconds: 5),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 5000),
+                  pauseAutoPlayOnTouch: const Duration(seconds: 10),
                   scrollDirection: Axis.horizontal,
                   onPageChanged: (index) {
                     setState(() {
@@ -97,11 +98,11 @@ class _BikeState extends State<Bike> {
                   },
                   items: imgList.map((imgUrl) {
                     return Builder(
-                      builder: (BuildContext context) {
+                      builder: (context) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 10.0),
-                          decoration: BoxDecoration(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                           ),
                           child: Image.network(
@@ -113,17 +114,17 @@ class _BikeState extends State<Bike> {
                     );
                   }).toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: map<Widget>(imgList, (index, url) {
                     return Container(
-                      width: 10.0,
-                      height: 10.0,
+                      width: 10,
+                      height: 10,
                       margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -137,22 +138,26 @@ class _BikeState extends State<Bike> {
                     );
                   }),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Center(child: Text('Giá thuê: 200.000đ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),)),
-                SizedBox(
+                const Center(
+                    child: Text(
+                  'Giá thuê: 200.000đ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                )),
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  padding: EdgeInsets.all(10),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(color: Colors.grey, width: 1),
                   ),
                   child: RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                         text: 'Giá khởi điểm cho 30 phút đầu là ',
                         style: TextStyle(color: Colors.grey),
                         children: [
@@ -176,7 +181,7 @@ class _BikeState extends State<Bike> {
                         ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Stack(
@@ -193,48 +198,49 @@ class _BikeState extends State<Bike> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
                           decoration: BoxDecoration(
                             border: Border(
-                                top: BorderSide(color: Colors.blue),
-                                left: BorderSide(color: Colors.blue),
-                                right: BorderSide(color: Colors.blue),
+                                top: const BorderSide(color: Colors.blue),
+                                left: const BorderSide(color: Colors.blue),
+                                right: const BorderSide(color: Colors.blue),
                                 bottom: BorderSide(
                                     color: Theme.of(context)
                                         .scaffoldBackgroundColor,
                                     width: 3)),
                           ),
-                          child: Center(
-                            child: Text('Chi tiết'),
+                          child: const Center(
+                            child: Text('Mô tả'),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
                           // decoration: BoxDecoration(
                           //   border: Border(top: BorderSide(color: Colors.blue), left: BorderSide(color: Colors.blue), right: BorderSide(color: Colors.blue), ),
                           // ),
-                          child: Center(
+                          child: const Center(
                             child: Text('Chi tiết'),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
                           // decoration: BoxDecoration(
                           //   border: Border(top: BorderSide(color: Colors.blue), left: BorderSide(color: Colors.blue), right: BorderSide(color: Colors.blue), ),
                           // ),
-                          child: Center(
-                            child: Text('Chi tiết'),
+                          child: const Center(
+                            child: Text('Đánh giá'),
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
+                const Padding(
+                  padding: EdgeInsets.all(20),
+                  // ignore: lines_longer_than_80_chars
                   child: Text(
                       'Mở đầu BST xe đạp thể thao từ FORNIX năm 2020, bạn không thể bỏ qua xe đạp mạnh mẽ FORNIX F8. Với thiết kế mạnh mẽ đầy cá tính, FORNIX F8 còn mang đến cho bạn những trải nghiệm tốc độ của bộ truyền động đầy mạnh mẽ'),
                 ),
@@ -261,10 +267,10 @@ class _BikeState extends State<Bike> {
                       Expanded(
                         child: InkWell(
                           onTap: () => showMaterialModalBottomSheet(
-                              context: context,
-                              builder: (context, scrollController) =>
-                                  Payment()),
-                          child: Center(
+                            context: context,
+                            builder: (context, scrollController) => Payment(),
+                          ),
+                          child: const Center(
                               child: Text(
                             'Thuê xe này',
                             style: TextStyle(
@@ -273,7 +279,7 @@ class _BikeState extends State<Bike> {
                           )),
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: Center(
                           child: Text(
                             'Liên hệ bãi xe',
@@ -294,14 +300,14 @@ class _BikeState extends State<Bike> {
                       children: [
                         Expanded(
                           child: Container(
-                            margin: EdgeInsets.only(top: 5),
+                            margin: const EdgeInsets.only(top: 5),
                             width: 1,
                             height: double.infinity,
                             color: Colors.white,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
                           child: Text(
                             'Hoặc',
                             style: TextStyle(color: Colors.white),
@@ -309,7 +315,7 @@ class _BikeState extends State<Bike> {
                         ),
                         Expanded(
                           child: Container(
-                            margin: EdgeInsets.only(bottom: 5),
+                            margin: const EdgeInsets.only(bottom: 5),
                             width: 1,
                             height: double.infinity,
                             color: Colors.white,
@@ -327,11 +333,6 @@ class _BikeState extends State<Bike> {
     );
   }
 
-  Widget _buildPayment() {
-    return Container(
-      height: 500,
-    );
-  }
 
   Widget _buildRatingBar(BuildContext context, double initRating) {
     return Wrap(
