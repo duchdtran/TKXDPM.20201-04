@@ -1,6 +1,7 @@
-import 'package:ecobike_rental/view/app_button.dart';
-import 'package:ecobike_rental/view/home/home.dart';
 import 'package:flutter/material.dart';
+
+import '../app_button.dart';
+import '../home/home.dart';
 
 class Start extends StatelessWidget {
   @override
@@ -10,22 +11,22 @@ class Start extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 70,
           ),
           Image.asset('assets/images/logo.png', height: 215, width: 215,),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             'Chào mừng đến Ecobike Rental',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text('Ứng dụng thuê xe trong khu vực công viên Ecopark'),
-          Spacer(),
+          const Text('Ứng dụng thuê xe trong khu vực công viên Ecopark'),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: AppButton(
@@ -38,7 +39,7 @@ class Start extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 120,
           )
         ],

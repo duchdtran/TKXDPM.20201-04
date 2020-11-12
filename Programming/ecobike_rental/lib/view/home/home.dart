@@ -30,17 +30,17 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'Ecobike Rental',
           style: TextStyle(color: Colors.blue),
         ),
-        leading: Icon(
+        leading: const Icon(
           Icons.menu,
           color: Colors.black,
         ),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications_none,
               color: Colors.black,
             ),
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
                 widget._isRent = !widget._isRent;
               });
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
               color: Colors.black,
             ),
@@ -147,7 +147,7 @@ class _HomeState extends State<Home> {
           GoogleMap(
             zoomControlsEnabled: false,
             mapType: MapType.normal,
-            initialCameraPosition: CameraPosition(
+            initialCameraPosition: const CameraPosition(
               target: LatLng(20.962056, 105.925219),
               zoom: 15,
             ),
@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
                 child: FloatingActionButton(
                   backgroundColor: Colors.white,
                   onPressed: () {},
-                  child: Icon(
+                  child: const Icon(
                     Icons.my_location,
                     color: Colors.black,
                   ),
@@ -194,17 +194,17 @@ class _HomeState extends State<Home> {
                 children: [
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text(
+                      const Text(
                         'Gần bạn',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       FlatButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'Xem thêm',
                           style: TextStyle(color: Colors.blue),
                         ),
@@ -256,7 +256,7 @@ class _HomeState extends State<Home> {
         shape: BoxShape.circle,
         color: Colors.white,
         border: Border.all(
-          width: 4.0,
+          width: 4,
           color: borderColor,
         ),
       ),
@@ -266,11 +266,11 @@ class _HomeState extends State<Home> {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
           ),
           Text(
             value,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           )
         ],
       ),
@@ -282,7 +282,7 @@ class _HomeState extends State<Home> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             boxShadow: [
@@ -297,25 +297,26 @@ class _HomeState extends State<Home> {
           width: double.infinity,
           height: 50,
           child: Row(
+            // ignore: prefer_const_literals_to_create_immutables
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
-              Icon(
+              const Icon(
                 Icons.search,
                 color: Colors.grey,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
-              Text(
+              const Text(
                 'Tìm kiếm',
                 style: TextStyle(color: Colors.grey),
               ),
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         SingleChildScrollView(
@@ -342,7 +343,7 @@ class _HomeState extends State<Home> {
           child: Row(
             children: [
               Icon(icon, size: 16, color: Colors.black.withOpacity(0.7)),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(
