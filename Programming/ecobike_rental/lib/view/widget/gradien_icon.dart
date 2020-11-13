@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GradientIcon extends StatelessWidget {
-  GradientIcon(
+  const GradientIcon(
       this.icon,
       this.size,
       this.gradient,
@@ -14,6 +14,10 @@ class GradientIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
+      shaderCallback: (bounds) {
+        final rect = Rect.fromLTRB(0, 0, size, size);
+        return gradient.createShader(rect);
+      },
       child: SizedBox(
         width: size,
         height: size,
@@ -23,10 +27,6 @@ class GradientIcon extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      shaderCallback: (Rect bounds) {
-        final rect = Rect.fromLTRB(0, 0, size, size);
-        return gradient.createShader(rect);
-      },
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:ecobike_rental/view/gradien_icon.dart';
+import 'file:///D:/PTTK/TKXDPM.20201-04/Programming/ecobike_rental/lib/view/widget/gradien_icon.dart';
 import 'package:ecobike_rental/view/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Stack(
             children: [
               Container(
@@ -55,7 +57,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 ),
               ),
               Positioned(
-                left: 0, right: 0, bottom: 0, top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                top: 0,
                 child: GradientIcon(
                   Icons.add_shopping_cart,
                   24,
@@ -69,16 +74,32 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               ),
             ],
           ),
-          SizedBox(height: 10,),
-          Text('Chúc mừng! Bạn đã thuê xe đạp Fornix thành công.', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
-          Spacer(),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            'Chúc mừng! Bạn đã thuê xe đạp Fornix thành công.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
           GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home.withRented())),
+            onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => Home.withRented())),
             child: Column(
               children: [
-                Divider(color: Colors.grey,),
-                Text('Đóng', style: TextStyle(color: Colors.blue, ),),
-                SizedBox(height: 20,),
+                const Divider(
+                  color: Colors.grey,
+                ),
+                const Text(
+                  'Đóng',
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),

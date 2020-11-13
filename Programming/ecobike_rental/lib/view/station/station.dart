@@ -17,8 +17,7 @@ class _StationState extends State<Station> {
       body: DefaultTabController(
         length: 3,
         child: NestedScrollView(
-            headerSliverBuilder:
-                (context, innerBoxIsScrolled) {
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
                   expandedHeight: 150,
@@ -75,7 +74,7 @@ class _StationState extends State<Station> {
             context, MaterialPageRoute(builder: (context) => Bike()));
       },
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Row(
           children: [
             Padding(
@@ -108,20 +107,20 @@ class _StationState extends State<Station> {
                   children: [
                     Column(
                       children: [
-                        const Text(
+                         Text(
                           '7.000đ/h',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        const Text(
+                         const Text(
                           'Giá thuê',
                           style: TextStyle(fontSize: 10),
                         ),
                       ],
                     ),
                     InkWell(
-                      onTap: (){
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => Bike()));
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Bike()));
                         showMaterialModalBottomSheet(
                             context: context,
                             builder: (context, scrollController) => Payment());
@@ -132,8 +131,10 @@ class _StationState extends State<Station> {
                           color: Theme.of(context).accentColor,
                         ),
                         margin: const EdgeInsets.symmetric(horizontal: 20),
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
                         child: const Center(
                           child: Text(
                             'Thuê xe',

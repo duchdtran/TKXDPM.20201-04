@@ -1,20 +1,21 @@
 import 'dart:async';
 
-import 'package:ecobike_rental/view/app_button.dart';
-import 'package:ecobike_rental/view/bike_info_item.dart';
-import 'package:ecobike_rental/view/scanner/scanner.dart';
-import 'package:ecobike_rental/view/station/station.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// ignore: must_be_immutable
+import '../scanner/scanner.dart';
+import '../station/station.dart';
+import '../widget/app_button.dart';
+import '../widget/bike_info_item.dart';
+
 class Home extends StatefulWidget {
-  bool _isRent = true;
   Home();
   Home.withRented() {
     _isRent = false;
   }
+
+  bool _isRent = true;
 
   @override
   _HomeState createState() => _HomeState();
@@ -59,88 +60,90 @@ class _HomeState extends State<Home> {
           ),
         ],
         bottom: PreferredSize(
-            child: Visibility(
-              visible: !widget._isRent,
-              child: Container(
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Divider(
-                      height: 3,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 170,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 20,
-                            left: 30,
-                            child: _buildContainer(
-                                'Phí thuê', '15.000/h', Colors.yellow),
-                          ),
-                          Positioned(
-                            top: 20,
-                            right: 30,
-                            child: _buildContainer(
-                                'Tổng tiền', '123.000đ', Colors.greenAccent),
-                          ),
-                          Positioned(
-                            top: 40,
-                            left: 0,
-                            right: 0,
-                            child: _buildContainer(
-                                'Thời gian', "1h 45' 27\"", Colors.blue),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Thông tin xe'),
-                          Text(
-                            'Hướng dẫn trả xe',
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          preferredSize: Size.fromHeight(widget._isRent ? 0 : 280),
+          child: Visibility(
+            visible: !widget._isRent,
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  const Divider(
+                    height: 3,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 170,
+                    child: Stack(
                       children: [
-                        BikeInfoItem(
-                          label: 'Biển số xe',
-                          value: '34M6-9863',
+                        Positioned(
+                          top: 20,
+                          left: 30,
+                          child: _buildContainer(
+                              'Phí thuê', '15.000/h', Colors.yellow),
                         ),
-                        BikeInfoItem(
-                          label: 'Lượng pin',
-                          value: '37%',
+                        Positioned(
+                          top: 20,
+                          right: 30,
+                          child: _buildContainer(
+                              'Tổng tiền', '123.000đ', Colors.greenAccent),
                         ),
-                        BikeInfoItem(
-                          label: 'Thời gian còn lại',
-                          value: '37 phút',
+                        Positioned(
+                          top: 40,
+                          left: 0,
+                          right: 0,
+                          child: _buildContainer(
+                              'Thời gian', "1h 45' 27\"", Colors.blue),
                         ),
                       ],
                     ),
-                    IconButton(
-                      icon: Icon(Icons.keyboard_arrow_up),
-                      onPressed: () {
-                        setState(() {
-                          widget._isRent = !widget._isRent;
-                        });
-                      },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Thông tin xe'),
+                        const Text(
+                          'Hướng dẫn trả xe',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const BikeInfoItem(
+                        label: 'Biển số xe',
+                        value: '34M6-9863',
+                      ),
+                      const BikeInfoItem(
+                        label: 'Lượng pin',
+                        value: '37%',
+                      ),
+                      const BikeInfoItem(
+                        label: 'Thời gian còn lại',
+                        value: '37 phút',
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.keyboard_arrow_up),
+                    onPressed: () {
+                      setState(() {
+                        widget._isRent = !widget._isRent;
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
-            preferredSize: Size.fromHeight(widget._isRent ? 0 : 280)),
+          ),
+        ),
       ),
       body: Stack(
         children: [
@@ -151,7 +154,7 @@ class _HomeState extends State<Home> {
               target: LatLng(20.962056, 105.925219),
               zoom: 15,
             ),
-            onMapCreated: (GoogleMapController controller) {
+            onMapCreated: (controller) {
               _controller.complete(controller);
             },
             onCameraMove: (position) {

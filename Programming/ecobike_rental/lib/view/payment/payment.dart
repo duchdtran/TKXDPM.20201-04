@@ -101,7 +101,7 @@ class Payment extends StatelessWidget {
                 value: method,
                 groupValue: _paymentMethod,
                 activeColor: color,
-                onChanged: (PaymentMethod value) {
+                onChanged: (value) {
                   _paymentMethod = value;
                 },
               ),
@@ -121,7 +121,7 @@ class Payment extends StatelessWidget {
         Navigator.of(context).pop();
         showDialog(
           context: context,
-          builder: (BuildContext context) {
+          builder: (context) {
             return const CustomDialogBox(
               title: 'Custom Dialog Demo',
               descriptions:
