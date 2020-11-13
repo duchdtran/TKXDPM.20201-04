@@ -28,8 +28,7 @@ class _AppButtonState extends State<AppButton> {
             gradient: LinearGradient(
               colors: <Color>[
                 Theme.of(context).primaryColor,
-                Theme.of(context).accentColor,
-
+                Theme.of(context).accentColor
               ],
             ),
             borderRadius: BorderRadius.all(Radius.circular(80.0)),
