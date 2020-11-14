@@ -1,17 +1,17 @@
 import 'dart:async';
 
-import 'package:ecobike_rental/controller/home.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/home.dart';
 import '../scanner/scanner.dart';
 import '../station/station.dart';
 import '../widget/app_button.dart';
 import '../widget/bike_info_item.dart';
 
+// ignore: must_be_immutable
 class Home extends StatefulWidget {
   Home._({Key key}) : super(key: key);
 
@@ -109,6 +109,7 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // ignore: prefer_const_literals_to_create_immutables
                       children: [
                         const Text('Thông tin xe'),
                         const Text(
@@ -226,18 +227,21 @@ class _HomeState extends State<Home> {
                     width: double.infinity,
                     height: 140,
                     child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount:
-                            context.select((ds) => ds.listStation.length),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Station())),
-                            child: Container(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: context
+                          .select((HomeDataSet ds) => ds.listStation.length),
+                      itemBuilder: (context, index) {
+                        return Builder(
+                          builder: (context) {
+                            return InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Station())),
+                              child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
+                                  color: Colors.blue,
                                 ),
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
@@ -245,10 +249,14 @@ class _HomeState extends State<Home> {
                                 height: 120,
                                 child: Center(
                                   child: Text(
-                                      '${context.select((ds) => ds.listStation[index].stationName)}'),
-                                )),
-                          );
-                        }),
+                                      '${context.select((HomeDataSet ds) => ds.listStation[index].stationName)}'),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   )
                 ],
               ),

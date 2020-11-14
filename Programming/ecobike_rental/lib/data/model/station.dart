@@ -1,4 +1,4 @@
-import 'package:ecobike_rental/data/model/address.dart';
+import 'address.dart';
 
 class Station{
 

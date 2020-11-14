@@ -123,8 +123,8 @@ class _BikeState extends State<Bike> {
                     return Container(
                       width: 10,
                       height: 10,
-                      margin:
-                          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -332,7 +332,6 @@ class _BikeState extends State<Bike> {
       ),
     );
   }
-
 
   Widget _buildRatingBar(BuildContext context, double initRating) {
     return Wrap(
