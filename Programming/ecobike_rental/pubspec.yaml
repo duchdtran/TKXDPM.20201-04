@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_state_notifier: ^0.6.1
+
   google_maps_flutter: ^1.0.6
   qr_code_scanner: ^0.0.13
   pin_view: ^1.0.1

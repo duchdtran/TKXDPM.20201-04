@@ -3,8 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../gradien_icon.dart';
 import '../payment/payment.dart';
+import '../widget/gradien_icon.dart';
 
 class Bike extends StatefulWidget {
   @override

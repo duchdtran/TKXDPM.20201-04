@@ -17,19 +17,18 @@ class _StationState extends State<Station> {
       body: DefaultTabController(
         length: 3,
         child: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  expandedHeight: 150.0,
+                  expandedHeight: 150,
                   floating: false,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
                       centerTitle: true,
-                      title: Text('Bãi gửi xe đảo cọ',
+                      title: const Text('Bãi gửi xe đảo cọ',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: 16,
                           )),
                       background: Image.network(
                         'https://i.pinimg.com/564x/b1/bc/3a/b1bc3a01ac9b8e70c4f11ef3b0c9cfae.jpg',
@@ -38,7 +37,7 @@ class _StationState extends State<Station> {
                 ),
                 SliverPersistentHeader(
                   delegate: _SliverAppBarDelegate(
-                    TabBar(
+                    const TabBar(
                       labelColor: Colors.black87,
                       unselectedLabelColor: Colors.grey,
                       tabs: [
@@ -75,7 +74,7 @@ class _StationState extends State<Station> {
             context, MaterialPageRoute(builder: (context) => Bike()));
       },
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Row(
           children: [
             Padding(
@@ -90,38 +89,38 @@ class _StationState extends State<Station> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Xe đạp thể thao Formix',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
-                Text(
+                const Text(
                   'FORNIX F8 mang đến những trải nghiệm \ntốc độ của bộ truyền động đầy mạnh mẽ',
                   style: TextStyle(fontSize: 10),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
                   children: [
                     Column(
                       children: [
-                        Text(
+                         Text(
                           '7.000đ/h',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(
+                         const Text(
                           'Giá thuê',
                           style: TextStyle(fontSize: 10),
                         ),
                       ],
                     ),
                     InkWell(
-                      onTap: (){
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => Bike()));
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Bike()));
                         showMaterialModalBottomSheet(
                             context: context,
                             builder: (context, scrollController) => Payment());
@@ -131,10 +130,12 @@ class _StationState extends State<Station> {
                           borderRadius: BorderRadius.circular(5),
                           color: Theme.of(context).accentColor,
                         ),
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: Center(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: const Center(
                           child: Text(
                             'Thuê xe',
                             style: TextStyle(color: Colors.white),

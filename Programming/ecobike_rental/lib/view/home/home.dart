@@ -1,20 +1,28 @@
 import 'dart:async';
 
-import 'package:ecobike_rental/view/app_button.dart';
-import 'package:ecobike_rental/view/bike_info_item.dart';
-import 'package:ecobike_rental/view/scanner/scanner.dart';
-import 'package:ecobike_rental/view/station/station.dart';
+import 'package:ecobike_rental/controller/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// ignore: must_be_immutable
+import '../scanner/scanner.dart';
+import '../station/station.dart';
+import '../widget/app_button.dart';
+import '../widget/bike_info_item.dart';
+
 class Home extends StatefulWidget {
-  bool _isRent = true;
-  Home();
-  Home.withRented() {
-    _isRent = false;
+  Home._({Key key}) : super(key: key);
+
+  static Widget withDependency() {
+    return StateNotifierProvider<HomeController, HomeDataSet>(
+      create: (_) => HomeController(),
+      child: Home._(),
+    );
   }
+
+  bool _isRent = true;
 
   @override
   _HomeState createState() => _HomeState();
@@ -27,20 +35,21 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<HomeController>().initDataSet();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'Ecobike Rental',
           style: TextStyle(color: Colors.blue),
         ),
-        leading: Icon(
+        leading: const Icon(
           Icons.menu,
           color: Colors.black,
         ),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications_none,
               color: Colors.black,
             ),
@@ -52,106 +61,108 @@ class _HomeState extends State<Home> {
                 widget._isRent = !widget._isRent;
               });
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
               color: Colors.black,
             ),
           ),
         ],
         bottom: PreferredSize(
-            child: Visibility(
-              visible: !widget._isRent,
-              child: Container(
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Divider(
-                      height: 3,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 170,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 20,
-                            left: 30,
-                            child: _buildContainer(
-                                'Phí thuê', '15.000/h', Colors.yellow),
-                          ),
-                          Positioned(
-                            top: 20,
-                            right: 30,
-                            child: _buildContainer(
-                                'Tổng tiền', '123.000đ', Colors.greenAccent),
-                          ),
-                          Positioned(
-                            top: 40,
-                            left: 0,
-                            right: 0,
-                            child: _buildContainer(
-                                'Thời gian', "1h 45' 27\"", Colors.blue),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Thông tin xe'),
-                          Text(
-                            'Hướng dẫn trả xe',
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          preferredSize: Size.fromHeight(widget._isRent ? 0 : 280),
+          child: Visibility(
+            visible: !widget._isRent,
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  const Divider(
+                    height: 3,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 170,
+                    child: Stack(
                       children: [
-                        BikeInfoItem(
-                          label: 'Biển số xe',
-                          value: '34M6-9863',
+                        Positioned(
+                          top: 20,
+                          left: 30,
+                          child: _buildContainer(
+                              'Phí thuê', '15.000/h', Colors.yellow),
                         ),
-                        BikeInfoItem(
-                          label: 'Lượng pin',
-                          value: '37%',
+                        Positioned(
+                          top: 20,
+                          right: 30,
+                          child: _buildContainer(
+                              'Tổng tiền', '123.000đ', Colors.greenAccent),
                         ),
-                        BikeInfoItem(
-                          label: 'Thời gian còn lại',
-                          value: '37 phút',
+                        Positioned(
+                          top: 40,
+                          left: 0,
+                          right: 0,
+                          child: _buildContainer(
+                              'Thời gian', "1h 45' 27\"", Colors.blue),
                         ),
                       ],
                     ),
-                    IconButton(
-                      icon: Icon(Icons.keyboard_arrow_up),
-                      onPressed: () {
-                        setState(() {
-                          widget._isRent = !widget._isRent;
-                        });
-                      },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Thông tin xe'),
+                        const Text(
+                          'Hướng dẫn trả xe',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const BikeInfoItem(
+                        label: 'Biển số xe',
+                        value: '34M6-9863',
+                      ),
+                      const BikeInfoItem(
+                        label: 'Lượng pin',
+                        value: '37%',
+                      ),
+                      const BikeInfoItem(
+                        label: 'Thời gian còn lại',
+                        value: '37 phút',
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.keyboard_arrow_up),
+                    onPressed: () {
+                      setState(() {
+                        widget._isRent = !widget._isRent;
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
-            preferredSize: Size.fromHeight(widget._isRent ? 0 : 280)),
+          ),
+        ),
       ),
       body: Stack(
         children: [
           GoogleMap(
             zoomControlsEnabled: false,
             mapType: MapType.normal,
-            initialCameraPosition: CameraPosition(
+            initialCameraPosition: const CameraPosition(
               target: LatLng(20.962056, 105.925219),
               zoom: 15,
             ),
-            onMapCreated: (GoogleMapController controller) {
+            onMapCreated: (controller) {
               _controller.complete(controller);
             },
             onCameraMove: (position) {
@@ -178,7 +189,7 @@ class _HomeState extends State<Home> {
                 child: FloatingActionButton(
                   backgroundColor: Colors.white,
                   onPressed: () {},
-                  child: Icon(
+                  child: const Icon(
                     Icons.my_location,
                     color: Colors.black,
                   ),
@@ -194,17 +205,17 @@ class _HomeState extends State<Home> {
                 children: [
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text(
+                      const Text(
                         'Gần bạn',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       FlatButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'Xem thêm',
                           style: TextStyle(color: Colors.blue),
                         ),
@@ -216,7 +227,8 @@ class _HomeState extends State<Home> {
                     height: 140,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 3,
+                        itemCount:
+                            context.select((ds) => ds.listStation.length),
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () => Navigator.push(
@@ -224,17 +236,17 @@ class _HomeState extends State<Home> {
                                 MaterialPageRoute(
                                     builder: (context) => Station())),
                             child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              width: 250,
-                              height: 120,
-                              child: Image.network(
-                                'https://i.pinimg.com/564x/b1/bc/3a/b1bc3a01ac9b8e70c4f11ef3b0c9cfae.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                width: 250,
+                                height: 120,
+                                child: Center(
+                                  child: Text(
+                                      '${context.select((ds) => ds.listStation[index].stationName)}'),
+                                )),
                           );
                         }),
                   )
@@ -256,7 +268,7 @@ class _HomeState extends State<Home> {
         shape: BoxShape.circle,
         color: Colors.white,
         border: Border.all(
-          width: 4.0,
+          width: 4,
           color: borderColor,
         ),
       ),
@@ -266,11 +278,11 @@ class _HomeState extends State<Home> {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
           ),
           Text(
             value,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           )
         ],
       ),
@@ -282,7 +294,7 @@ class _HomeState extends State<Home> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             boxShadow: [
@@ -297,25 +309,26 @@ class _HomeState extends State<Home> {
           width: double.infinity,
           height: 50,
           child: Row(
+            // ignore: prefer_const_literals_to_create_immutables
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
-              Icon(
+              const Icon(
                 Icons.search,
                 color: Colors.grey,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
-              Text(
+              const Text(
                 'Tìm kiếm',
                 style: TextStyle(color: Colors.grey),
               ),
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         SingleChildScrollView(
@@ -342,7 +355,7 @@ class _HomeState extends State<Home> {
           child: Row(
             children: [
               Icon(icon, size: 16, color: Colors.black.withOpacity(0.7)),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class AppButton extends StatefulWidget {
+  AppButton({@required this.title, @required this.onPress, this.icon,});
+
   String title;
   IconData icon;
   Function onPress;
-
-  AppButton({@required this.title, this.icon, @required this.onPress});
 
   @override
   _AppButtonState createState() => _AppButtonState();
@@ -21,7 +21,7 @@ class _AppButtonState extends State<AppButton> {
       onPressed: widget.onPress,
       child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 12,
           ),
           decoration: BoxDecoration(
@@ -31,7 +31,7 @@ class _AppButtonState extends State<AppButton> {
                 Theme.of(context).accentColor
               ],
             ),
-            borderRadius: BorderRadius.all(Radius.circular(80.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(80)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

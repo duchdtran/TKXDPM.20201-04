@@ -16,7 +16,7 @@ class Payment extends StatelessWidget {
         ),
       ),
       height: 350,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         children: [
           IconButton(
@@ -55,17 +55,17 @@ class Payment extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.add,
               color: Colors.white,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
-            Expanded(
+            const Expanded(
                 child: Text(
               'Thêm phương thức thanh toán',
               style: TextStyle(color: Colors.white),
@@ -87,7 +87,7 @@ class Payment extends StatelessWidget {
               Icons.payment,
               color: color,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Expanded(
@@ -101,7 +101,7 @@ class Payment extends StatelessWidget {
                 value: method,
                 groupValue: _paymentMethod,
                 activeColor: color,
-                onChanged: (PaymentMethod value) {
+                onChanged: (value) {
                   _paymentMethod = value;
                 },
               ),
@@ -121,8 +121,8 @@ class Payment extends StatelessWidget {
         Navigator.of(context).pop();
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return CustomDialogBox(
+          builder: (context) {
+            return const CustomDialogBox(
               title: 'Custom Dialog Demo',
               descriptions:
                   'Hii all this is a custom dialog in flutter and  you will be use in your flutter applications',
@@ -132,7 +132,7 @@ class Payment extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(40),
@@ -143,12 +143,13 @@ class Payment extends StatelessWidget {
               flex: 3,
               child: Center(
                 child: Column(
+                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
-                    Text(
+                    const Text(
                       'Đặt cọc',
                       style: TextStyle(fontSize: 10),
                     ),
-                    Text(
+                    const Text(
                       '100.000đ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -161,7 +162,7 @@ class Payment extends StatelessWidget {
               width: 1,
               height: 25,
             ),
-            Expanded(
+            const Expanded(
                 flex: 7,
                 child: Center(
                   child: Text(
