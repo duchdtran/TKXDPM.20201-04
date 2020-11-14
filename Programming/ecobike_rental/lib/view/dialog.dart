@@ -1,6 +1,6 @@
 import 'dart:ui';
-import 'file:///D:/PTTK/TKXDPM.20201-04/Programming/ecobike_rental/lib/view/widget/gradien_icon.dart';
 import 'package:ecobike_rental/view/home/home.dart';
+import 'package:ecobike_rental/view/widget/gradien_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +85,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
           const Spacer(),
           GestureDetector(
             onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => Home.withRented())),
+                MaterialPageRoute(builder: (context) => Home.withDependency())),
             child: Column(
               children: [
                 const Divider(

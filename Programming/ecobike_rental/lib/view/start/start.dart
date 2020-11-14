@@ -14,7 +14,11 @@ class Start extends StatelessWidget {
           const SizedBox(
             height: 70,
           ),
-          Image.asset('assets/images/logo.png', height: 215, width: 215,),
+          Image.asset(
+            'assets/images/logo.png',
+            height: 215,
+            width: 215,
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -34,7 +38,8 @@ class Start extends StatelessWidget {
               onPress: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Home()),
+                  MaterialPageRoute(
+                      builder: (context) => Home.withDependency()),
                 );
               },
             ),

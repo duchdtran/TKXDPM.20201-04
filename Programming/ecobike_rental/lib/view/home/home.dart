@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/controller/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../scanner/scanner.dart';
@@ -10,9 +13,13 @@ import '../widget/app_button.dart';
 import '../widget/bike_info_item.dart';
 
 class Home extends StatefulWidget {
-  Home();
-  Home.withRented() {
-    _isRent = false;
+  Home._({Key key}) : super(key: key);
+
+  static Widget withDependency() {
+    return StateNotifierProvider<HomeController, HomeDataSet>(
+      create: (_) => HomeController(),
+      child: Home._(),
+    );
   }
 
   bool _isRent = true;
@@ -28,6 +35,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<HomeController>().initDataSet();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -219,7 +227,8 @@ class _HomeState extends State<Home> {
                     height: 140,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 3,
+                        itemCount:
+                            context.select((ds) => ds.listStation.length),
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () => Navigator.push(
@@ -227,17 +236,17 @@ class _HomeState extends State<Home> {
                                 MaterialPageRoute(
                                     builder: (context) => Station())),
                             child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              width: 250,
-                              height: 120,
-                              child: Image.network(
-                                'https://i.pinimg.com/564x/b1/bc/3a/b1bc3a01ac9b8e70c4f11ef3b0c9cfae.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                width: 250,
+                                height: 120,
+                                child: Center(
+                                  child: Text(
+                                      '${context.select((ds) => ds.listStation[index].stationName)}'),
+                                )),
                           );
                         }),
                   )
