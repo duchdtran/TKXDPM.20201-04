@@ -1,5 +1,6 @@
-import 'package:ecobike_rental/view/start/start.dart';
 import 'package:flutter/material.dart';
+
+import 'view/start/start.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,8 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Color(0xFF0087EE),
-        accentColor:  Color(0xFF03DA91),
+        primaryColor: const Color(0xFF0087EE),
+        accentColor:  const Color(0xFF03DA91),
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
