@@ -1,3 +1,4 @@
+import 'package:ecobike_rental/view/invoice/invoice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -119,18 +120,8 @@ class Payment extends StatelessWidget {
   Widget _buildConfirmPaymentWidget(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pop();
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const CustomDialogBox(
-              title: 'Custom Dialog Demo',
-              descriptions:
-                  'Hii all this is a custom dialog in flutter and  you will be use in your flutter applications',
-              text: 'Yes',
-            );
-          },
-        );
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Invoice()));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -168,7 +159,7 @@ class Payment extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'Xác nhận thanh toán',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold)
                   ),
                 )),
           ],
