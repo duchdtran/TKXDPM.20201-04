@@ -4,13 +4,17 @@ import 'package:ecobike_rental/view/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomDialogBox extends StatefulWidget {
-  final String title, descriptions, text;
-  final Image img;
+import 'home/home.dart';
+import 'widget/gradien_icon.dart';
 
+class CustomDialogBox extends StatefulWidget {
   const CustomDialogBox(
       {Key key, this.title, this.descriptions, this.text, this.img})
       : super(key: key);
+
+  final String title, descriptions, text;
+  final Image img;
+
 
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
@@ -29,7 +33,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     );
   }
 
-  Widget contentBox(context) {
+  Widget contentBox(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -85,8 +89,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
           const Spacer(),
           GestureDetector(
             onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => Home.withRented())),
+                MaterialPageRoute(builder: (context) => Home.withDependency())),
             child: Column(
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
                 const Divider(
                   color: Colors.grey,

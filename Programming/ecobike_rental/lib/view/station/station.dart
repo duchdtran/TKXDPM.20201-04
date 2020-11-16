@@ -1,8 +1,8 @@
-import 'package:ecobike_rental/view/bike/bike.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../bike/bike.dart';
 import '../payment/payment.dart';
 
 class Station extends StatefulWidget {
@@ -106,8 +106,9 @@ class _StationState extends State<Station> {
                 Row(
                   children: [
                     Column(
+                      // ignore: prefer_const_literals_to_create_immutables
                       children: [
-                         Text(
+                         const Text(
                           '7.000đ/h',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),

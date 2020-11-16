@@ -3,8 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../widget/gradien_icon.dart';
 import '../payment/payment.dart';
+import '../widget/gradien_icon.dart';
 
 class Bike extends StatefulWidget {
   @override
@@ -123,8 +123,8 @@ class _BikeState extends State<Bike> {
                     return Container(
                       width: 10,
                       height: 10,
-                      margin:
-                          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -332,7 +332,6 @@ class _BikeState extends State<Bike> {
       ),
     );
   }
-
 
   Widget _buildRatingBar(BuildContext context, double initRating) {
     return Wrap(
