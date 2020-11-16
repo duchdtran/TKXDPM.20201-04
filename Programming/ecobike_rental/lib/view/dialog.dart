@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'file:///D:/PTTK/TKXDPM.20201-04/Programming/ecobike_rental/lib/view/widget/gradien_icon.dart';
+import 'widget/gradien_icon.dart';
 import 'package:ecobike_rental/view/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

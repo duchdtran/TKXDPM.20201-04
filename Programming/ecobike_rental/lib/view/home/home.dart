@@ -172,7 +172,7 @@ class _HomeState extends State<Home> {
             right: 0,
             child: _buildSearchBarWidget(),
           ),
-          Positioned(
+          Positioned( // cham dinh vi mauu den
               bottom: (_userTap | !widget._isRent) ? 20 : 220,
               right: 10,
               child: SizedBox(
