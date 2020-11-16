@@ -48,6 +48,8 @@ class _ListStationState extends State<ListStation>{
           children: [
             _buildStationItemWidget(),
             _buildStationItemWidget(),
+            _buildStationItemWidget(),
+            _buildStationItemWidget(),
             _buildStationItemWidget()
           ],
       )
