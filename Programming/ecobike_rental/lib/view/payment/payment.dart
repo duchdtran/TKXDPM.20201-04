@@ -1,3 +1,4 @@
+import 'package:ecobike_rental/view/payment/add_payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class Payment extends StatelessWidget {
           _buildPaymentMethodWidget(
               title: 'Paypal - test123@gmail.com',
               method: PaymentMethod.paypal),
-          _buildAddPaymentMethodWidget(),
+          _buildAddPaymentMethodWidget(context),
           const SizedBox(
             height: 10,
           ),
@@ -51,9 +52,14 @@ class Payment extends StatelessWidget {
     );
   }
 
-  Widget _buildAddPaymentMethodWidget() {
+  Widget _buildAddPaymentMethodWidget(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddPayment()));
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
