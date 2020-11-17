@@ -21,8 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: Start(),
-      home: ListStation(),
+      home: Start(),
     );
   }
 }
