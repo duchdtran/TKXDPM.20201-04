@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/view/list_station/list_station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -301,39 +302,42 @@ class _HomeState extends State<Home> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 5,
-              ),
-            ],
-            color: Colors.white,
-          ),
-          width: double.infinity,
-          height: 50,
-          child: Row(
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const SizedBox(
-                width: 30,
-              ),
-              const Icon(
-                Icons.search,
-                color: Colors.grey,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text(
-                'Tìm kiếm',
-                style: TextStyle(color: Colors.grey),
-              ),
-            ],
+        InkWell(
+          onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>ListStation())),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 5,
+                ),
+              ],
+              color: Colors.white,
+            ),
+            width: double.infinity,
+            height: 50,
+            child: Row(
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                const SizedBox(
+                  width: 30,
+                ),
+                const Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Text(
+                  'Tìm kiếm',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(
