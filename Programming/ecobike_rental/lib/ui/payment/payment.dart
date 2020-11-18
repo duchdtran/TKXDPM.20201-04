@@ -123,12 +123,7 @@ class Payment extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) {
-            return const CustomDialogBox(
-              title: 'Custom Dialog Demo',
-              descriptions:
-                  'Hii all this is a custom dialog in flutter and  you will be use in your flutter applications',
-              text: 'Yes',
-            );
+            return CustomDialogBox();
           },
         );
       },

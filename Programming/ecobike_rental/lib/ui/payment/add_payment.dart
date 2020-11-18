@@ -109,7 +109,7 @@ class _AddPaymentState extends State<AddPayment> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                             child: TextFormField(
                               controller: dueDateController,
                               decoration: const InputDecoration(
@@ -129,7 +129,7 @@ class _AddPaymentState extends State<AddPayment> {
                         ),
                         Expanded(
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                               child: TextFormField(
                                 controller: cvvController,
                                 keyboardType: TextInputType.number,
@@ -211,8 +211,8 @@ Widget _buildBottomWidget(_formKey, controller) {
         child: AppButton(
           title: 'Xác nhận',
           onPress: () {
-            final form = _formKey.currentState; // this is your GlobalKey<FormState> that you specified and set to the key of your Form Widget.
-            if (form.validate()) { // form.validate() will call all the validator functions that you've passed to your inputfields
+            final form = _formKey.currentState;
+            if (form.validate()) {
               // Print all form value
               print('Card number: ');
               print(controller['number'].value.text);

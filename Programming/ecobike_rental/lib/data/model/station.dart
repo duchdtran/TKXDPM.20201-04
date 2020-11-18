@@ -1,14 +1,29 @@
 import 'address.dart';
 
-class Station{
+import 'bike.dart';
 
-  Station({this.stationId, this.stationName, this.address, this.emailAddress,
-      this.phoneNumber, this.area});
+class Station {
+  Station({
+    this.stationId,
+    this.stationName,
+    this.address,
+    this.email,
+    this.phone,
+    this.area,
+    this.contactName,
+    this.singleBikes,
+    this.doubleBikes,
+    this.electricBikes,
+  });
 
   int stationId;
   String stationName;
   Address address;
-  String emailAddress;
-  String phoneNumber;
+  String email;
+  String phone;
   double area;
+  String contactName;
+  List<Bike> singleBikes;
+  List<Bike> doubleBikes;
+  List<Bike> electricBikes;
 }

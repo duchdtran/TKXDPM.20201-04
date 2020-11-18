@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:ecobike_rental/view/list_station/list_station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/home.dart';
+import '../../provider/home.dart';
+import '../list_station/list_station.dart';
 import '../scanner/scanner.dart';
 import '../station/station.dart';
 import '../widget/app_button.dart';
@@ -17,8 +17,8 @@ class Home extends StatefulWidget {
   Home._({Key key}) : super(key: key);
 
   static Widget withDependency() {
-    return StateNotifierProvider<HomeController, HomeDataSet>(
-      create: (_) => HomeController(),
+    return StateNotifierProvider<HomeProvider, HomeDataSet>(
+      create: (_) => HomeProvider(),
       child: Home._(),
     );
   }
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<HomeController>().initDataSet();
+    context.watch<HomeProvider>().initDataSet();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -155,115 +155,124 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            zoomControlsEnabled: false,
-            mapType: MapType.normal,
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(20.962056, 105.925219),
-              zoom: 15,
-            ),
-            onMapCreated: (controller) {
-              _controller.complete(controller);
-            },
-            onCameraMove: (position) {
-              setState(() {
-                _userTap = true;
-              });
-            },
-            onCameraIdle: () {
-              _userTap = false;
-            },
-          ),
-          Positioned(
-            top: 10,
-            left: 0,
-            right: 0,
-            child: _buildSearchBarWidget(),
-          ),
-          Positioned(
-              bottom: (_userTap | !widget._isRent) ? 20 : 220,
-              right: 10,
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.white,
-                  onPressed: () {},
-                  child: const Icon(
-                    Icons.my_location,
-                    color: Colors.black,
+      body: Selector<HomeDataSet, bool>(
+        builder: (context, data, child) {
+          if (!data) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return Stack(
+              children: [
+                GoogleMap(
+                  zoomControlsEnabled: false,
+                  mapType: MapType.normal,
+                  initialCameraPosition: const CameraPosition(
+                    target: LatLng(20.962056, 105.925219),
+                    zoom: 15,
                   ),
+                  onMapCreated: (controller) {
+                    _controller.complete(controller);
+                  },
+                  onCameraMove: (position) {
+                    setState(() {
+                      _userTap = true;
+                    });
+                  },
+                  onCameraIdle: () {
+                    _userTap = false;
+                  },
                 ),
-              )),
-          Positioned(
-            bottom: 30,
-            left: 0,
-            right: 0,
-            child: Visibility(
-              visible: !(_userTap | !widget._isRent),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'Gần bạn',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const Spacer(),
-                      FlatButton(
+                Positioned(
+                  top: 10,
+                  left: 0,
+                  right: 0,
+                  child: _buildSearchBarWidget(),
+                ),
+                Positioned(
+                    bottom: (_userTap | !widget._isRent) ? 20 : 220,
+                    right: 10,
+                    child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.white,
                         onPressed: () {},
-                        child: const Text(
-                          'Xem thêm',
-                          style: TextStyle(color: Colors.blue),
+                        child: const Icon(
+                          Icons.my_location,
+                          color: Colors.black,
                         ),
                       ),
-                    ],
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 140,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: context
-                          .select((HomeDataSet ds) => ds.listStation.length),
-                      itemBuilder: (context, index) {
-                        return Builder(
-                          builder: (context) {
-                            return InkWell(
-                              onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Station())),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.blue,
-                                ),
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                width: 250,
-                                height: 120,
-                                child: Center(
-                                  child: Text(
-                                      '${context.select((HomeDataSet ds) => ds.listStation[index].stationName)}'),
-                                ),
+                    )),
+                Positioned(
+                  bottom: 30,
+                  left: 0,
+                  right: 0,
+                  child: Visibility(
+                    visible: !(_userTap | !widget._isRent),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Text(
+                              'Gần bạn',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const Spacer(),
+                            FlatButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Xem thêm',
+                                style: TextStyle(color: Colors.blue),
                               ),
-                            );
-                          },
-                        );
-                      },
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 140,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: context.select<HomeDataSet, int>(
+                                (ds) => ds.listStation.length),
+                            itemBuilder: (context, index) {
+                              return Builder(
+                                builder: (context) {
+                                  return InkWell(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Station())),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.blue,
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      width: 250,
+                                      height: 120,
+                                      child: Center(
+                                        child: Text(
+                                            '${context.select<HomeDataSet, String>((ds) => ds.listStation[index].stationName)}'),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
+                  ),
+                ),
+              ],
+            );
+          }
+        },
+        selector: (buildContext, ds) => ds.init,
       ),
       bottomNavigationBar: _buildBottomWidget(),
     );
@@ -303,7 +312,12 @@ class _HomeState extends State<Home> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         InkWell(
-          onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>ListStation())),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListStation(),
+            ),
+          ),
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(

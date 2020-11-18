@@ -7,14 +7,6 @@ import 'home/home.dart';
 import 'widget/gradien_icon.dart';
 
 class CustomDialogBox extends StatefulWidget {
-  const CustomDialogBox(
-      {Key key, this.title, this.descriptions, this.text, this.img})
-      : super(key: key);
-
-  final String title, descriptions, text;
-  final Image img;
-
-
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
 }

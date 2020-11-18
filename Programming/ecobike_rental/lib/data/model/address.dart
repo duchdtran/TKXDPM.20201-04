@@ -1,8 +1,7 @@
-class Address{
-  Address({this.addressID, this.latitude, this.longitude});
+class Address {
+  Address(this.addressId, this.longitude, this.latitude);
 
-  int addressID;
-  double latitude;
+  int addressId;
   double longitude;
-
+  double latitude;
 }

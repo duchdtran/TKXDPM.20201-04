@@ -217,9 +217,6 @@ class _BikeState extends State<Bike> {
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          // decoration: BoxDecoration(
-                          //   border: Border(top: BorderSide(color: Colors.blue), left: BorderSide(color: Colors.blue), right: BorderSide(color: Colors.blue), ),
-                          // ),
                           child: const Center(
                             child: Text('Chi tiết'),
                           ),
@@ -227,9 +224,6 @@ class _BikeState extends State<Bike> {
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          // decoration: BoxDecoration(
-                          //   border: Border(top: BorderSide(color: Colors.blue), left: BorderSide(color: Colors.blue), right: BorderSide(color: Colors.blue), ),
-                          // ),
                           child: const Center(
                             child: Text('Đánh giá'),
                           ),
