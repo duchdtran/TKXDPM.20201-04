@@ -6,12 +6,12 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../payment/payment.dart';
 import '../widget/gradien_icon.dart';
 
-class Bike extends StatefulWidget {
+class BikeScreen extends StatefulWidget {
   @override
-  _BikeState createState() => _BikeState();
+  _BikeScreenState createState() => _BikeScreenState();
 }
 
-class _BikeState extends State<Bike> {
+class _BikeScreenState extends State<BikeScreen> {
   CarouselSlider carouselSlider;
 
   int _current = 0;

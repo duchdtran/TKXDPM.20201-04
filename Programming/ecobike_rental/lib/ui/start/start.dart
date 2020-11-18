@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../home/home.dart';
 import '../widget/app_button.dart';
 
-class Start extends StatelessWidget {
+class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class Start extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Home.withDependency()),
+                      builder: (context) => HomeScreen.withDependency()),
                 );
               },
             ),

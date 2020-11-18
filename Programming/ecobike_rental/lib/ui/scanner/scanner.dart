@@ -6,12 +6,12 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';
 
-class QRScanner extends StatefulWidget {
+class QRScannerScreen extends StatefulWidget {
   @override
-  _QRScannerState createState() => _QRScannerState();
+  _QRScannerScreenState createState() => _QRScannerScreenState();
 }
 
-class _QRScannerState extends State<QRScanner> {
+class _QRScannerScreenState extends State<QRScannerScreen> {
   String qrText = '';
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -134,7 +134,7 @@ class _QRScannerState extends State<QRScanner> {
         qrText = scanData;
         debugPrint('QRCode: $qrText');
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Bike()));
+            context, MaterialPageRoute(builder: (context) => BikeScreen()));
       });
     });
   }
@@ -162,7 +162,7 @@ class _QRScannerState extends State<QRScanner> {
             submit: (pin) {
               debugPrint('Code pin: $pin');
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Bike()));
+                  context, MaterialPageRoute(builder: (context) => BikeScreen()));
               showMaterialModalBottomSheet(
                   context: context,
                   builder: (context, scrollController) => Payment());

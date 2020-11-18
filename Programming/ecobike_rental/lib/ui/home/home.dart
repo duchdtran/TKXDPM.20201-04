@@ -13,23 +13,23 @@ import '../widget/app_button.dart';
 import '../widget/bike_info_item.dart';
 
 // ignore: must_be_immutable
-class Home extends StatefulWidget {
-  Home._({Key key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen._({Key key}) : super(key: key);
 
   static Widget withDependency() {
     return StateNotifierProvider<HomeProvider, HomeDataSet>(
       create: (_) => HomeProvider(),
-      child: Home._(),
+      child: HomeScreen._(),
     );
   }
 
   bool _isRent = true;
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
   bool _userTap = false;
 
   final Completer<GoogleMapController> _controller = Completer();
@@ -241,9 +241,12 @@ class _HomeState extends State<Home> {
                                 builder: (context) {
                                   return InkWell(
                                     onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Station())),
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Station.withDependency(),
+                                      ),
+                                    ),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
@@ -404,7 +407,7 @@ class _HomeState extends State<Home> {
             icon: Icons.qr_code_scanner,
             onPress: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => QRScanner()));
+                  .push(MaterialPageRoute(builder: (context) => QRScannerScreen()));
             },
           ),
         ),

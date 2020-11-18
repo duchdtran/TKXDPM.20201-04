@@ -1,77 +1,106 @@
+import 'package:ecobike_rental/data/model/bike.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/station.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';
 
-class Station extends StatefulWidget {
-  @override
-  _StationState createState() => _StationState();
-}
+class Station extends StatelessWidget {
+  Station._({Key key}) : super(key: key);
 
-class _StationState extends State<Station> {
+  static Widget withDependency() {
+    return StateNotifierProvider<StationProvider, StationDataSet>(
+      create: (_) => StationProvider(1),
+      child: Station._(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    context.watch<StationProvider>().initDataSet();
     return Scaffold(
-      body: DefaultTabController(
-        length: 3,
-        child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  expandedHeight: 150,
-                  floating: false,
-                  pinned: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                      centerTitle: true,
-                      title: const Text('Bãi gửi xe đảo cọ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          )),
-                      background: Image.network(
-                        'https://i.pinimg.com/564x/b1/bc/3a/b1bc3a01ac9b8e70c4f11ef3b0c9cfae.jpg',
-                        fit: BoxFit.fitWidth,
-                      )),
-                ),
-                SliverPersistentHeader(
-                  delegate: _SliverAppBarDelegate(
-                    const TabBar(
-                      labelColor: Colors.black87,
-                      unselectedLabelColor: Colors.grey,
-                      tabs: [
-                        Tab(text: 'Xe đạp đơn'),
-                        Tab(text: 'Xe đạp đôi'),
-                        Tab(text: 'Xe đạp điện'),
-                      ],
-                    ),
-                  ),
-                  pinned: true,
-                ),
-              ];
-            },
-            body: TabBarView(
-              children: [
-                _buildListBikeWidget(),
-                _buildListBikeWidget(),
-                _buildListBikeWidget(),
-              ],
-            )),
+      body: Selector<StationDataSet, bool>(
+        builder: (context, data, child) {
+          if (!data) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return DefaultTabController(
+              length: 3,
+              child: NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) {
+                    return <Widget>[
+                      SliverAppBar(
+                        expandedHeight: 150,
+                        floating: false,
+                        pinned: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                            centerTitle: true,
+                            title: Text(
+                                context.select<StationDataSet, String>(
+                                    (value) => value.station.stationName),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                )),
+                            background: Image.network(
+                              'https://i.pinimg.com/564x/b1/bc/3a/b1bc3a01ac9b8e70c4f11ef3b0c9cfae.jpg',
+                              fit: BoxFit.fitWidth,
+                            )),
+                      ),
+                      SliverPersistentHeader(
+                        delegate: _SliverAppBarDelegate(
+                          TabBar(
+                            labelColor: Colors.black87,
+                            unselectedLabelColor: Colors.grey,
+                            tabs: [
+                              const Tab(text: 'Xe đạp đơn'),
+                              const Tab(text: 'Xe đạp đôi'),
+                              const Tab(text: 'Xe đạp điện'),
+                            ],
+                          ),
+                        ),
+                        pinned: true,
+                      ),
+                    ];
+                  },
+                  body: TabBarView(
+                    children: [
+                      _buildListBikeWidget(context, BikeType.singleBike),
+                      _buildListBikeWidget(context, BikeType.doubleBike),
+                      _buildListBikeWidget(context, BikeType.electricBike),
+                    ],
+                  )),
+            );
+          }
+        },
+        selector: (buildContext, ds) => ds.init,
       ),
     );
   }
 
-  Widget _buildListBikeWidget() {
+  Widget _buildListBikeWidget(BuildContext context, BikeType bikeType) {
+    final listBike = context.watch<StationProvider>().loadListBike(bikeType);
+
     return ListView.builder(
-        itemCount: 10, itemBuilder: (context, index) => _buildBikeItemWidget());
+      itemCount: context.select<StationDataSet, int>(
+          (value) => listBike.length),
+      itemBuilder: (context, index) => Builder(
+        builder: (context) {
+          return _buildBikeItemWidget(context, listBike[index]);
+        },
+      ),
+    );
   }
 
-  Widget _buildBikeItemWidget() {
+  Widget _buildBikeItemWidget(BuildContext context, Bike bike) {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Bike()));
+            context, MaterialPageRoute(builder: (context) => BikeScreen()));
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -79,8 +108,7 @@ class _StationState extends State<Station> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Image.network(
-                'https://salt.tikicdn.com/cache/w444/ts/product/a8/56/fc/74b35562a43d3f40956d3bceff558b32.jpg',
+              child: Image.network(bike.images[0],
                 width: 150,
                 height: 150,
                 fit: BoxFit.fitWidth,
@@ -89,16 +117,16 @@ class _StationState extends State<Station> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Xe đạp thể thao Formix',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Text(
+                  bike.bikeName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  'FORNIX F8 mang đến những trải nghiệm \ntốc độ của bộ truyền động đầy mạnh mẽ',
-                  style: TextStyle(fontSize: 10),
+                Text(
+                  bike.description,
+                  style: const TextStyle(fontSize: 10),
                 ),
                 const SizedBox(
                   height: 5,
@@ -108,11 +136,11 @@ class _StationState extends State<Station> {
                     Column(
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
-                         const Text(
-                          '7.000đ/h',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Text(
+                          '${bike.costHourlyRent}đ/h',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                         const Text(
+                        const Text(
                           'Giá thuê',
                           style: TextStyle(fontSize: 10),
                         ),
@@ -120,8 +148,10 @@ class _StationState extends State<Station> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Bike()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BikeScreen()));
                         showMaterialModalBottomSheet(
                             context: context,
                             builder: (context, scrollController) => Payment());
@@ -143,11 +173,11 @@ class _StationState extends State<Station> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

@@ -80,7 +80,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
           const Spacer(),
           GestureDetector(
             onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => Home.withDependency())),
+                MaterialPageRoute(builder: (context) => HomeScreen.withDependency())),
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
               children: [
