@@ -1,8 +1,8 @@
+import 'package:ecobike_rental/repositories/station.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../data/model/bike.dart';
 import '../data/model/station.dart';
-import '../repository/station.dart';
 
 class StationProvider extends StateNotifier<StationDataSet> with LocatorMixin {
   StationProvider(this._stationId) : super(StationDataSet()) {
@@ -24,19 +24,12 @@ class StationProvider extends StateNotifier<StationDataSet> with LocatorMixin {
   }
 
   List<Bike> loadListBike(BikeType bikeType) {
-    List<Bike> listBike;
-    switch (bikeType) {
-      case BikeType.singleBike:
-        listBike = state.station.singleBikes;
-        break;
-      case BikeType.doubleBike:
-        listBike = state.station.doubleBikes;
-        break;
-      case BikeType.electricBike:
-        listBike = state.station.electricBikes;
-        break;
+    final listBike = <Bike>[];
+    for (var i = 0; i < state.station.bikes.length; i++) {
+      if (state.station.bikes[i].bikeType == bikeType) {
+        listBike.add(state.station.bikes[i]);
+      }
     }
-
     return listBike;
   }
 }

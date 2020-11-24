@@ -1,7 +1,7 @@
+import 'package:ecobike_rental/repositories/home.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../data/model/station.dart';
-import '../repository/home.dart';
 
 class HomeProvider extends StateNotifier<HomeDataSet> with LocatorMixin {
   HomeProvider() : super(HomeDataSet()) {

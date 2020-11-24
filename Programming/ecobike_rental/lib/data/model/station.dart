@@ -1,29 +1,45 @@
-import 'address.dart';
+import 'package:equatable/equatable.dart';
 
-import 'bike.dart';
+import 'models.dart';
 
-class Station {
+const String tableStation =  'station';
+
+class Station extends Equatable{
   Station({
-    this.stationId,
+    this.id,
     this.stationName,
     this.address,
     this.email,
     this.phone,
     this.area,
     this.contactName,
-    this.singleBikes,
-    this.doubleBikes,
-    this.electricBikes,
+    this.bikes,
   });
 
-  int stationId;
+  Station.empty();
+
+  int id;
   String stationName;
   Address address;
   String email;
   String phone;
   double area;
   String contactName;
-  List<Bike> singleBikes;
-  List<Bike> doubleBikes;
-  List<Bike> electricBikes;
+  List<Bike> bikes;
+
+  @override
+  List<Object> get props => [id];
+
+
+  static Station fromJson(Map<String, dynamic> json){
+    return Station.empty()
+      ..id = json['id']
+      ..contactName = json['contact_name']
+      ..area = json['area']
+      ..phone = json['phone']
+      ..address = json['address']?.map(Address.fromJson)
+      ..bikes = json['bikes']?.map(Bike.fromJson)
+      ..email = json['email']
+      ..stationName = json['station_name'];
+  }
 }

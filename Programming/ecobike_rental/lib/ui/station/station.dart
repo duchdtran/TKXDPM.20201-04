@@ -1,21 +1,21 @@
-import 'package:ecobike_rental/data/model/bike.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/model/bike.dart';
 import '../../provider/station.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';
 
 class Station extends StatelessWidget {
-  Station._({Key key}) : super(key: key);
+  const Station._({Key key}) : super(key: key);
 
-  static Widget withDependency() {
+  static Widget withDependency(int stationId) {
     return StateNotifierProvider<StationProvider, StationDataSet>(
-      create: (_) => StationProvider(1),
-      child: Station._(),
+      create: (_) => StationProvider(stationId),
+      child: const Station._(),
     );
   }
 
@@ -53,13 +53,13 @@ class Station extends StatelessWidget {
                       ),
                       SliverPersistentHeader(
                         delegate: _SliverAppBarDelegate(
-                          TabBar(
+                          const TabBar(
                             labelColor: Colors.black87,
                             unselectedLabelColor: Colors.grey,
                             tabs: [
-                              const Tab(text: 'Xe đạp đơn'),
-                              const Tab(text: 'Xe đạp đôi'),
-                              const Tab(text: 'Xe đạp điện'),
+                              Tab(text: 'Xe đạp đơn'),
+                              Tab(text: 'Xe đạp đôi'),
+                              Tab(text: 'Xe đạp điện'),
                             ],
                           ),
                         ),
@@ -86,8 +86,8 @@ class Station extends StatelessWidget {
     final listBike = context.watch<StationProvider>().loadListBike(bikeType);
 
     return ListView.builder(
-      itemCount: context.select<StationDataSet, int>(
-          (value) => listBike.length),
+      itemCount:
+          context.select<StationDataSet, int>((value) => listBike.length),
       itemBuilder: (context, index) => Builder(
         builder: (context) {
           return _buildBikeItemWidget(context, listBike[index]);
@@ -100,7 +100,9 @@ class Station extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BikeScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => BikeScreen.withDependency(bike.id)));
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -108,7 +110,8 @@ class Station extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Image.network(bike.images[0],
+              child: Image.network(
+                bike.images[0],
                 width: 150,
                 height: 150,
                 fit: BoxFit.fitWidth,
@@ -151,7 +154,8 @@ class Station extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BikeScreen()));
+                                builder: (context) =>
+                                    BikeScreen.withDependency(bike.id)));
                         showMaterialModalBottomSheet(
                             context: context,
                             builder: (context, scrollController) => Payment());

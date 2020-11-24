@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            Station.withDependency(),
+                                            Station.withDependency(index),
                                       ),
                                     ),
                                     child: Container(

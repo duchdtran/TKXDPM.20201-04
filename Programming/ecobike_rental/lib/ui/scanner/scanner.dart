@@ -95,10 +95,10 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
             child: GestureDetector(
               onTap: () {
                 showMaterialModalBottomSheet(
-                    context: context,
-                    builder: (context, scrollController) =>
-                        _buildPinCodeWidget(context),);
-
+                  context: context,
+                  builder: (context, scrollController) =>
+                      _buildPinCodeWidget(context),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -134,7 +134,9 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         qrText = scanData;
         debugPrint('QRCode: $qrText');
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BikeScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => BikeScreen.withDependency(1)));
       });
     });
   }
@@ -162,7 +164,11 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
             submit: (pin) {
               debugPrint('Code pin: $pin');
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => BikeScreen()));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BikeScreen.withDependency(1),
+                ),
+              );
               showMaterialModalBottomSheet(
                   context: context,
                   builder: (context, scrollController) => Payment());
