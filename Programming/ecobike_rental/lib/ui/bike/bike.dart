@@ -210,8 +210,9 @@ class BikeScreen extends StatelessWidget {
                                   context: context,
                                   builder: (context, scrollController) =>
                                       PaymentScreen.withDependency(
-                                    context.select<BikeDataSet, int>(
-                                        (value) => value.bike.id),
+                                        2
+                                    // context.select<BikeDataSet, int>(
+                                    //     (value) => value.bike.id),
                                   ),
                                 ),
                                 child: const Center(

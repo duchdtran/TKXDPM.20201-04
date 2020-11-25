@@ -29,9 +29,9 @@ class PaymentScreen extends StatelessWidget {
           ],
         ),
       ),
-      height: 350,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
             icon: const Icon(
@@ -42,17 +42,28 @@ class PaymentScreen extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
-          Wrap(
-            children: List.generate(
-              context.select<PaymentDataSet, int>(
-                  (value) => value.listCard.length),
-              (index) => _buildPaymentMethodWidget(
-                  title: context.select<PaymentDataSet, String>(
-                      (value) => value.listCard[index].paymentMethod),
-                  subTitle: context.select<PaymentDataSet, String>(
-                      (value) => value.listCard[index].cardCode),
-                  method: PaymentMethod.visa),
-            ),
+          Selector<PaymentDataSet, int>(
+            builder: (context, data, child) {
+              return Wrap(
+                children: List.generate(
+                  context.select<PaymentDataSet, int>(
+                      (value) => value.listCard.length),
+                  (index) => InkWell(
+                    onTap: () => context
+                        .read<PaymentProvider>()
+                        .selectPaymentMethod(index),
+                    child: _buildPaymentMethodWidget(
+                      isCheck: data == index,
+                      title: context.select<PaymentDataSet, String>(
+                          (value) => value.listCard[index].paymentMethod),
+                      subTitle: context.select<PaymentDataSet, String>(
+                          (value) => value.listCard[index].cardCode),
+                    ),
+                  ),
+                ),
+              );
+            },
+            selector: (buildContext, ds) => ds.paymentChoose,
           ),
           _buildAddPaymentMethodWidget(context),
           const SizedBox(
@@ -104,9 +115,8 @@ class PaymentScreen extends StatelessWidget {
   Widget _buildPaymentMethodWidget(
       {String title,
       String subTitle,
-      PaymentMethod method,
+      bool isCheck = false,
       Color color = Colors.white}) {
-    var _paymentMethod = PaymentMethod.visa;
     return Column(
       children: [
         Row(
@@ -124,23 +134,18 @@ class PaymentScreen extends StatelessWidget {
                   text: title,
                   style: TextStyle(color: color),
                   children: [
-                    TextSpan(text: '-'),
+                    const TextSpan(text: '-'),
                     TextSpan(text: subTitle),
                   ],
                 ),
               ),
             ),
-            Theme(
-              data: ThemeData(unselectedWidgetColor: color),
-              child: Radio(
-                value: method,
-                groupValue: _paymentMethod,
-                activeColor: color,
-                onChanged: (value) {
-                  _paymentMethod = value;
-                },
-              ),
-            )
+            Icon(
+              isCheck
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              color: Colors.white,
+            ),
           ],
         ),
         Divider(
@@ -206,5 +211,3 @@ class PaymentScreen extends StatelessWidget {
     );
   }
 }
-
-enum PaymentMethod { visa, paypal }
