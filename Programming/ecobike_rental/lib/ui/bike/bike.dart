@@ -131,7 +131,7 @@ class BikeScreen extends StatelessWidget {
                           (index, url) {
                             return Consumer<BikeDataSet>(
                                 builder: (context, data, child) {
-                                  debugPrint(data.indicatorImageBike.toString());
+                              debugPrint(data.indicatorImageBike.toString());
                               return Container(
                                 width: 10,
                                 height: 10,
@@ -171,87 +171,12 @@ class BikeScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey, width: 1),
+                          border: Border.all(color: Colors.black87, width: 1),
                         ),
-                        child: RichText(
-                          text: TextSpan(
-                              text: 'Giá khởi điểm cho 30 phút đầu là ',
-                              style: TextStyle(color: Colors.grey),
-                              children: [
-                                TextSpan(
-                                  text:
-                                      '${context.select<BikeDataSet, int>((value) => value.bike.costStartingRent)}đ',
-                                  style: const TextStyle(color: Colors.blue),
-                                ),
-                                const TextSpan(
-                                  text:
-                                      '. Cứ mỗi 15 phút tiếp theo, bạn sẽ phải trả thêm ',
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                TextSpan(
-                                  text:
-                                      '${context.select<BikeDataSet, int>((value) => value.bike.costHourlyRent)}đ',
-                                  style: const TextStyle(color: Colors.blue),
-                                ),
-                                const TextSpan(
-                                  text: '.',
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ]),
-                        ),
+                        child: _buildRentCost(context),
                       ),
                       const SizedBox(
                         height: 10,
-                      ),
-                      Stack(
-                        children: [
-                          Positioned(
-                            bottom: 0,
-                            child: Container(
-                              height: 1,
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                      top: const BorderSide(color: Colors.blue),
-                                      left:
-                                          const BorderSide(color: Colors.blue),
-                                      right:
-                                          const BorderSide(color: Colors.blue),
-                                      bottom: BorderSide(
-                                          color: Theme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          width: 3)),
-                                ),
-                                child: const Center(
-                                  child: Text('Mô tả'),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                child: const Center(
-                                  child: Text('Chi tiết'),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                child: const Center(
-                                  child: Text('Đánh giá'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
@@ -284,7 +209,10 @@ class BikeScreen extends StatelessWidget {
                                 onTap: () => showMaterialModalBottomSheet(
                                   context: context,
                                   builder: (context, scrollController) =>
-                                      Payment(),
+                                      PaymentScreen.withDependency(
+                                    context.select<BikeDataSet, int>(
+                                        (value) => value.bike.id),
+                                  ),
                                 ),
                                 child: const Center(
                                     child: Text(
@@ -350,6 +278,36 @@ class BikeScreen extends StatelessWidget {
         },
         selector: (buildContext, ds) => ds.init,
       ),
+    );
+  }
+
+  Widget _buildRentCost(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+          text: 'Giá khởi điểm cho 30 phút đầu là ',
+          style: TextStyle(color: Colors.black87),
+          children: [
+            TextSpan(
+              text:
+                  '${context.select<BikeDataSet, int>((value) => value.bike.costStartingRent)}đ',
+              style: const TextStyle(
+                  color: Colors.blue, fontWeight: FontWeight.bold),
+            ),
+            const TextSpan(
+              text: '. Cứ mỗi 15 phút tiếp theo, bạn sẽ phải trả thêm ',
+              style: TextStyle(color: Colors.black87),
+            ),
+            TextSpan(
+              text:
+                  '${context.select<BikeDataSet, int>((value) => value.bike.costHourlyRent)}đ',
+              style: const TextStyle(
+                  color: Colors.blue, fontWeight: FontWeight.bold),
+            ),
+            const TextSpan(
+              text: '.',
+              style: TextStyle(color: Colors.black87),
+            ),
+          ]),
     );
   }
 

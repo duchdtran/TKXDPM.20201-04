@@ -1,11 +1,25 @@
+import 'package:ecobike_rental/provider/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:provider/provider.dart';
 
+import '../add_payment/add_payment.dart';
 import '../dialog.dart';
 
-class Payment extends StatelessWidget {
+class PaymentScreen extends StatelessWidget {
+  PaymentScreen._({Key key}) : super(key: key);
+
+  static Widget withDependency(int bikeId) {
+    return StateNotifierProvider<PaymentProvider, PaymentDataSet>(
+      create: (_) => PaymentProvider(bikeId),
+      child: PaymentScreen._(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    context.watch<PaymentProvider>().initDataSet();
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -28,12 +42,19 @@ class Payment extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
-          _buildPaymentMethodWidget(
-              title: 'Visa - 4321', method: PaymentMethod.visa),
-          _buildPaymentMethodWidget(
-              title: 'Paypal - test123@gmail.com',
-              method: PaymentMethod.paypal),
-          _buildAddPaymentMethodWidget(),
+          Wrap(
+            children: List.generate(
+              context.select<PaymentDataSet, int>(
+                  (value) => value.listCard.length),
+              (index) => _buildPaymentMethodWidget(
+                  title: context.select<PaymentDataSet, String>(
+                      (value) => value.listCard[index].paymentMethod),
+                  subTitle: context.select<PaymentDataSet, String>(
+                      (value) => value.listCard[index].cardCode),
+                  method: PaymentMethod.visa),
+            ),
+          ),
+          _buildAddPaymentMethodWidget(context),
           const SizedBox(
             height: 10,
           ),
@@ -51,9 +72,12 @@ class Payment extends StatelessWidget {
     );
   }
 
-  Widget _buildAddPaymentMethodWidget() {
+  Widget _buildAddPaymentMethodWidget(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AddPayment()));
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
@@ -78,7 +102,10 @@ class Payment extends StatelessWidget {
   }
 
   Widget _buildPaymentMethodWidget(
-      {String title, PaymentMethod method, Color color = Colors.white}) {
+      {String title,
+      String subTitle,
+      PaymentMethod method,
+      Color color = Colors.white}) {
     var _paymentMethod = PaymentMethod.visa;
     return Column(
       children: [
@@ -92,10 +119,17 @@ class Payment extends StatelessWidget {
               width: 10,
             ),
             Expanded(
-                child: Text(
-              title,
-              style: TextStyle(color: color),
-            )),
+              child: RichText(
+                text: TextSpan(
+                  text: title,
+                  style: TextStyle(color: color),
+                  children: [
+                    TextSpan(text: '-'),
+                    TextSpan(text: subTitle),
+                  ],
+                ),
+              ),
+            ),
             Theme(
               data: ThemeData(unselectedWidgetColor: color),
               child: Radio(

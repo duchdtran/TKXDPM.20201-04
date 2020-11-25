@@ -158,7 +158,7 @@ class Station extends StatelessWidget {
                                     BikeScreen.withDependency(bike.id)));
                         showMaterialModalBottomSheet(
                             context: context,
-                            builder: (context, scrollController) => Payment());
+                            builder: (context, scrollController) => PaymentScreen.withDependency(bike.id));
                       },
                       child: Container(
                         decoration: BoxDecoration(

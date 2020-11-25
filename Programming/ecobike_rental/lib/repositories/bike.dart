@@ -1,8 +1,7 @@
-
-import '../data/model/bike.dart';
+import '../data/model/models.dart';
 
 class BikeRepository {
-  Future<Bike> getBike(int bikeId) async{
+  Future<Bike> getBike(int bikeId) async {
     final bike = Bike(
       bikeName: 'Xe đạp thể thao Formix',
       images: [
@@ -20,4 +19,11 @@ class BikeRepository {
     return Future.value(bike);
   }
 
+  Future<List<Card>> getListCard() async {
+    var lCard = <Card>[
+      Card(cardCode: '125445', paymentMethod: 'Visa'),
+      Card(cardCode: '125445', paymentMethod: 'Visa'),
+    ];
+    return Future.value(lCard);
+  }
 }

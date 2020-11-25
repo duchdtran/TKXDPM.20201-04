@@ -1,8 +1,9 @@
-import 'package:ecobike_rental/repositories/bike.dart';
 import 'package:flutter/widgets.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../data/model/bike.dart';
+import '../data/model/models.dart';
+import '../repositories/bike.dart';
 
 class BikeProvider extends StateNotifier<BikeDataSet> with LocatorMixin {
   BikeProvider(this._stationId) : super(BikeDataSet()) {
@@ -18,11 +19,11 @@ class BikeProvider extends StateNotifier<BikeDataSet> with LocatorMixin {
       ..bike = await _mRepository.getBike(
         _stationId,
       )
+      ..listCard = await _mRepository.getListCard()
       ..init = true;
 
     state = newState;
   }
-
 
 }
 
@@ -35,6 +36,7 @@ class BikeDataSet extends ChangeNotifier{
   int indicatorImageBike;
   bool init;
   Bike bike;
+  List<Card> listCard;
 
   void setIndicatorImageBike(int value) {
     indicatorImageBike = value;

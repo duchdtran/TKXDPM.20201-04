@@ -171,7 +171,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               );
               showMaterialModalBottomSheet(
                   context: context,
-                  builder: (context, scrollController) => Payment());
+                  builder: (context, scrollController) => PaymentScreen.withDependency(2));
             },
           ),
         ],
