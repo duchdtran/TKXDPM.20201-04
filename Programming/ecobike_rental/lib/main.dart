@@ -1,9 +1,24 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import './data/database.dart';
+import 'dart:convert';
+
+import 'data/model/station.dart';
 import 'view/start/start.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var station = new Station(
+    stationName: 'Bãi gửi xe đảo cọ',
+    area: 45.6,
+    emailAddress: 'test123@gmail.com',
+    phoneNumber: '0868330147',
+  );
+  await DatabaseImp.insert(station);
+  var stations = await Station.getStations();
+  stations.forEach((element) {
+    debugPrint(element.toMap().toString());
+  });
 }
 
 class MyApp extends StatelessWidget {

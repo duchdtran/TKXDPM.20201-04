@@ -38,14 +38,14 @@ class Invoice extends StatelessWidget {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          margin: const EdgeInsets.only(top: 40),
+          padding: EdgeInsets.all(20),
+          margin: EdgeInsets.only(top: 40),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
-          height: 400,
-          width: 400,
+          width: 350,
+          height: 500,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
