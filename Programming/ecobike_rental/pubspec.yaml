@@ -24,7 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_state_notifier: ^0.6.1
+  http: ^0.12.2
 
+  sqflite: ^1.3.2+1
+  path_provider: ^1.6.24
+  equatable: ^1.2.5
   google_maps_flutter: ^1.0.6
   qr_code_scanner: ^0.0.13
   pin_view: ^1.0.1
@@ -42,6 +46,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   pedantic: ^1.9.2
+  floor_generator: ^0.17.0
+  build_runner: ^1.10.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

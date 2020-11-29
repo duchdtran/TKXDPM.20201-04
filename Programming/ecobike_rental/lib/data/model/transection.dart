@@ -1,13 +1,12 @@
 import 'package:ecobike_rental/data/db/database.dart';
 import 'package:equatable/equatable.dart';
 
-class Address extends Equatable implements Model {
-  static String tableName = "Address";
-  static String key = "address_id";
+class Transection extends Equatable implements Model {
+  static String tableName = "Transection";
+  static String key = "transection_id";
 
-  Address({this.id, this.name, this.longitude, this.latitude});
-
-  Address.empty();
+  Transection({this.id, this.name, this.longitude, this.latitude});
+  Transection.empty();
 
   int id;
   String name;
@@ -17,8 +16,8 @@ class Address extends Equatable implements Model {
   @override
   List<Object> get props => [id];
 
-  static Address fromJson(Map<String, dynamic> json) {
-    return Address.empty()
+  static Transection fromJson(Map<String, dynamic> json) {
+    return Transection.empty()
       ..id = json['id']
       ..latitude = json['latitude']
       ..longitude = json['longitude'];
@@ -27,16 +26,17 @@ class Address extends Equatable implements Model {
   @override
   Map<String, dynamic> toMap() {
     return {
-      Address.key: id,
+      Transection.key: id,
       'address_name': name,
       'longitude': longitude,
       'latitude': latitude
     };
+
   }
 
-  static Address fromMap(Map<String, dynamic> map) {
-    return Address(
-        id: map[Address.key],
+  static Transection fromMap(Map<String, dynamic> map) {
+    return Transection(
+        id: map[Transection.key],
         name: map["address_name"],
         longitude: map["longitude"],
         latitude: map["latitude"]);
@@ -44,6 +44,6 @@ class Address extends Equatable implements Model {
 
   @override
   String getTableName() {
-    return Address.tableName;
+    return Transection.tableName;
   }
 }
