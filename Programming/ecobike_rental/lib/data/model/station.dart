@@ -1,14 +1,11 @@
-import 'package:ecobike_rental/data/db/database.dart';
 import 'package:equatable/equatable.dart';
 
+import '../db/database.dart';
 import 'models.dart';
 
 const String tableStation = 'station';
 
 class Station extends Equatable implements Model {
-  static String tableName = "Station";
-  static String key = "station_id";
-
   Station({
     this.id,
     this.stationName,
@@ -22,6 +19,17 @@ class Station extends Equatable implements Model {
 
   Station.empty();
 
+  Station.fromMap(Map<String, dynamic> map) {
+    id = map[Station.key];
+    stationName = map["station_name"];
+    contactName = map["contact_name"];
+    email = map["email"];
+    phone = map["phone"];
+    area = map["area"];
+  }
+
+  static String tableName = "Station";
+  static String key = "station_id";
   int id;
   String stationName;
   Address address;
@@ -53,7 +61,7 @@ class Station extends Equatable implements Model {
   }
 
   Future save() async {
-    return await DatabaseImp.insert(this);
+    return DatabaseImp.insert(this);
   }
 
   @override
@@ -69,24 +77,14 @@ class Station extends Equatable implements Model {
     };
   }
 
-  static Station fromMap(Map<String, dynamic> map) {
-    return Station(
-        id: map[Station.key],
-        stationName: map["station_name"],
-        contactName: map["contact_name"],
-        email: map["email"],
-        phone: map["phone"],
-        area: map["area"]);
-  }
-
   static Future<List<Station>> getListStation() async {
-    var maps = await DatabaseImp.getModels(Station.tableName);
-    var lists = new List<Station>();
+    final maps = await DatabaseImp.getModels(Station.tableName);
+    final lists = <Station>[];
     for (var i = 0; i < maps.length; i++) {
-      var station = Station.fromMap(maps[i]);
-      var addressMap = await DatabaseImp.getModel(
+      final station = Station.fromMap(maps[i]);
+      final addressMap = await DatabaseImp.getModel(
           Address.tableName, maps[i]["address_id"], Address.key);
-      var address = Address.fromMap(addressMap);
+      final address = Address.fromMap(addressMap);
       station.address = address;
       station.bikes = await Bike.getListBikeInStation(station.id);
       lists.add(station);
@@ -95,12 +93,12 @@ class Station extends Equatable implements Model {
   }
 
   static Future<Station> getStation(int stationId) async {
-    var map =
+    final map =
         await DatabaseImp.getModel(Station.tableName, stationId, Station.key);
-    var station = Station.fromMap(map);
-    var addressMap = await DatabaseImp.getModel(
+    final station = Station.fromMap(map);
+    final addressMap = await DatabaseImp.getModel(
         Address.tableName, map["address_id"], Address.key);
-    var address = Address.fromMap(addressMap);
+    final address = Address.fromMap(addressMap);
     station.address = address;
     station.bikes = await Bike.getListBikeInStation(station.id);
     return station;

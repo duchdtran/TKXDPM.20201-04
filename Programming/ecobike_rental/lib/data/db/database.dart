@@ -1,27 +1,34 @@
 import 'dart:async';
-
-import 'package:ecobike_rental/data/model/address.dart';
-import 'package:ecobike_rental/data/model/station.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import '../model/address.dart';
+import '../model/station.dart';
+
 
 class Model {
-  Map<String, dynamic> toMap() {}
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{};
+  }
 
-  String getTableName() {}
+  String getTableName() {
+    return "";
+  }
 }
 
 class DatabaseImp {
   static Future<Database> connect() async {
-    var addressTableName = Address.tableName;
-    var addressKey = Address.key;
-    var addressTableStr =
-        "CREATE TABLE $addressTableName ($addressKey INTEGER PRIMARY KEY, latitude REAL, longitude REAL)";
-    var stationTableName = Station.tableName;
-    var stationKey = Station.key;
-    var stationTableStr =
-        "CREATE TABLE IF NOT EXISTS $stationTableName ($stationKey INTEGER PRIMARY KEY, stationName TEXT, addressId INTEGER, emailAddress TEXT, phoneNumber TEXT, area REAL)";
+    final addressTableName = Address.tableName;
+    final addressKey = Address.key;
+    final addressTableStr =
+        "CREATE TABLE $addressTableName ($addressKey INTEGER PRIMARY"
+        " KEY, latitude REAL, longitude REAL)";
+    final stationTableName = Station.tableName;
+    final stationKey = Station.key;
+    final stationTableStr =
+        "CREATE TABLE IF NOT EXISTS $stationTableName ($stationKey "
+        "INTEGER PRIMARY KEY, stationName TEXT, addressId INTEGER, "
+        "emailAddress TEXT, phoneNumber TEXT, area REAL)";
     return openDatabase(
       join(await getDatabasesPath(), 'db00.db'),
       onCreate: (db, version) async {
@@ -39,8 +46,8 @@ class DatabaseImp {
   }
 
   static Future delete(int id, String tableName) async {
-    Database db = await connect();
-    int result = await db.delete(
+    final db = await connect();
+    final result = await db.delete(
       tableName,
       where: "id = ?",
       whereArgs: [id],
@@ -49,22 +56,22 @@ class DatabaseImp {
   }
 
   static Future insert(Model model) async {
-    Database db = await connect();
-    int result = await db.insert(model.getTableName(), model.toMap(),
+    final db = await connect();
+    final result = await db.insert(model.getTableName(), model.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     return result;
   }
 
   static Future<List<Map<String, dynamic>>> getModels(String tableName) async {
-    Database db = await connect();
-    final List<Map<String, dynamic>> maps = await db.query(tableName);
+    final db = await connect();
+    final maps = await db.query(tableName);
     return maps;
   }
 
   static Future<Map<String, dynamic>> getModel(
       String tableName, int id, String key) async {
-    Database db = await connect();
-    final List<Map<String, dynamic>> maps =
+    final db = await connect();
+    final maps =
         await db.query(tableName, where: '"$key" = ?', whereArgs: [id]);
     return maps[0];
   }

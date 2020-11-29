@@ -1,13 +1,20 @@
-import 'package:ecobike_rental/data/db/database.dart';
 import 'package:equatable/equatable.dart';
+import '../db/database.dart';
 
 class Transection extends Equatable implements Model {
-  static String tableName = "Transection";
-  static String key = "transection_id";
-
   Transection({this.id, this.name, this.longitude, this.latitude});
+
   Transection.empty();
 
+  Transection.fromMap(Map<String, dynamic> map) {
+    id = map[Transection.key];
+    name = map["address_name"];
+    longitude = map["longitude"];
+    latitude = map["latitude"];
+  }
+
+  static String tableName = "Transection";
+  static String key = "transection_id";
   int id;
   String name;
   double longitude;
@@ -31,15 +38,6 @@ class Transection extends Equatable implements Model {
       'longitude': longitude,
       'latitude': latitude
     };
-
-  }
-
-  static Transection fromMap(Map<String, dynamic> map) {
-    return Transection(
-        id: map[Transection.key],
-        name: map["address_name"],
-        longitude: map["longitude"],
-        latitude: map["latitude"]);
   }
 
   @override

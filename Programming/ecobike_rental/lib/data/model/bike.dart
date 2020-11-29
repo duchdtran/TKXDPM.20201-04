@@ -1,10 +1,8 @@
-import 'package:ecobike_rental/data/db/database.dart';
 import 'package:equatable/equatable.dart';
 
-class Bike extends Equatable implements Model {
-  static String tableName = "Bike";
-  static String key = "bike_id";
+import '../db/database.dart';
 
+class Bike extends Equatable implements Model {
   Bike({
     this.id,
     this.bikeName,
@@ -20,6 +18,19 @@ class Bike extends Equatable implements Model {
 
   Bike.empty();
 
+  Bike.fromMap(Map<String, dynamic> map) {
+    id = map[Bike.tableName];
+    bikeName = map["bike_name"];
+    description = map["description"];
+    costStartingRent = map["starting_rent"];
+    costHourlyRent = map["hourly_rent"];
+    bikeType = map["bike_type"];
+    licensePlates = map["license_plates"];
+    deposits = map["deposits"];
+  }
+
+  static String tableName = "Bike";
+  static String key = "bike_id";
   int id;
   String bikeName;
   String description;
@@ -65,23 +76,12 @@ class Bike extends Equatable implements Model {
   }
 
   static Future<List<Bike>> getListBikeInStation(int stationId) async {
-    var list = new List<Bike>();
+    final list = <Bike>[];
 
     return list;
   }
 
-  static Bike fromMap(Map<String, dynamic> map) {
-    return Bike(
-      id: map[Bike.tableName],
-      bikeName: map["bike_name"],
-      description: map["description"],
-      costStartingRent: map["starting_rent"],
-      costHourlyRent: map["hourly_rent"],
-      bikeType: map["bike_type"],
-      licensePlates: map["license_plates"],
-      deposits: map["deposits"],
-    );
-  }
+
 }
 
 enum BikeType { singleBike, doubleBike, electricBike }

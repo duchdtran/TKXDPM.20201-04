@@ -1,13 +1,23 @@
-import 'package:ecobike_rental/data/db/database.dart';
 import 'package:equatable/equatable.dart';
 
-class Rental extends Equatable implements Model {
-  static String tableName = "Rentals";
-  static String key = "rental_id";
+import '../db/database.dart';
 
+class Rental extends Equatable implements Model {
   Rental({this.id, this.rateContent, this.rateNumber});
 
   Rental.empty();
+
+  Rental.fromMap(Map<String, dynamic> map) {
+    id = map[Rental.key];
+    renterId = map["renter_id"];
+    bikeId = map["bike_id"];
+    cardId = map["card_id"];
+    rateContent = map["rate_content"];
+    rateNumber = map["rate_number"];
+  }
+
+  static String tableName = "Rentals";
+  static String key = "rental_id";
 
   int id;
   int renterId;
@@ -29,17 +39,6 @@ class Rental extends Equatable implements Model {
       'rate_content': rateContent,
       'rate_number': rateNumber
     };
-  }
-
-  static Rental fromMap(Map<String, dynamic> map) {
-    var rental = new Rental.empty();
-    rental.id = map[Rental.key];
-    rental.renterId = map["renter_id"];
-    rental.bikeId = map["bike_id"];
-    rental.cardId = map["card_id"];
-    rental.rateContent = map["rate_content"];
-    rental.rateNumber = map["rate_number"];
-    return rental;
   }
 
   @override

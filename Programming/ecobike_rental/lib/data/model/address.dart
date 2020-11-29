@@ -1,13 +1,21 @@
-import 'package:ecobike_rental/data/db/database.dart';
 import 'package:equatable/equatable.dart';
 
-class Address extends Equatable implements Model {
-  static String tableName = "Address";
-  static String key = "address_id";
+import '../db/database.dart';
 
+class Address extends Equatable implements Model {
   Address({this.id, this.name, this.longitude, this.latitude});
 
   Address.empty();
+
+  Address.fromMap(Map<String, dynamic> map) {
+    id = map[Address.key];
+    name = map["address_name"];
+    longitude = map["longitude"];
+    latitude = map["latitude"];
+  }
+
+  static String tableName = "Address";
+  static String key = "address_id";
 
   int id;
   String name;
@@ -34,13 +42,6 @@ class Address extends Equatable implements Model {
     };
   }
 
-  static Address fromMap(Map<String, dynamic> map) {
-    return Address(
-        id: map[Address.key],
-        name: map["address_name"],
-        longitude: map["longitude"],
-        latitude: map["latitude"]);
-  }
 
   @override
   String getTableName() {

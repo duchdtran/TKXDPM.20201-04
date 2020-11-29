@@ -1,10 +1,7 @@
-import 'package:ecobike_rental/data/db/database.dart';
-import 'package:ecobike_rental/data/model/models.dart';
+import '../db/database.dart';
+import 'models.dart';
 
 class Card implements Model {
-  static String tableName = "Card";
-  static String key = "card_id";
-
   Card({
     this.id,
     this.cardCode,
@@ -16,6 +13,16 @@ class Card implements Model {
 
   Card.empty();
 
+  Card.fromMap(Map<String, dynamic> map) {
+    id = map[Card.key];
+    renderId = map['renter_id'];
+    paymentMethod = map['payment_method'];
+    cvvCode = map['cvv'];
+    dateExpired = map['expiration_date'];
+  }
+
+  static String tableName = "Card";
+  static String key = "card_id";
   int id;
   String paymentMethod;
   String cardCode;
@@ -34,16 +41,6 @@ class Card implements Model {
       'cvv': cvvCode,
       'expiration_date': dateExpired
     };
-  }
-
-  static Card fromMap(Map<String, dynamic> map) {
-    var card = new Card.empty();
-    card.id = map[Card.key];
-    card.renderId = map['renter_id'];
-    card.paymentMethod = map['payment_method'];
-    card.cvvCode = map['cvv'];
-    card.dateExpired = map['expiration_date'];
-    return card;
   }
 
   @override
