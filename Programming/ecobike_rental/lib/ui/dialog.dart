@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home.dart';
-import 'widget/gradien_icon.dart';
+import 'widget/gradient_icon.dart';
 
 class CustomDialogBox extends StatefulWidget {
   @override

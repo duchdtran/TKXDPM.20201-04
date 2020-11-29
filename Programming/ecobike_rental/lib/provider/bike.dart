@@ -1,25 +1,30 @@
 import 'package:flutter/widgets.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../data/model/bike.dart';
-import '../data/model/models.dart';
-import '../repositories/bike.dart';
+import '../model/core/cores.dart';
+import '../model/helper/helpers.dart';
 
+
+///
+///Cung cấp dữ liệu và xử lí logic cho màn hình Bike
+///
 class BikeProvider extends StateNotifier<BikeDataSet> with LocatorMixin {
   BikeProvider(this._stationId) : super(BikeDataSet()) {
-    _mRepository = BikeRepository();
+    _bikeHelper = BikeHelper();
+    _paymentHelper = PaymentHelper();
   }
 
   final int _stationId;
 
-  BikeRepository _mRepository;
+  BikeHelper _bikeHelper;
+  PaymentHelper _paymentHelper;
 
   Future<void> initDataSet() async {
     final newState = BikeDataSet()
-      ..bike = await _mRepository.getBike(
+      ..bike = await _bikeHelper.getBike(
         _stationId,
       )
-      ..listCard = await _mRepository.getListCard()
+      ..listCard = await _paymentHelper.getListCard()
       ..init = true;
 
     state = newState;

@@ -1,8 +1,10 @@
-import 'package:http/http.dart' as http;
+import '../core/cores.dart';
 
-import '../data/model/models.dart';
-
-class PaymentRepository {
+///
+/// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Payment
+///
+class PaymentHelper implements PaymentHelperInterface{
+  @override
   Future<List<Card>> getListCard() async {
     var lCard = <Card>[
       Card(cardCode: '125445', paymentMethod: 'Visa'),
@@ -12,4 +14,8 @@ class PaymentRepository {
     return Future.value(lCard);
   }
 
+}
+
+abstract class PaymentHelperInterface{
+  Future<List<Card>> getListCard();
 }

@@ -1,20 +1,23 @@
+import 'package:ecobike_rental/model/helper/helpers.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../data/model/models.dart';
-import '../repositories/payment.dart';
+import '../model/core/cores.dart';
 
+///
+///Cung cấp dữ liệu và xử lí logic cho màn hình Payment
+///
 class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
   PaymentProvider(this._stationId) : super(PaymentDataSet()) {
-    _mRepository = PaymentRepository();
+    _mPaymentHelper = PaymentHelper();
   }
 
   final int _stationId;
 
-  PaymentRepository _mRepository;
+  PaymentHelper _mPaymentHelper;
 
   Future<void> initDataSet() async {
     final newState = PaymentDataSet()
-      ..listCard = await _mRepository.getListCard()
+      ..listCard = await _mPaymentHelper.getListCard()
       ..paymentChoose = state.paymentChoose
       ..init = true;
 

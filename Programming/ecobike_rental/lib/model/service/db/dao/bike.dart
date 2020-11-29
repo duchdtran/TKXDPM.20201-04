@@ -1,5 +1,6 @@
-import 'package:ecobike_rental/data/model/models.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../../../core/cores.dart';
 
 
 class BikeDao{

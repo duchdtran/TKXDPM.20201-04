@@ -1,18 +1,21 @@
-import 'package:ecobike_rental/repositories/home.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../data/model/station.dart';
+import '../model/core/cores.dart';
+import '../model/helper/helpers.dart';
 
+///
+///Cung cấp dữ liệu và xử lí logic cho màn hình home
+///
 class HomeProvider extends StateNotifier<HomeDataSet> with LocatorMixin {
   HomeProvider() : super(HomeDataSet()) {
-    _mRepository = HomeRepository();
+    _mStationHelper = StationHelper();
   }
 
-  HomeRepository _mRepository;
+  StationHelper _mStationHelper;
 
   Future<void> initDataSet() async {
     final newState = HomeDataSet()
-    ..listStation = await _mRepository.getListStation()
+    ..listStation = await _mStationHelper.getListStation()
     ..init = true;
 
     state = newState;

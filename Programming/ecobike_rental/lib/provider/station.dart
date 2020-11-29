@@ -1,21 +1,23 @@
-import 'package:ecobike_rental/repositories/station.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../data/model/bike.dart';
-import '../data/model/station.dart';
+import '../model/core/cores.dart';
+import '../model/helper/helpers.dart';
 
+///
+///Cung cấp dữ liệu và xử lí logic cho màn hình Station
+///
 class StationProvider extends StateNotifier<StationDataSet> with LocatorMixin {
   StationProvider(this._stationId) : super(StationDataSet()) {
-    _mRepository = StationRepository();
+    _mStationHelper = StationHelper();
   }
 
   final int _stationId;
 
-  StationRepository _mRepository;
+  StationHelper _mStationHelper;
 
   Future<void> initDataSet() async {
     final newState = StationDataSet()
-      ..station = await _mRepository.getStation(
+      ..station = await _mStationHelper.getStation(
         _stationId,
       )
       ..init = true;

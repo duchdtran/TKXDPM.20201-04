@@ -6,4 +6,4 @@ export 'electric_bike.dart';
 export 'renter.dart';
 export 'single_bike.dart';
 export 'station.dart';
-export 'transection.dart';
+export 'transaction.dart';

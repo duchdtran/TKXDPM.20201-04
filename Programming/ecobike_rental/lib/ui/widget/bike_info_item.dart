@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 class BikeInfoItem extends StatelessWidget {
   const BikeInfoItem({@required this.label,@required this.value});

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'models.dart';
+import 'cores.dart';
 
 const String tableStation =  'station';
 

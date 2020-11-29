@@ -1,7 +1,6 @@
-import 'dart:convert';
-
-import 'package:ecobike_rental/data/network/response/process_transaction.dart';
 import 'package:http/http.dart' as http;
+
+import 'response/process_transaction.dart';
 
 class ApiHelper{
   static const  String baseURL = 'http://ecopark-system-api.herokuapp.com';

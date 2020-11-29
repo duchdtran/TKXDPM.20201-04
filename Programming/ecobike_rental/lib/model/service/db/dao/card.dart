@@ -1,6 +1,4 @@
-
-
-import 'package:ecobike_rental/data/model/card.dart';
+import '../../../core/card.dart';
 
 class CardDao{
   static Future<int> saveCard(Card card) async{

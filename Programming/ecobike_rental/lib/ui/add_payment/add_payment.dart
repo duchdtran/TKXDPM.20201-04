@@ -15,7 +15,8 @@ class _AddPaymentState extends State<AddPayment> {
 
   final _formKey = GlobalKey<FormState>();
   bool _saveCard = true;
-  RegExp creditcardRegExp = RegExp('^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})\$');
+  RegExp creditcardRegExp = RegExp(
+      '^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})\$');
   RegExp dueDateRegExp = RegExp('[0-9][0-9]/[0-9][0-9]');
   RegExp cvvRegExp = RegExp('[0-9][0-9][0-9]');
 
@@ -44,11 +45,8 @@ class _AddPaymentState extends State<AddPayment> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  'assets/images/visa.png',
-                  width: 32,
-                  height: 32
-                ),
+                child: Image.asset('assets/images/visa.png',
+                    width: 32, height: 32),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
@@ -56,8 +54,7 @@ class _AddPaymentState extends State<AddPayment> {
                     // ignore: file_names
                     'assets/images/mastercard.png',
                     width: 32,
-                    height: 32
-                ),
+                    height: 32),
               )
             ],
           ),
@@ -72,9 +69,7 @@ class _AddPaymentState extends State<AddPayment> {
                       keyboardType: TextInputType.number,
                       controller: cardNumberController,
                       decoration: const InputDecoration(
-                        hintStyle: TextStyle(
-                            fontSize: 14
-                        ),
+                        hintStyle: TextStyle(fontSize: 14),
                         hintText: 'Số thẻ',
                       ),
                       validator: (value) {
@@ -90,9 +85,7 @@ class _AddPaymentState extends State<AddPayment> {
                     TextFormField(
                       controller: nameController,
                       decoration: const InputDecoration(
-                        hintStyle: TextStyle(
-                          fontSize: 14
-                        ),
+                        hintStyle: TextStyle(fontSize: 14),
                         hintText: 'Họ và tên',
                       ),
                       validator: (value) {
@@ -108,46 +101,40 @@ class _AddPaymentState extends State<AddPayment> {
                     Row(
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                            child: TextFormField(
-                              controller: dueDateController,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    fontSize: 14
-                                ),
-                                hintText: 'Ngày hết hạn (MM/YY)',
-                              ),
-                              validator: (value) {
-                                if (!dueDateRegExp.hasMatch(value)) {
-                                  return 'Ngày hết hạn không hợp lệ';
-                                }
-                                return null;
-                              },
+                            child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                          child: TextFormField(
+                            controller: dueDateController,
+                            decoration: const InputDecoration(
+                              hintStyle: TextStyle(fontSize: 14),
+                              hintText: 'Ngày hết hạn (MM/YY)',
                             ),
-                          )
-                        ),
+                            validator: (value) {
+                              if (!dueDateRegExp.hasMatch(value)) {
+                                return 'Ngày hết hạn không hợp lệ';
+                              }
+                              return null;
+                            },
+                          ),
+                        )),
                         Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                              child: TextFormField(
-                                controller: cvvController,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  hintStyle: TextStyle(
-                                      fontSize: 14
-                                  ),
-                                  hintText: 'CVV',
-                                ),
-                                validator: (value) {
-                                  if (!cvvRegExp.hasMatch(value)) {
-                                    return 'CVV không hợp lệ';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            )
-                        ),
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                          child: TextFormField(
+                            controller: cvvController,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              hintStyle: TextStyle(fontSize: 14),
+                              hintText: 'CVV',
+                            ),
+                            validator: (value) {
+                              if (!cvvRegExp.hasMatch(value)) {
+                                return 'CVV không hợp lệ';
+                              }
+                              return null;
+                            },
+                          ),
+                        )),
                       ],
                     ),
                     const SizedBox(
@@ -156,38 +143,34 @@ class _AddPaymentState extends State<AddPayment> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Lưu thẻ',
-                                style: TextStyle(
-                                  fontSize: 16
+                            flex: 4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Lưu thẻ',
+                                  style: TextStyle(fontSize: 16),
                                 ),
-                              ),
-                              Text(
-                                'Thông tin được mã hoá và lưu trữ an toàn.',
-                                style: TextStyle(
-                                    color: Colors.grey[700]
-                                ),
-                              )
-                            ],
-                          )
-                        ),
+                                Text(
+                                  'Thông tin được mã hoá và lưu trữ an toàn.',
+                                  style: TextStyle(color: Colors.grey[700]),
+                                )
+                              ],
+                            )),
                         Expanded(
                           flex: 1,
-                          child: Switch(value: _saveCard, onChanged: (value) {
-                            setState(() {
-                              _saveCard = value;
-                            });
-                          }),
+                          child: Switch(
+                              value: _saveCard,
+                              onChanged: (value) {
+                                setState(() {
+                                  _saveCard = value;
+                                });
+                              }),
                         )
                       ],
                     ),
                   ],
-                )
-            ),
+                )),
           )
         ],
       ),

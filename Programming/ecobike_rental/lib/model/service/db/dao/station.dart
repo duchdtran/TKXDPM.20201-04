@@ -1,5 +1,4 @@
-
-import 'package:ecobike_rental/data/model/station.dart';
+import '../../../core/station.dart';
 
 class StationDao{
   static Future<int> saveStation(Station station) async{

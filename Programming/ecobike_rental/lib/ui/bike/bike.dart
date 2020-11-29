@@ -6,15 +6,15 @@ import 'package:provider/provider.dart';
 
 import '../../provider/bike.dart';
 import '../payment/payment.dart';
-import '../widget/gradien_icon.dart';
+import '../widget/gradient_icon.dart';
 
 class BikeScreen extends StatelessWidget {
-  BikeScreen._({Key key}) : super(key: key);
+  const BikeScreen._({Key key}) : super(key: key);
 
   static Widget withDependency(int stationId) {
     return StateNotifierProvider<BikeProvider, BikeDataSet>(
       create: (_) => BikeProvider(stationId),
-      child: BikeScreen._(),
+      child: const BikeScreen._(),
     );
   }
 
