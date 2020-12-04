@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 120,
                                       child: Center(
                                         child: Text(
-                                            '${context.select<HomeDataSet, String>((ds) => ds.listStation[index].stationName)}'),
+                                            '${context.select<HomeDataSet, String>((ds) => ds.listStation[index].contactName)}'),
                                       ),
                                     ),
                                   );
@@ -406,8 +406,8 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Quét mã để thuê xe',
             icon: Icons.qr_code_scanner,
             onPress: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => QRScannerScreen()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => QRScannerScreen()));
             },
           ),
         ),

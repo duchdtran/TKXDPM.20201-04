@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Bike extends Equatable{
-
-
+class Bike extends Equatable {
   Bike({
     this.id,
     this.bikeName,
@@ -32,15 +30,15 @@ class Bike extends Equatable{
   @override
   List<Object> get props => [id];
 
-  static Bike fromJson(Map<String, dynamic> json){
+  static Bike fromJson(Map<String, dynamic> json) {
     return Bike.empty()
-        ..bikeName = json['']
-        ..bikeType = json['']
-        ..bikeName = json['']
-        ..bikeName = json['']
-        ..bikeName = json['']
-        ..bikeName = json['']
-        ..bikeName = json[''];
+      ..bikeName = json['']
+      ..bikeType = json['']
+      ..bikeName = json['']
+      ..bikeName = json['']
+      ..bikeName = json['']
+      ..bikeName = json['']
+      ..bikeName = json[''];
   }
 }
 

@@ -1,20 +1,21 @@
-import 'package:equatable/equatable.dart';
+class Address {
+  String addressName;
+  int longitude;
+  int latitude;
 
-class Address extends Equatable{
-  Address(this.id, this.longitude, this.latitude);
-  Address.empty();
+  Address({this.addressName, this.longitude, this.latitude});
 
-  int id;
-  double longitude;
-  double latitude;
+  Address.fromJson(Map<String, dynamic> json) {
+    addressName = json['addressName'];
+    longitude = json['longitude'];
+    latitude = json['latitude'];
+  }
 
-  @override
-  List<Object> get props => [id];
-
-  static Address fromJson(Map<String, dynamic> json){
-    return Address.empty()
-        ..id = json['id']
-        ..latitude = json['latitude']
-        ..longitude = json['longitude'];
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['addressName'] = this.addressName;
+    data['longitude'] = this.longitude;
+    data['latitude'] = this.latitude;
+    return data;
   }
 }

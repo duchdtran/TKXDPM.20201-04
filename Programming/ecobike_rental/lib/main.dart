@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: const Color(0xFF0087EE),
-        accentColor:  const Color(0xFF03DA91),
+        accentColor: const Color(0xFF03DA91),
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -23,4 +23,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
