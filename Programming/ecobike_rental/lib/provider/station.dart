@@ -25,7 +25,7 @@ class StationProvider extends StateNotifier<StationDataSet> with LocatorMixin {
     state = newState;
   }
 
-  List<Bike> loadListBike(BikeType bikeType) {
+  List<Bike> loadListBike(int bikeType) {
     final listBike = <Bike>[];
     for (var i = 0; i < state.station.bikes.length; i++) {
       if (state.station.bikes[i].bikeType == bikeType) {

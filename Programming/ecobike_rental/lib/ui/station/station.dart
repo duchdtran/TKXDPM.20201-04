@@ -9,13 +9,13 @@ import '../../provider/station.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';
 
-class Station extends StatelessWidget {
-  const Station._({Key key}) : super(key: key);
+class StationScreen extends StatelessWidget {
+  const StationScreen._({Key key}) : super(key: key);
 
   static Widget withDependency(int stationId) {
     return StateNotifierProvider<StationProvider, StationDataSet>(
       create: (_) => StationProvider(stationId),
-      child: const Station._(),
+      child: const StationScreen._(),
     );
   }
 
@@ -69,9 +69,9 @@ class Station extends StatelessWidget {
                   },
                   body: TabBarView(
                     children: [
-                      _buildListBikeWidget(context, BikeType.singleBike),
-                      _buildListBikeWidget(context, BikeType.doubleBike),
-                      _buildListBikeWidget(context, BikeType.electricBike),
+                      _buildListBikeWidget(context, 1),
+                      _buildListBikeWidget(context, 2),
+                      _buildListBikeWidget(context, 3),
                     ],
                   )),
             );
@@ -82,7 +82,7 @@ class Station extends StatelessWidget {
     );
   }
 
-  Widget _buildListBikeWidget(BuildContext context, BikeType bikeType) {
+  Widget _buildListBikeWidget(BuildContext context, int bikeType) {
     final listBike = context.watch<StationProvider>().loadListBike(bikeType);
 
     return ListView.builder(
@@ -111,7 +111,8 @@ class Station extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Image.network(
-                bike.images[0],
+                //bike.images[0] ??
+                'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                 width: 150,
                 height: 150,
                 fit: BoxFit.fitWidth,
@@ -158,7 +159,8 @@ class Station extends StatelessWidget {
                                     BikeScreen.withDependency(bike.id)));
                         showMaterialModalBottomSheet(
                             context: context,
-                            builder: (context, scrollController) => PaymentScreen.withDependency(bike.id));
+                            builder: (context, scrollController) =>
+                                PaymentScreen.withDependency(bike.id));
                       },
                       child: Container(
                         decoration: BoxDecoration(

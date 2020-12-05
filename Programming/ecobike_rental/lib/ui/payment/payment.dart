@@ -1,9 +1,9 @@
-import 'package:ecobike_rental/provider/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/payment.dart';
 import '../add_payment/add_payment.dart';
 import '../dialog.dart';
 

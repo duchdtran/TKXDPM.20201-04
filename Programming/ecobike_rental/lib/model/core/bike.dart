@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class Bike extends Equatable {
+abstract class Bike {
   Bike({
     this.id,
     this.bikeName,
@@ -12,6 +10,7 @@ class Bike extends Equatable {
     this.bikeType,
     this.licensePlates,
     this.deposits,
+    this.isRented,
   });
 
   Bike.empty();
@@ -23,23 +22,8 @@ class Bike extends Equatable {
   List<String> images;
   int costStartingRent;
   int costHourlyRent;
-  BikeType bikeType;
+  int bikeType;
   String licensePlates;
   int deposits;
-
-  @override
-  List<Object> get props => [id];
-
-  static Bike fromJson(Map<String, dynamic> json) {
-    return Bike.empty()
-      ..bikeName = json['']
-      ..bikeType = json['']
-      ..bikeName = json['']
-      ..bikeName = json['']
-      ..bikeName = json['']
-      ..bikeName = json['']
-      ..bikeName = json[''];
-  }
+  bool isRented;
 }
-
-enum BikeType { singleBike, doubleBike, electricBike }

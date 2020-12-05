@@ -7,11 +7,11 @@ import '../model/core/cores.dart';
 ///Cung cấp dữ liệu và xử lí logic cho màn hình Payment
 ///
 class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
-  PaymentProvider(this._stationId) : super(PaymentDataSet()) {
+  PaymentProvider(this._bikeId) : super(PaymentDataSet()) {
     _mPaymentHelper = PaymentHelper();
   }
 
-  final int _stationId;
+  final int _bikeId;
 
   PaymentHelper _mPaymentHelper;
 

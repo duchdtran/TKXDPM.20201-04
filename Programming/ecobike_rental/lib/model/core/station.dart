@@ -1,10 +1,8 @@
-import 'package:equatable/equatable.dart';
-
 import 'cores.dart';
 
 const String tableStation = 'station';
 
-class Station extends Equatable {
+class Station {
   Station({
     this.id,
     this.stationName,
@@ -23,22 +21,7 @@ class Station extends Equatable {
   Address address;
   String email;
   String phone;
-  int area;
+  double area;
   String contactName;
   List<Bike> bikes;
-
-  @override
-  List<Object> get props => [id];
-
-  static Station fromJson(Map<String, dynamic> json) {
-    return Station.empty()
-      ..contactName = json['contactName']
-      ..email = json['email']
-      ..phone = json['phone']
-      ..area = json['area']
-      ..stationName = json['stationName'];
-    //..address = json['address']?.map(Address.fromJson);
-    //..bikes = json['bikes']?.map(Bike.fromJson)
-    //;
-  }
 }

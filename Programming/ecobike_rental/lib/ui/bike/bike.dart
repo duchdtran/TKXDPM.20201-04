@@ -9,12 +9,18 @@ import '../payment/payment.dart';
 import '../widget/gradient_icon.dart';
 
 class BikeScreen extends StatelessWidget {
-  const BikeScreen._({Key key}) : super(key: key);
+  BikeScreen._({Key key}) : super(key: key);
 
-  static Widget withDependency(int stationId) {
+  final List<String> _imgs = [
+    'https://salt.tikicdn.com/cache/w444/ts/product/d1/d4/37/05a926017eb58f6a75d7b55210b93f03.jpg',
+    'https://vcdn.tikicdn.com/cache/w444/ts/review/33/42/8c/9989d35ed67c29711c1295591bd66ca8.jpg',
+    'https://vcdn.tikicdn.com/cache/w444/ts/review/d3/28/f3/074cb370ab01c64102ad0ddce1c7d885.jpg',
+  ];
+
+  static Widget withDependency(int bikeId) {
     return StateNotifierProvider<BikeProvider, BikeDataSet>(
-      create: (_) => BikeProvider(stationId),
-      child: const BikeScreen._(),
+      create: (_) => BikeProvider(bikeId),
+      child: BikeScreen._(),
     );
   }
 
@@ -98,10 +104,11 @@ class BikeScreen extends StatelessWidget {
                           Provider.of<BikeDataSet>(context, listen: false)
                               .setIndicatorImageBike(index);
                         },
-                        items: context
-                            .select<BikeDataSet, List<String>>(
-                                (value) => value.bike.images)
-                            .map((imgUrl) {
+                        items:
+                            // context
+                            // .select<BikeDataSet, List<String>>(
+                            //     (value) => value.bike.images)
+                            _imgs.map((imgUrl) {
                           return Builder(
                             builder: (context) {
                               return Container(
@@ -123,37 +130,37 @@ class BikeScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: map<Widget>(
-                          context.select<BikeDataSet, List<String>>(
-                              (value) => value.bike.images),
-                          (index, url) {
-                            return Consumer<BikeDataSet>(
-                                builder: (context, data, child) {
-                              debugPrint(data.indicatorImageBike.toString());
-                              return Container(
-                                width: 10,
-                                height: 10,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 2),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: data.indicatorImageBike == index
-                                        ? Colors.blue
-                                        : Colors.grey,
-                                    width: 1,
-                                  ),
-                                  color: data.indicatorImageBike == index
-                                      ? Colors.blue
-                                      : Colors.transparent,
-                                ),
-                              );
-                            });
-                          },
-                        ),
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: map<Widget>(
+                      //     context.select<BikeDataSet, List<String>>(
+                      //         (value) => value.bike.images),
+                      //     (index, url) {
+                      //       return Consumer<BikeDataSet>(
+                      //           builder: (context, data, child) {
+                      //         debugPrint(data.indicatorImageBike.toString());
+                      //         return Container(
+                      //           width: 10,
+                      //           height: 10,
+                      //           margin: const EdgeInsets.symmetric(
+                      //               vertical: 10, horizontal: 2),
+                      //           decoration: BoxDecoration(
+                      //             shape: BoxShape.circle,
+                      //             border: Border.all(
+                      //               color: data.indicatorImageBike == index
+                      //                   ? Colors.blue
+                      //                   : Colors.grey,
+                      //               width: 1,
+                      //             ),
+                      //             color: data.indicatorImageBike == index
+                      //                 ? Colors.blue
+                      //                 : Colors.transparent,
+                      //           ),
+                      //         );
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -209,11 +216,10 @@ class BikeScreen extends StatelessWidget {
                                 onTap: () => showMaterialModalBottomSheet(
                                   context: context,
                                   builder: (context, scrollController) =>
-                                      PaymentScreen.withDependency(
-                                        2
-                                    // context.select<BikeDataSet, int>(
-                                    //     (value) => value.bike.id),
-                                  ),
+                                      PaymentScreen.withDependency(1
+                                          // context.select<BikeDataSet, int>(
+                                          //     (value) => value.bike.id),
+                                          ),
                                 ),
                                 child: const Center(
                                     child: Text(

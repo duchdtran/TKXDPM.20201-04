@@ -5,8 +5,10 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/core/station.dart';
 import '../../provider/home.dart';
 import '../list_station/list_station.dart';
+import '../loading/loading.dart';
 import '../scanner/scanner.dart';
 import '../station/station.dart';
 import '../widget/app_button.dart';
@@ -37,130 +39,54 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     context.watch<HomeProvider>().initDataSet();
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Ecobike Rental',
-          style: TextStyle(color: Colors.blue),
-        ),
-        leading: const Icon(
-          Icons.menu,
-          color: Colors.black,
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Colors.black,
-            ),
-            onPressed: () {},
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                widget._isRent = !widget._isRent;
-              });
-            },
-            icon: const Icon(
-              Icons.person,
-              color: Colors.black,
-            ),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(widget._isRent ? 0 : 280),
-          child: Visibility(
-            visible: !widget._isRent,
-            child: Container(
-              width: double.infinity,
-              child: Column(
-                children: [
-                  const Divider(
-                    height: 3,
+
+    final listStation =
+        context.select<HomeDataSet, List<Station>>((ds) => ds.listStation);
+    return Selector<HomeDataSet, bool>(
+      builder: (context, data, child) {
+        if (!data) {
+          return Center(child: LoadingScreen());
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              title: const Text(
+                'Ecobike Rental',
+                style: TextStyle(color: Colors.blue),
+              ),
+              leading: const Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.notifications_none,
+                    color: Colors.black,
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 170,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 20,
-                          left: 30,
-                          child: _buildContainer(
-                              'Phí thuê', '15.000/h', Colors.yellow),
-                        ),
-                        Positioned(
-                          top: 20,
-                          right: 30,
-                          child: _buildContainer(
-                              'Tổng tiền', '123.000đ', Colors.greenAccent),
-                        ),
-                        Positioned(
-                          top: 40,
-                          left: 0,
-                          right: 0,
-                          child: _buildContainer(
-                              'Thời gian', "1h 45' 27\"", Colors.blue),
-                        ),
-                      ],
-                    ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      widget._isRent = !widget._isRent;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.black,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        const Text('Thông tin xe'),
-                        const Text(
-                          'Hướng dẫn trả xe',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      const BikeInfoItem(
-                        label: 'Biển số xe',
-                        value: '34M6-9863',
-                      ),
-                      const BikeInfoItem(
-                        label: 'Lượng pin',
-                        value: '37%',
-                      ),
-                      const BikeInfoItem(
-                        label: 'Thời gian còn lại',
-                        value: '37 phút',
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.keyboard_arrow_up),
-                    onPressed: () {
-                      setState(() {
-                        widget._isRent = !widget._isRent;
-                      });
-                    },
-                  ),
-                ],
+                ),
+              ],
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(widget._isRent ? 0 : 280),
+                child: Visibility(
+                  visible: !widget._isRent,
+                  child: _buildRentBike(),
+                ),
               ),
             ),
-          ),
-        ),
-      ),
-      body: Selector<HomeDataSet, bool>(
-        builder: (context, data, child) {
-          if (!data) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return Stack(
+            body: Stack(
               children: [
                 GoogleMap(
                   zoomControlsEnabled: false,
@@ -234,8 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 140,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: context.select<HomeDataSet, int>(
-                                (ds) => ds.listStation.length),
+                            itemCount: listStation.length,
                             itemBuilder: (context, index) {
                               return Builder(
                                 builder: (context) {
@@ -244,7 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            Station.withDependency(index),
+                                            StationScreen.withDependency(
+                                          listStation[index].id,
+                                        ),
                                       ),
                                     ),
                                     child: Container(
@@ -258,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 120,
                                       child: Center(
                                         child: Text(
-                                            '${context.select<HomeDataSet, String>((ds) => ds.listStation[index].contactName)}'),
+                                            '${listStation[index].contactName}'),
                                       ),
                                     ),
                                   );
@@ -272,12 +199,94 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
-            );
-          }
-        },
-        selector: (buildContext, ds) => ds.init,
+            ),
+            bottomNavigationBar: _buildBottomWidget(),
+          );
+        }
+      },
+      selector: (buildContext, ds) => ds.init,
+    );
+  }
+
+  Container _buildRentBike() {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: [
+          const Divider(
+            height: 3,
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 170,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 20,
+                  left: 30,
+                  child: _buildContainer('Phí thuê', '15.000/h', Colors.yellow),
+                ),
+                Positioned(
+                  top: 20,
+                  right: 30,
+                  child: _buildContainer(
+                      'Tổng tiền', '123.000đ', Colors.greenAccent),
+                ),
+                Positioned(
+                  top: 40,
+                  left: 0,
+                  right: 0,
+                  child:
+                      _buildContainer('Thời gian', "1h 45' 27\"", Colors.blue),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                const Text('Thông tin xe'),
+                const Text(
+                  'Hướng dẫn trả xe',
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const BikeInfoItem(
+                label: 'Biển số xe',
+                value: '34M6-9863',
+              ),
+              const BikeInfoItem(
+                label: 'Lượng pin',
+                value: '37%',
+              ),
+              const BikeInfoItem(
+                label: 'Thời gian còn lại',
+                value: '37 phút',
+              ),
+            ],
+          ),
+          IconButton(
+            icon: const Icon(Icons.keyboard_arrow_up),
+            onPressed: () {
+              setState(() {
+                widget._isRent = !widget._isRent;
+              });
+            },
+          ),
+        ],
       ),
-      bottomNavigationBar: _buildBottomWidget(),
     );
   }
 

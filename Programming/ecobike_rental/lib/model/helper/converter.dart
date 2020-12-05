@@ -1,13 +1,18 @@
 import '../core/cores.dart';
-import '../service/network/response/station.dart';
+import '../service/network/response/responses.dart';
 
 class Converter {
   static Station convertStationResponse(StationResponse response) {
+    final bikes = <Bike>[];
+    response.listBike
+        .forEach((element) => bikes.add(convertBikeResponse(element)));
     return Station(
       address: convertAddressResponse(response.address),
       area: response.area,
       contactName: response.contactName,
-      //bikes: response.listBike);
+      bikes: bikes,
+      id: response.stationId,
+      stationName: response.stationName,
       email: response.email,
       phone: response.phone,
     );
@@ -19,5 +24,55 @@ class Converter {
       latitude: response.latitude,
       longitude: response.longitude,
     );
+  }
+
+  static Bike convertBikeResponse(BikeResponse response) {
+    Bike bike;
+    switch (response.type) {
+      case 1:
+        bike = SingleBike(
+          bikeName: response.bikeName,
+          costHourlyRent: response.hourlyRent,
+          costStartingRent: response.startingRent,
+          deposits: response.deposit,
+          description: response.description,
+          id: response.bikeId,
+          isRented: response.rentals == '',
+          //images: [response.image],
+          bikeType: response.type,
+          licensePlates: response.licensePlates,
+        );
+        break;
+      case 2:
+        bike = DoubleBike(
+          bikeName: response.bikeName,
+          costHourlyRent: response.hourlyRent,
+          costStartingRent: response.startingRent,
+          deposits: response.deposit,
+          description: response.description,
+          id: response.bikeId,
+          isRented: response.rentals == '',
+          //images: [response.image],
+          bikeType: response.type,
+          licensePlates: response.licensePlates,
+        );
+        break;
+      case 3:
+        bike = ElectricBike(
+          batteryCapacity: response.batterCapacity,
+          powerDrain: response.powerDrain, bikeName: response.bikeName,
+          costHourlyRent: response.hourlyRent,
+          costStartingRent: response.startingRent,
+          deposits: response.deposit,
+          description: response.description,
+          isRented: response.rentals == '',
+          id: response.bikeId,
+          //images: [response.image],
+          bikeType: response.type,
+          licensePlates: response.licensePlates,
+        );
+        break;
+    }
+    return bike;
   }
 }
