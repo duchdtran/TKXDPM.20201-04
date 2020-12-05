@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_.19.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p=".gitignore" t="Include" />
+      <e p="ApplicationDbContext.cs" t="Include" />
+      <e p="Controllers" t="Include">
+        <e p="EcoBikeRentalController.cs" t="Include" />
+      </e>
+      <e p="Migrations" t="Include">
+        <e p="20201202105328_First.Designer.cs" t="Include" />
+        <e p="20201202105328_First.cs" t="Include" />
+        <e p="20201202110132_Second.Designer.cs" t="Include" />
+        <e p="20201202110132_Second.cs" t="Include" />
+        <e p="20201203093153_Third.Designer.cs" t="Include" />
+        <e p="20201203093153_Third.cs" t="Include" />
+        <e p="20201203093352_Fourth.Designer.cs" t="Include" />
+        <e p="20201203093352_Fourth.cs" t="Include" />
+        <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
+      </e>
+      <e p="Model" t="Include">
+        <e p="Address.cs" t="Include" />
+        <e p="Bike.cs" t="Include" />
+        <e p="BikeInStation.cs" t="Include" />
+        <e p="Card.cs" t="Include" />
+        <e p="Rental.cs" t="Include" />
+        <e p="Renter.cs" t="Include" />
+        <e p="Station.cs" t="Include" />
+        <e p="Transaction.cs" t="Include" />
+      </e>
+      <e p="Program.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="launchSettings.json" t="Include" />
+      </e>
+      <e p="Startup.cs" t="Include" />
+      <e p="TKXDPM_API.csproj" t="IncludeRecursive" />
+      <e p="Test.cs" t="Include" />
+      <e p="appsettings.Development.json" t="Include" />
+      <e p="appsettings.json" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp3.1" t="Include">
+            <e p="TKXDPM_API.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
