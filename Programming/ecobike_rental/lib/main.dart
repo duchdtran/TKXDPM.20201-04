@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+<<<<<<< HEAD
 import 'view/start/start.dart';
 import 'controller/list_station.dart';
 
+=======
+import 'ui/start/start.dart';
+>>>>>>> 297ef02e597f3bce87d9701601047650b2582212
 
 void main() {
   runApp(MyApp());
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Start(),
+      home: StartScreen(),
     );
   }
 }
