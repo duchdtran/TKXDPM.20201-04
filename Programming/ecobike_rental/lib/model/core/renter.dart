@@ -1,4 +1,4 @@
-import 'card.dart';
+import 'cores.dart';
 
 class Renter {
   int id;

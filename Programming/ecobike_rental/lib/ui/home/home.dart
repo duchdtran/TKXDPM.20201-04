@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
     );
   }
 
-  bool _isRent = true;
+  bool _isRented = true;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      widget._isRent = !widget._isRent;
+                      widget._isRented = !widget._isRented;
                     });
                   },
                   icon: const Icon(
@@ -79,9 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
               bottom: PreferredSize(
-                preferredSize: Size.fromHeight(widget._isRent ? 0 : 280),
+                preferredSize: Size.fromHeight(widget._isRented ? 0 : 280),
                 child: Visibility(
-                  visible: !widget._isRent,
+                  visible: !widget._isRented,
                   child: _buildRentBike(),
                 ),
               ),
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: _buildSearchBarWidget(),
                 ),
                 Positioned(
-                    bottom: (_userTap | !widget._isRent) ? 20 : 220,
+                    bottom: (_userTap | !widget._isRented) ? 20 : 220,
                     right: 10,
                     child: SizedBox(
                       width: 40,
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 0,
                   right: 0,
                   child: Visibility(
-                    visible: !(_userTap | !widget._isRent),
+                    visible: !(_userTap | !widget._isRented),
                     child: Column(
                       children: [
                         Row(
@@ -281,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.keyboard_arrow_up),
             onPressed: () {
               setState(() {
-                widget._isRent = !widget._isRent;
+                widget._isRented = !widget._isRented;
               });
             },
           ),

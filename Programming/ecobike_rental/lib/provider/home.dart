@@ -15,19 +15,22 @@ class HomeProvider extends StateNotifier<HomeDataSet> with LocatorMixin {
 
   Future<void> initDataSet() async {
     final newState = HomeDataSet()
-    ..listStation = await _mStationHelper.getListStation()
-    ..init = true;
+      ..listStation = await _mStationHelper.getListStation()
+      ..init = true;
 
     state = newState;
-
   }
+
+  Future<void> getRentalInfo() async {}
 }
 
 class HomeDataSet {
   HomeDataSet() {
     init = false;
+    isRented = false;
   }
 
   bool init;
+  bool isRented;
   List<Station> listStation;
 }
