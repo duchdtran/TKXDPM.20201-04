@@ -8,16 +8,18 @@ import '../model/helper/helpers.dart';
 ///
 class HomeProvider extends StateNotifier<HomeDataSet> with LocatorMixin {
   HomeProvider() : super(HomeDataSet()) {
-    _mStationHelper = StationHelper();
+    _stationHelper = StationHelper();
+    _rentalHelper = RentalHelper();
   }
 
-  StationHelper _mStationHelper;
+  StationHelper _stationHelper;
+  RentalHelper _rentalHelper;
 
   Future<void> initDataSet() async {
     final newState = HomeDataSet()
-      ..listStation = await _mStationHelper.getListStation()
+      ..rental = await _rentalHelper.getRentalInfo()
+      ..listStation = await _stationHelper.getListStation()
       ..init = true;
-
     state = newState;
   }
 
@@ -27,10 +29,9 @@ class HomeProvider extends StateNotifier<HomeDataSet> with LocatorMixin {
 class HomeDataSet {
   HomeDataSet() {
     init = false;
-    isRented = false;
   }
 
   bool init;
-  bool isRented;
+  Rental rental;
   List<Station> listStation;
 }

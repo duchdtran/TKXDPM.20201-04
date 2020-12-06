@@ -9,9 +9,9 @@ class BikeHelper implements BikeHelperInterface {
   BikeApi api = BikeApi();
   @override
   Future<Bike> getBike(int bikeId) async {
-    final bike = await api.getBike(bikeId);
+    final response = await api.getBike(bikeId);
 
-    return Future.value(Converter.convertBikeResponse(bike));
+    return Future.value(Converter.convertBikeResponse(response));
   }
 
   @override

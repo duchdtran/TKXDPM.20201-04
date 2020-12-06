@@ -40,6 +40,6 @@ class PaymentDataSet {
   }
 
   bool init;
-  List<Card> listCard;
+  List<CardInfo> listCard;
   int paymentChoose;
 }

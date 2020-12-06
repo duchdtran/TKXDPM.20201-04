@@ -1,5 +1,5 @@
-class Card {
-  Card({
+class CardInfo {
+  CardInfo({
     this.cardCode,
     this.owner,
     this.cvvCode,

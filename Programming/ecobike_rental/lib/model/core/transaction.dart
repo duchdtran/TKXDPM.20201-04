@@ -1,7 +1,15 @@
 class Transaction {
+  Transaction({
+    this.actualEndDateTime,
+    this.actualStartDateTime,
+    this.bookedEndDateTime,
+    this.bookedStartDateTime,
+    this.paymentStutus,
+  });
+
   bool paymentStutus;
-  DateTime bookedStartDateTime;
-  DateTime bookedEndDateTime;
-  DateTime actualStartDateTime;
-  DateTime actualEndDateTime;
+  String bookedStartDateTime;
+  String bookedEndDateTime;
+  String actualStartDateTime;
+  String actualEndDateTime;
 }

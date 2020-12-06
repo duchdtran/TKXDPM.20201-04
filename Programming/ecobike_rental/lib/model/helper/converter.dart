@@ -75,4 +75,21 @@ class Converter {
     }
     return bike;
   }
+
+  static Transaction convertTransactionResponse(TransactionResponse response) {
+    return Transaction(
+      actualEndDateTime: response.actualEndDateTime,
+      actualStartDateTime: response.actualStartDateTime,
+      bookedEndDateTime: response.bookedEndDateTime,
+      bookedStartDateTime: response.bookedStartDateTime,
+      paymentStutus: response.paymentStatus,
+    );
+  }
+
+  static Rental convertRentalResponse(RentalResponse response) {
+    return Rental(
+      rentedBike: convertBikeResponse(response.bike),
+      transactionInfo: convertTransactionResponse(response.transaction),
+    );
+  }
 }

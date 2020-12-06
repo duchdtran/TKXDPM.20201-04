@@ -9,18 +9,18 @@ class StationHelper {
   final api = StattionApi();
 
   Future<List<Station>> getListStation() async {
-    var result = List<Station>();
-    final ListStation = await api.getListStation();
-    ListStation.forEach(
+    final response = <Station>[];
+    final listStation = await api.getListStation();
+    listStation.forEach(
       (element) {
-        result.add(Converter.convertStationResponse(element));
+        response.add(Converter.convertStationResponse(element));
       },
     );
-    return Future.value(result);
+    return Future.value(response);
   }
 
   Future<Station> getStation(int stationId) async {
-    final station = await api.getStation(stationId);
-    return Future.value(Converter.convertStationResponse(station));
+    final response = await api.getStation(stationId);
+    return Future.value(Converter.convertStationResponse(response));
   }
 }

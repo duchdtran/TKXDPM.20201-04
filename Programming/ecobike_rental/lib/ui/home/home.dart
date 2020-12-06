@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/model/core/cores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,14 +26,13 @@ class HomeScreen extends StatefulWidget {
     );
   }
 
-  bool _isRented = true;
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _userTap = false;
+  bool _isRented = false;
 
   final Completer<GoogleMapController> _controller = Completer();
 
@@ -40,13 +40,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     context.watch<HomeProvider>().initDataSet();
 
-    final listStation =
-        context.select<HomeDataSet, List<Station>>((ds) => ds.listStation);
     return Selector<HomeDataSet, bool>(
       builder: (context, data, child) {
         if (!data) {
           return Center(child: LoadingScreen());
         } else {
+          final listStation = context
+              .select<HomeDataSet, List<Station>>((ds) => ds.listStation);
+          final _rental =
+              context.select<HomeDataSet, Rental>((ds) => ds.rental);
+          _isRented = _rental != null;
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
@@ -69,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      widget._isRented = !widget._isRented;
+                      _isRented = !_isRented;
                     });
                   },
                   icon: const Icon(
@@ -79,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
               bottom: PreferredSize(
-                preferredSize: Size.fromHeight(widget._isRented ? 0 : 280),
+                preferredSize: Size.fromHeight(_isRented ? 280 : 0),
                 child: Visibility(
-                  visible: !widget._isRented,
+                  visible: _isRented,
                   child: _buildRentBike(),
                 ),
               ),
@@ -114,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: _buildSearchBarWidget(),
                 ),
                 Positioned(
-                    bottom: (_userTap | !widget._isRented) ? 20 : 220,
+                    bottom: (_userTap | _isRented) ? 20 : 220,
                     right: 10,
                     child: SizedBox(
                       width: 40,
@@ -133,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 0,
                   right: 0,
                   child: Visibility(
-                    visible: !(_userTap | !widget._isRented),
+                    visible: !(_userTap | _isRented),
                     child: Column(
                       children: [
                         Row(
@@ -164,31 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemBuilder: (context, index) {
                               return Builder(
                                 builder: (context) {
-                                  return InkWell(
-                                    onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            StationScreen.withDependency(
-                                          listStation[index].id,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.blue,
-                                      ),
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      width: 250,
-                                      height: 120,
-                                      child: Center(
-                                        child: Text(
-                                            '${listStation[index].contactName}'),
-                                      ),
-                                    ),
-                                  );
+                                  return _buildStationItem(listStation[index]);
                                 },
                               );
                             },
@@ -281,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.keyboard_arrow_up),
             onPressed: () {
               setState(() {
-                widget._isRented = !widget._isRented;
+                _isRented = !_isRented;
               });
             },
           ),
@@ -419,6 +398,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => QRScannerScreen()));
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStationItem(Station station) {
+    return InkWell(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StationScreen.withDependency(
+            station.id,
+          ),
+        ),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.blue,
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        width: 250,
+        height: 120,
+        child: Center(
+          child: Text('${station.stationName}'),
         ),
       ),
     );

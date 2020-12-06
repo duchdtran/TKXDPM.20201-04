@@ -3,19 +3,18 @@ import '../core/cores.dart';
 ///
 /// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Payment
 ///
-class PaymentHelper implements PaymentHelperInterface{
+class PaymentHelper implements PaymentHelperInterface {
   @override
-  Future<List<Card>> getListCard() async {
-    var lCard = <Card>[
-      Card(cardCode: '125445', paymentMethod: 'Visa'),
-      Card(cardCode: '214556', paymentMethod: 'VietTinbank'),
-      Card(cardCode: '214556', paymentMethod: 'VietTinbank'),
+  Future<List<CardInfo>> getListCard() async {
+    var lCard = <CardInfo>[
+      CardInfo(cardCode: '125445', paymentMethod: 'Visa'),
+      CardInfo(cardCode: '214556', paymentMethod: 'VietTinbank'),
+      CardInfo(cardCode: '214556', paymentMethod: 'VietTinbank'),
     ];
     return Future.value(lCard);
   }
-
 }
 
-abstract class PaymentHelperInterface{
-  Future<List<Card>> getListCard();
+abstract class PaymentHelperInterface {
+  Future<List<CardInfo>> getListCard();
 }

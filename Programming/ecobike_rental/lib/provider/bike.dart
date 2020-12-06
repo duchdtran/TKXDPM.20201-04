@@ -39,7 +39,7 @@ class BikeDataSet extends ChangeNotifier {
   int indicatorImageBike;
   bool init;
   Bike bike;
-  List<Card> listCard;
+  List<CardInfo> listCard;
 
   void setIndicatorImageBike(int value) {
     indicatorImageBike = value;
