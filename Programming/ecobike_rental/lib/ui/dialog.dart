@@ -1,9 +1,10 @@
 import 'dart:ui';
 
+import 'package:ecobike_rental/ui/start/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'home/home.dart';
+import 'start/start.dart';
 import 'widget/gradient_icon.dart';
 
 class CustomDialogBox extends StatefulWidget {
@@ -79,8 +80,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => HomeScreen.withDependency())),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => StartScreen.withDependency())),
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
               children: [
