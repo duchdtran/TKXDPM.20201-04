@@ -9,7 +9,7 @@ class RentalHelper {
   final api = RentalApi();
   Future<Rental> getRentalInfo() async {
     RentalResponse response;
-    const deviceCode = '123';
+    const deviceCode = 'b89570dd-9ae3-4317-b610-6de2b548764c';
     response = await api.getRentalInfo(deviceCode);
     return Future.value(Converter.convertRentalResponse(response));
   }

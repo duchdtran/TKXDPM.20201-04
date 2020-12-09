@@ -30,5 +30,5 @@ class ElectricBike extends Bike {
         );
 
   int batteryCapacity;
-  double powerDrain;
+  int powerDrain;
 }

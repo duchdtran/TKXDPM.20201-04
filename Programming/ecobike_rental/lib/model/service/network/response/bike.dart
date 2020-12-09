@@ -7,7 +7,7 @@ class BikeResponse {
   int type;
   String licensePlates;
   int batterCapacity;
-  double powerDrain;
+  int powerDrain;
   int deposit;
   String rentals;
 

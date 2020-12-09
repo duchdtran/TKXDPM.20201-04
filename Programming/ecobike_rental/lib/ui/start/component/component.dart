@@ -1,5 +1,6 @@
-import 'package:ecobike_rental/model/core/cores.dart';
 import 'package:flutter/material.dart';
+
+import '../../../model/core/cores.dart';
 
 Widget buildSearchBarWidget({Function onTap}) {
   return Column(

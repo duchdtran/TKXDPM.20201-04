@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../model/core/cores.dart';
+import '../../station/station.dart';
 import '../../widget/app_button.dart';
 import '../component/component.dart';
 
@@ -104,7 +105,13 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Builder(
                         builder: (context) {
-                          return buildStationItem(listStation[index]);
+                          return buildStationItem(listStation[index],
+                              onPress: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          StationScreen.withDependency(
+                                              listStation[index].id))));
                         },
                       );
                     },
