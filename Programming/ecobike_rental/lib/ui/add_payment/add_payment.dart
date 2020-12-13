@@ -73,9 +73,12 @@ class _AddPaymentState extends State<AddPayment> {
                         hintText: 'Số thẻ',
                       ),
                       validator: (value) {
-                        if (!creditcardRegExp.hasMatch(value)) {
-                          return 'Số thẻ không hợp lệ';
+                        if (value.isEmpty) {
+                          return 'Trường này không thể trống';
                         }
+                        // if (!creditcardRegExp.hasMatch(value)) {
+                        //   return 'Số thẻ không hợp lệ';
+                        // }
                         return null;
                       },
                     ),
@@ -107,12 +110,15 @@ class _AddPaymentState extends State<AddPayment> {
                             controller: dueDateController,
                             decoration: const InputDecoration(
                               hintStyle: TextStyle(fontSize: 14),
-                              hintText: 'Ngày hết hạn (MM/YY)',
+                              hintText: 'Ngày hết hạn',
                             ),
                             validator: (value) {
-                              if (!dueDateRegExp.hasMatch(value)) {
-                                return 'Ngày hết hạn không hợp lệ';
+                              if (value.isEmpty) {
+                                return 'Trường này không thể trống';
                               }
+                              // if (!dueDateRegExp.hasMatch(value)) {
+                              //   return 'Ngày hết hạn không hợp lệ';
+                              // }
                               return null;
                             },
                           ),
@@ -128,9 +134,12 @@ class _AddPaymentState extends State<AddPayment> {
                               hintText: 'CVV',
                             ),
                             validator: (value) {
-                              if (!cvvRegExp.hasMatch(value)) {
-                                return 'CVV không hợp lệ';
+                              if (value.isEmpty) {
+                                return 'Trường này không thể trống';
                               }
+                              // if (!cvvRegExp.hasMatch(value)) {
+                              //   return 'CVV không hợp lệ';
+                              // }
                               return null;
                             },
                           ),
