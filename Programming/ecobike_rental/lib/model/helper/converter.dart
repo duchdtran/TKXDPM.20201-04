@@ -3,6 +3,9 @@ import '../service/network/response/responses.dart';
 
 class Converter {
   static Station convertStationResponse(StationResponse response) {
+    if(response == null){
+      return null;
+    }
     final bikes = <Bike>[];
     response.listBike
         .forEach((element) => bikes.add(convertBikeResponse(element)));
@@ -19,6 +22,9 @@ class Converter {
   }
 
   static Address convertAddressResponse(AddressResponse response) {
+    if(response == null){
+      return null;
+    }
     return Address(
       addressName: response.addressName,
       latitude: response.latitude,
@@ -27,6 +33,9 @@ class Converter {
   }
 
   static Bike convertBikeResponse(BikeResponse response) {
+    if(response == null){
+      return null;
+    }
     Bike bike;
     switch (response.type) {
       case 1:
@@ -77,6 +86,9 @@ class Converter {
   }
 
   static Transaction convertTransactionResponse(TransactionResponse response) {
+    if(response == null){
+      return null;
+    }
     return Transaction(
       actualEndDateTime: response.actualEndDateTime,
       actualStartDateTime: response.actualStartDateTime,

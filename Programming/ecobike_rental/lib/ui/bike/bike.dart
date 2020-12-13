@@ -68,15 +68,17 @@ class BikeScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             RichText(
+                              overflow: TextOverflow.ellipsis,
                               text: TextSpan(
                                 text: context.select<BikeDataSet, String>(
                                     (value) => value.bike.bikeName),
+                                    
                                 style: const TextStyle(color: Colors.black),
-                                children: [
-                                  const TextSpan(
-                                      text: ' (500m)',
-                                      style: TextStyle(color: Colors.blue)),
-                                ],
+                                // children: [
+                                //   const TextSpan(
+                                //       text: ' (500m)',
+                                //       style: TextStyle(color: Colors.blue)),
+                                // ],
                               ),
                             ),
                             const Spacer(),

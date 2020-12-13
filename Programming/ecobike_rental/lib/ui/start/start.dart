@@ -29,15 +29,15 @@ class StartScreen extends StatelessWidget {
         } else {
           final listStation = context
               .select<HomeDataSet, List<Station>>((ds) => ds.listStation);
-          //return Selector<HomeDataSet, bool>(
-          //builder: (context, data, child) {
-          //if (data) {
-          // return RentalScreen(listStation);
-          // } else {
+          return Selector<HomeDataSet, bool>(
+          builder: (context, data, child) {
+          if (data) {
+          return RentalScreen(listStation);
+          } else {
           return HomeScreen(listStation);
-          // }
-          // },
-          //selector: (buildContext, ds) => ds.rental == null);
+          }
+          },
+          selector: (buildContext, ds) => ds.rental == null);
         }
       },
       selector: (buildContext, ds) => ds.init,

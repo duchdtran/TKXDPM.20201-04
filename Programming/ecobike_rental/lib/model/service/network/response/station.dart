@@ -7,7 +7,7 @@ class StationResponse {
   String contactName;
   String email;
   String phone;
-  double area;
+  int area;
   AddressResponse address;
   List<BikeResponse> listBike;
 

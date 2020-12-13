@@ -21,7 +21,7 @@ class Station {
   Address address;
   String email;
   String phone;
-  double area;
+  int area;
   String contactName;
   List<Bike> bikes;
 }

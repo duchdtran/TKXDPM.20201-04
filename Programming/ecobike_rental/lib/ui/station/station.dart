@@ -41,7 +41,7 @@ class StationScreen extends StatelessWidget {
                             centerTitle: true,
                             title: Text(
                                 context.select<StationDataSet, String>(
-                                    (value) => value.station.stationName),
+                                    (value) => value.station.contactName),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -118,71 +118,76 @@ class StationScreen extends StatelessWidget {
                 fit: BoxFit.fitWidth,
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  bike.bikeName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  bike.description,
-                  style: const TextStyle(fontSize: 10),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Column(
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        Text(
-                          '${bike.costHourlyRent}đ/h',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const Text(
-                          'Giá thuê',
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ],
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    BikeScreen.withDependency(bike.id)));
-                        showMaterialModalBottomSheet(
-                            context: context,
-                            builder: (context, scrollController) =>
-                                PaymentScreen.withDependency(bike.id));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Theme.of(context).accentColor,
-                        ),
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Thuê xe',
-                            style: TextStyle(color: Colors.white),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    bike.bikeName,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    bike.description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          Text(
+                            '${bike.costHourlyRent}đ/h',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const Text(
+                            'Giá thuê',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      BikeScreen.withDependency(bike.id)));
+                          showMaterialModalBottomSheet(
+                              context: context,
+                              builder: (context, scrollController) =>
+                                  PaymentScreen.withDependency(bike.id));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Theme.of(context).accentColor,
+                          ),
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Thuê xe',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
