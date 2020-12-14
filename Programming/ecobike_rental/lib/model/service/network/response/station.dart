@@ -3,7 +3,8 @@ import 'responses.dart';
 class StationResponse {
   int stationId;
   int addressId;
-  String stationName;
+  Null stationName;
+  String stationImage;
   String contactName;
   String email;
   String phone;
@@ -15,6 +16,7 @@ class StationResponse {
       {this.stationId,
       this.addressId,
       this.stationName,
+      this.stationImage,
       this.contactName,
       this.email,
       this.phone,
@@ -26,6 +28,7 @@ class StationResponse {
     stationId = json['stationId'];
     addressId = json['addressId'];
     stationName = json['stationName'];
+    stationImage = json['stationImage'];
     contactName = json['contactName'];
     email = json['email'];
     phone = json['phone'];
@@ -42,19 +45,20 @@ class StationResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['stationId'] = stationId;
-    data['addressId'] = addressId;
-    data['stationName'] = stationName;
-    data['contactName'] = contactName;
-    data['email'] = email;
-    data['phone'] = phone;
-    data['area'] = area;
-    if (address != null) {
-      data['address'] = address.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['stationId'] = this.stationId;
+    data['addressId'] = this.addressId;
+    data['stationName'] = this.stationName;
+    data['stationImage'] = this.stationImage;
+    data['contactName'] = this.contactName;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['area'] = this.area;
+    if (this.address != null) {
+      data['address'] = this.address.toJson();
     }
-    if (listBike != null) {
-      data['listBike'] = listBike.map((v) => v.toJson()).toList();
+    if (this.listBike != null) {
+      data['listBike'] = this.listBike.map((v) => v.toJson()).toList();
     }
     return data;
   }

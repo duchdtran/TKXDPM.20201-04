@@ -11,12 +11,6 @@ import '../widget/gradient_icon.dart';
 class BikeScreen extends StatelessWidget {
   BikeScreen._({Key key}) : super(key: key);
 
-  final List<String> _imgs = [
-    'https://salt.tikicdn.com/cache/w444/ts/product/d1/d4/37/05a926017eb58f6a75d7b55210b93f03.jpg',
-    'https://vcdn.tikicdn.com/cache/w444/ts/review/33/42/8c/9989d35ed67c29711c1295591bd66ca8.jpg',
-    'https://vcdn.tikicdn.com/cache/w444/ts/review/d3/28/f3/074cb370ab01c64102ad0ddce1c7d885.jpg',
-  ];
-
   static Widget withDependency(int bikeId) {
     return StateNotifierProvider<BikeProvider, BikeDataSet>(
       create: (_) => BikeProvider(bikeId),
@@ -107,10 +101,9 @@ class BikeScreen extends StatelessWidget {
                               .setIndicatorImageBike(index);
                         },
                         items:
-                            // context
-                            // .select<BikeDataSet, List<String>>(
-                            //     (value) => value.bike.images)
-                            _imgs.map((imgUrl) {
+                            context
+                            .select<BikeDataSet, List<String>>(
+                                (value) => value.bike.images).map((imgUrl) {
                           return Builder(
                             builder: (context) {
                               return Container(

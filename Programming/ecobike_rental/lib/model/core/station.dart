@@ -9,6 +9,7 @@ class Station {
     this.address,
     this.email,
     this.phone,
+    this.image,
     this.area,
     this.contactName,
     this.bikes,
@@ -21,6 +22,7 @@ class Station {
   Address address;
   String email;
   String phone;
+  String image;
   int area;
   String contactName;
   List<Bike> bikes;

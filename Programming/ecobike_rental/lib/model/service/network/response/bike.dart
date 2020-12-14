@@ -3,6 +3,7 @@ class BikeResponse {
   String bikeName;
   String description;
   int startingRent;
+    String bikeImage;
   int hourlyRent;
   int type;
   String licensePlates;
@@ -16,6 +17,7 @@ class BikeResponse {
       this.bikeName,
       this.description,
       this.startingRent,
+         this.bikeImage,
       this.hourlyRent,
       this.type,
       this.licensePlates,
@@ -31,6 +33,7 @@ class BikeResponse {
     startingRent = json['startingRent'];
     hourlyRent = json['hourlyRent'];
     type = json['type'];
+    bikeImage = json['bikeImage'];
     licensePlates = json['licensePlates'];
     batterCapacity = json['batterCapacity'];
     powerDrain = json['powerDrain'];
@@ -45,6 +48,7 @@ class BikeResponse {
     data['description'] = this.description;
     data['startingRent'] = this.startingRent;
     data['hourlyRent'] = this.hourlyRent;
+    data['bikeImage'] = this.bikeImage;
     data['type'] = this.type;
     data['licensePlates'] = this.licensePlates;
     data['batterCapacity'] = this.batterCapacity;

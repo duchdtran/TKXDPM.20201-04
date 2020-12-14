@@ -47,7 +47,8 @@ class StationScreen extends StatelessWidget {
                                   fontSize: 16,
                                 )),
                             background: Image.network(
-                              'https://i.pinimg.com/564x/b1/bc/3a/b1bc3a01ac9b8e70c4f11ef3b0c9cfae.jpg',
+                              context.select<StationDataSet, String>(
+                                    (value) => value.station.image),
                               fit: BoxFit.fitWidth,
                             )),
                       ),
@@ -111,7 +112,7 @@ class StationScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Image.network(
-                //bike.images[0] ??
+                bike.images[0] ??
                 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                 width: 150,
                 height: 150,

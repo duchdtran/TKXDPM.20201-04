@@ -14,6 +14,7 @@ class Converter {
       area: response.area,
       contactName: response.contactName,
       bikes: bikes,
+      image: response.stationImage,
       id: response.stationId,
       stationName: response.stationName,
       email: response.email,
@@ -47,7 +48,7 @@ class Converter {
           description: response.description,
           id: response.bikeId,
           isRented: response.rentals == '',
-          //images: [response.image],
+          images: [response.bikeImage],
           bikeType: response.type,
           licensePlates: response.licensePlates,
         );
@@ -61,7 +62,7 @@ class Converter {
           description: response.description,
           id: response.bikeId,
           isRented: response.rentals == '',
-          //images: [response.image],
+          images: [response.bikeImage],
           bikeType: response.type,
           licensePlates: response.licensePlates,
         );
@@ -76,7 +77,7 @@ class Converter {
           description: response.description,
           isRented: response.rentals == '',
           id: response.bikeId,
-          //images: [response.image],
+          images: [response.bikeImage],
           bikeType: response.type,
           licensePlates: response.licensePlates,
         );

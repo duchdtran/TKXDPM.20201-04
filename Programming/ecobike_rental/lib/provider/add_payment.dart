@@ -9,15 +9,20 @@ import '../model/helper/helpers.dart';
 class AddPaymentProvider extends StateNotifier<AddPaymentDataSet>
     with LocatorMixin {
   AddPaymentProvider() : super(AddPaymentDataSet()) {
-    _mStationHelper = StationHelper();
+    _mPaymentHelper = PaymentHelper();
   }
 
-  StationHelper _mStationHelper;
+  PaymentHelper _mPaymentHelper;
 
   Future<void> initDataSet() async {
     final newState = AddPaymentDataSet()..init = true;
 
     state = newState;
+  }
+
+
+  Future<void> addPaymentMethod(CardInfo cardInfo){
+    
   }
 }
 
@@ -26,5 +31,7 @@ class AddPaymentDataSet {
     init = false;
   }
 
+
+  CardInfo cardInfo;
   bool init;
 }

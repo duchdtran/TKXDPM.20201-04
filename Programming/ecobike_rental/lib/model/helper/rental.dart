@@ -1,8 +1,6 @@
-import 'package:ecobike_rental/model/service/network/response/rental.dart';
-
 import '../core/cores.dart';
-
 import '../service/network/rental_api.dart';
+import '../service/network/response/rental.dart';
 import 'converter.dart';
 
 class RentalHelper {

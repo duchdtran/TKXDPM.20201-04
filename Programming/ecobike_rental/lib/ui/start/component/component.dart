@@ -88,9 +88,10 @@ Widget buildStationItem(Station station, {Function onPress}) {
     onTap: onPress,
     child: Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.blue,
-      ),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.blue,
+          image: DecorationImage(
+              image: NetworkImage(station.image), fit: BoxFit.fill)),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       width: 250,
       height: 120,
