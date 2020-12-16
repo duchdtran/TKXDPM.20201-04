@@ -125,37 +125,6 @@ class BikeScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: map<Widget>(
-                      //     context.select<BikeDataSet, List<String>>(
-                      //         (value) => value.bike.images),
-                      //     (index, url) {
-                      //       return Consumer<BikeDataSet>(
-                      //           builder: (context, data, child) {
-                      //         debugPrint(data.indicatorImageBike.toString());
-                      //         return Container(
-                      //           width: 10,
-                      //           height: 10,
-                      //           margin: const EdgeInsets.symmetric(
-                      //               vertical: 10, horizontal: 2),
-                      //           decoration: BoxDecoration(
-                      //             shape: BoxShape.circle,
-                      //             border: Border.all(
-                      //               color: data.indicatorImageBike == index
-                      //                   ? Colors.blue
-                      //                   : Colors.grey,
-                      //               width: 1,
-                      //             ),
-                      //             color: data.indicatorImageBike == index
-                      //                 ? Colors.blue
-                      //                 : Colors.transparent,
-                      //           ),
-                      //         );
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
                       const SizedBox(
                         height: 10,
                       ),

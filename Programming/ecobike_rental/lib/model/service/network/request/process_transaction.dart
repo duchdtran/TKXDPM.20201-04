@@ -1,18 +1,31 @@
-class ProcessTransactionRequest{
+import 'Transaction.dart';
+
+class ProcessTransactionRequest {
+  String hashCode1;
+  String appCode;
   String version;
   Transaction transaction;
-  String appCode;
 
+  ProcessTransactionRequest(
+      {this.hashCode1, this.appCode, this.version, this.transaction});
 
-}
+  ProcessTransactionRequest.fromJson(Map<String, dynamic> json) {
+    hashCode1 = json['hashCode'];
+    appCode = json['appCode'];
+    version = json['version'];
+    transaction = json['transaction'] != null
+        ? new Transaction.fromJson(json['transaction'])
+        : null;
+  }
 
-class Transaction{
-  String cardCode;
-  String owner;
-  String cvvCode;
-  String dateExpired;
-  String command;
-  String transactionContent;
-  int amount;
-  String createdAt;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['hashCode'] = this.hashCode;
+    data['appCode'] = this.appCode;
+    data['version'] = this.version;
+    if (this.transaction != null) {
+      data['transaction'] = this.transaction.toJson();
+    }
+    return data;
+  }
 }

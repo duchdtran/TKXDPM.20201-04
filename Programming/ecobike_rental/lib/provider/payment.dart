@@ -17,11 +17,15 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
 
   Future<void> initDataSet() async {
     final newState = PaymentDataSet()
-      ..listCard = await _mPaymentHelper.getListCard()
+      ..listCard = state.listCard
       ..paymentChoose = state.paymentChoose
       ..init = true;
 
     state = newState;
+  }
+
+  Future<void> processTransaction() async{
+    await _mPaymentHelper.processTransaction();
   }
 
   Future<void> selectPaymentMethod(int index) async {
@@ -31,12 +35,19 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
     state.paymentChoose = index;
     await initDataSet();
   }
+
+  Future<void> addPaymentMethod(CardInfo cardInfo){
+    final newState = state;
+    newState.listCard.add(cardInfo);
+    state = newState;
+  }
 }
 
 class PaymentDataSet {
   PaymentDataSet() {
     init = false;
     paymentChoose = 0;
+    listCard = [];
   }
 
   bool init;

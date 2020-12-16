@@ -1,9 +1,12 @@
 import '../core/cores.dart';
+import '../service/network/payment_api.dart';
 
 ///
 /// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Payment
 ///
 class PaymentHelper implements PaymentHelperInterface {
+  PaymentApi api = PaymentApi();
+
   @override
   Future<List<CardInfo>> getListCard() async {
     var lCard = <CardInfo>[
@@ -12,6 +15,10 @@ class PaymentHelper implements PaymentHelperInterface {
       CardInfo(cardCode: '214556', paymentMethod: 'VietTinbank'),
     ];
     return Future.value(lCard);
+  }
+
+  Future<void> processTransaction() async {
+    await api.processTransaction();
   }
 }
 

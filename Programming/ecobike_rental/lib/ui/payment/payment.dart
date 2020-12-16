@@ -1,8 +1,10 @@
+import 'package:ecobike_rental/ui/start/start.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/core/cores.dart';
 import '../../provider/payment.dart';
 import '../add_payment/add_payment.dart';
 import '../dialog.dart';
@@ -55,8 +57,6 @@ class PaymentScreen extends StatelessWidget {
                     child: _buildPaymentMethodWidget(
                       isCheck: data == index,
                       title: context.select<PaymentDataSet, String>(
-                          (value) => value.listCard[index].paymentMethod),
-                      subTitle: context.select<PaymentDataSet, String>(
                           (value) => value.listCard[index].cardCode),
                     ),
                   ),
@@ -69,7 +69,28 @@ class PaymentScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          _buildConfirmPaymentWidget(context),
+          _buildConfirmPaymentWidget(context, onPress: () {
+            // final list = context.select<PaymentDataSet, List<CardInfo>>(
+            //     (value) => value.listCard);
+            // if (list.isNotEmpty) {
+            //   final cardInfo = list[context
+            //       .select<PaymentDataSet, int>((value) => value.paymentChoose)];
+            // }
+            context.read<PaymentProvider>().processTransaction();
+            // Navigator.of(context).push();
+            showDialog(
+              context: context,
+              builder: (context) {
+                return CustomDialogBox(
+                  title: "Chúc mừng bạn đã đặt xe thành công",
+                  onPress: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StartScreen.withDependency())),
+                );
+              },
+            );
+          }),
           const SizedBox(
             height: 10,
           ),
@@ -85,9 +106,12 @@ class PaymentScreen extends StatelessWidget {
 
   Widget _buildAddPaymentMethodWidget(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        final cardInfo = await Navigator.push(
             context, MaterialPageRoute(builder: (context) => AddPayment()));
+        if (cardInfo != null) {
+          await context.read<PaymentProvider>().addPaymentMethod(cardInfo);
+        }
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -134,8 +158,8 @@ class PaymentScreen extends StatelessWidget {
                   text: title,
                   style: TextStyle(color: color),
                   children: [
-                    const TextSpan(text: '-'),
-                    TextSpan(text: subTitle),
+                    // const TextSpan(text: '-'),
+                    // TextSpan(text: subTitle),
                   ],
                 ),
               ),
@@ -155,16 +179,10 @@ class PaymentScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildConfirmPaymentWidget(BuildContext context) {
+  Widget _buildConfirmPaymentWidget(BuildContext context, {Function onPress}) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pop();
-        showDialog(
-          context: context,
-          builder: (context) {
-            return CustomDialogBox();
-          },
-        );
+        onPress();
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

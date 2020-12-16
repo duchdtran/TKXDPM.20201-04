@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:ecobike_rental/ui/start/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +7,10 @@ import 'start/start.dart';
 import 'widget/gradient_icon.dart';
 
 class CustomDialogBox extends StatefulWidget {
+  CustomDialogBox({this.title, this.onPress});
+  String title;
+  Function onPress;
+
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
 }
@@ -73,15 +76,14 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
           const SizedBox(
             height: 10,
           ),
-          const Text(
-            'Chúc mừng! Bạn đã thuê xe đạp Fornix thành công.',
+          Text(
+            widget.title,
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => StartScreen.withDependency())),
+            onTap: widget.onPress,
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
               children: [

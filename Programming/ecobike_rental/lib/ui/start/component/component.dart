@@ -96,7 +96,7 @@ Widget buildStationItem(Station station, {Function onPress}) {
       width: 250,
       height: 120,
       child: Center(
-        child: Text('${station.contactName}'),
+        child: Text('${station.stationName}'),
       ),
     ),
   );

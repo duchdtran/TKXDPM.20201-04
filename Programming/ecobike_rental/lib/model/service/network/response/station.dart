@@ -3,7 +3,7 @@ import 'responses.dart';
 class StationResponse {
   int stationId;
   int addressId;
-  Null stationName;
+  String stationName;
   String stationImage;
   String contactName;
   String email;

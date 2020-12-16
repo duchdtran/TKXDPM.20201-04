@@ -11,5 +11,5 @@ class CardInfo {
   String cardCode;
   String owner;
   int cvvCode;
-  String dateExpired;
+  int dateExpired;
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../../model/core/card.dart';
 import '../widget/app_button.dart';
 
 class AddPayment extends StatefulWidget {
@@ -66,11 +68,11 @@ class _AddPaymentState extends State<AddPayment> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     TextFormField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       controller: cardNumberController,
                       decoration: const InputDecoration(
                         hintStyle: TextStyle(fontSize: 14),
-                        hintText: 'Số thẻ',
+                        hintText: 'Mã thẻ',
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -108,6 +110,7 @@ class _AddPaymentState extends State<AddPayment> {
                           padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                           child: TextFormField(
                             controller: dueDateController,
+                            keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                               hintStyle: TextStyle(fontSize: 14),
                               hintText: 'Ngày hết hạn',
@@ -169,7 +172,7 @@ class _AddPaymentState extends State<AddPayment> {
                         Expanded(
                           flex: 1,
                           child: Switch(
-                              value: _saveCard,
+                              value: !_saveCard,
                               onChanged: (value) {
                                 setState(() {
                                   _saveCard = value;
@@ -183,7 +186,7 @@ class _AddPaymentState extends State<AddPayment> {
           )
         ],
       ),
-      bottomNavigationBar: _buildBottomWidget(_formKey, {
+      bottomNavigationBar: _buildBottomWidget(context, _formKey, {
         'number': cardNumberController,
         'name': nameController,
         'due': dueDateController,
@@ -194,7 +197,7 @@ class _AddPaymentState extends State<AddPayment> {
   }
 }
 
-Widget _buildBottomWidget(_formKey, controller) {
+Widget _buildBottomWidget(BuildContext context, _formKey, controller) {
   return Container(
     height: 80,
     child: Center(
@@ -206,19 +209,25 @@ Widget _buildBottomWidget(_formKey, controller) {
             final form = _formKey.currentState;
             if (form.validate()) {
               // Print all form value
-              print('Card number: ');
-              print(controller['number'].value.text);
-              print('Name: ');
-              print(controller['name'].value.text);
-              print('Due date: ');
-              print(controller['due'].value.text);
-              print('CVV: ');
-              print(controller['cvv'].value.text);
-              print('Save card? ');
-              print(controller['saveCard']);
+              // print('Card number: ');
+              // print(controller['number'].value.text);
+              // print('Name: ');
+              // print(controller['name'].value.text);
+              // print('Due date: ');
+              // print(controller['due'].value.text);
+              // print('CVV: ');
+              // print(controller['cvv'].value.text);
+              // print('Save card? ');
+              // print(controller['saveCard']);
 
-              // TODO:
-              // Save card and continue checkout processing
+              final cardInfo = CardInfo(
+                cardCode: controller['number'].value.text,
+                cvvCode: int.parse(controller['cvv'].value.text),
+                dateExpired: int.parse(controller['due'].value.text),
+                owner: controller['name'].value.text,
+              );
+
+              Navigator.pop(context, cardInfo);
             }
           },
         ),
