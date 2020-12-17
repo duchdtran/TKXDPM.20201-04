@@ -1,5 +1,6 @@
 import '../core/cores.dart';
 import '../service/network/payment_api.dart';
+import '../service/network/request/transaction.dart';
 
 ///
 /// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Payment
@@ -17,8 +18,8 @@ class PaymentHelper implements PaymentHelperInterface {
     return Future.value(lCard);
   }
 
-  Future<void> processTransaction() async {
-    await api.processTransaction();
+  Future<void> processTransaction(TransactionRequest transaction) async {
+    await api.processTransaction(transaction);
   }
 }
 

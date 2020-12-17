@@ -4,23 +4,13 @@ import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:http/http.dart' as http;
 
-import 'request/Transaction.dart';
 import 'request/input_encoding.dart';
 import 'request/process_transaction.dart';
+import 'request/transaction.dart';
 
 class PaymentApi {
-  Future<String> processTransaction() async {
-    final transaction = Transaction(
-      owner: 'Group 4',
-      createdAt: '2020-11-12 10:55:26',
-      amount: 2000,
-      cvvCode: '228',
-      dateExpired: '1125',
-      cardCode: '118609_group4_2020',
-      transactionContent: 'Thanh toan aahh',
-      command: 'pay',
-    );
-    final String md5 = generateMd5(InputEncoding(
+  Future<String> processTransaction(TransactionRequest transaction) async {
+    final md5 = generateMd5(InputEncoding(
       secretKey: 'BcvsSCIF4ho=',
       transaction: transaction,
     ).toString());

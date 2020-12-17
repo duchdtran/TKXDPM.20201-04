@@ -1,3 +1,4 @@
+import 'package:ecobike_rental/model/service/network/request/transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
@@ -68,28 +69,53 @@ class PaymentScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          _buildConfirmPaymentWidget(context, onPress: () {
-            // final list = context.select<PaymentDataSet, List<CardInfo>>(
-            //     (value) => value.listCard);
-            // if (list.isNotEmpty) {
-            //   final cardInfo = list[context
-            //       .select<PaymentDataSet, int>((value) => value.paymentChoose)];
-            // }
-            context.read<PaymentProvider>().processTransaction();
-            // Navigator.of(context).push();
-            showDialog(
-              context: context,
-              builder: (context) {
-                return CustomDialogBox(
-                  title: "Chúc mừng bạn đã đặt xe thành công",
-                  onPress: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => StartScreen.withDependency())),
-                );
-              },
-            );
-          }),
+          Selector<PaymentDataSet, bool>(
+            builder: (context, data, child) {
+              int deposit = data
+                    ? (context.select<PaymentDataSet, int>(
+                        (value) => value.bike.deposits))
+                    : 0;
+              return _buildConfirmPaymentWidget(
+                context,
+                deposit: data
+                    ? (context.select<PaymentDataSet, int>(
+                        (value) => value.bike.deposits).toString())
+                    : '-',
+                onPress: !data
+                    ? null
+                    : () {
+                        final transaction = TransactionRequest(
+                          owner: 'Group 4',
+                          createdAt: '2020-11-12 10:55:26',
+                          amount: deposit,
+                          cvvCode: '228',
+                          dateExpired: '1125',
+                          cardCode: '118609_group4_2020',
+                          transactionContent: 'Tiền đặt cọc',
+                          command: 'pay',
+                        );
+                        context
+                            .read<PaymentProvider>()
+                            .processTransaction(transaction);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomDialogBox(
+                              title: "Chúc mừng bạn đã đặt xe thành công",
+                              onPress: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          StartScreen.withDependency())),
+                            );
+                          },
+                        );
+                      },
+              );
+            },
+            selector: (buildContext, ds) => ds.init,
+          ),
+
           const SizedBox(
             height: 10,
           ),
@@ -178,57 +204,53 @@ class PaymentScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildConfirmPaymentWidget(BuildContext context, {Function onPress}) {
+  Widget _buildConfirmPaymentWidget(BuildContext context,
+      {String deposit, Function onPress}) {
     return InkWell(
       onTap: () {
         onPress();
       },
-      child: Selector<PaymentDataSet, bool>(
-        builder: (context, data, child) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(40),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Column(
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        const Text(
-                          'Đặt cọc',
-                          style: TextStyle(fontSize: 10),
-                        ),
-                        Text(
-                          data?'${context.select<PaymentDataSet, int>((value) => value.bike.deposits)}đ':"--",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Column(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    const Text(
+                      'Đặt cọc',
+                      style: TextStyle(fontSize: 10),
                     ),
-                  ),
+                    Text(
+                      '$depositđ',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                Container(
-                  color: Colors.grey,
-                  width: 1,
-                  height: 25,
-                ),
-                const Expanded(
-                    flex: 7,
-                    child: Center(
-                      child: Text(
-                        'Xác nhận thanh toán',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    )),
-              ],
+              ),
             ),
-          );
-        },
-        selector: (buildContext, ds) => ds.init,
+            Container(
+              color: Colors.grey,
+              width: 1,
+              height: 25,
+            ),
+            const Expanded(
+                flex: 7,
+                child: Center(
+                  child: Text(
+                    'Xác nhận thanh toán',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }

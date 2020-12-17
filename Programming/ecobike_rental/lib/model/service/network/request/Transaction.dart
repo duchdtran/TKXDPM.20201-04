@@ -1,4 +1,4 @@
-class Transaction {
+class TransactionRequest {
   String owner;
   String createdAt;
   int amount;
@@ -8,7 +8,7 @@ class Transaction {
   String transactionContent;
   String command;
 
-  Transaction(
+  TransactionRequest(
       {this.owner,
       this.createdAt,
       this.amount,
@@ -18,7 +18,7 @@ class Transaction {
       this.transactionContent,
       this.command});
 
-  Transaction.fromJson(Map<String, dynamic> json) {
+  TransactionRequest.fromJson(Map<String, dynamic> json) {
     owner = json['owner'];
     createdAt = json['createdAt'];
     amount = json['amount'];

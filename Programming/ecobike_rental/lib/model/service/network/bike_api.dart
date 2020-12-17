@@ -16,4 +16,7 @@ class BikeApi {
     }
     return bike;
   }
+
+  Future<void> rentBike(String, deviceCode, int bikeId, int deposit){
+  }
 }

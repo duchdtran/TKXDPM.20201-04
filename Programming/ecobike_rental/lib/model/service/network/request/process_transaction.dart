@@ -1,10 +1,10 @@
-import 'Transaction.dart';
+import 'transaction.dart';
 
 class ProcessTransactionRequest {
   String hashCode1;
   String appCode;
   String version;
-  Transaction transaction;
+  TransactionRequest transaction;
 
   ProcessTransactionRequest(
       {this.hashCode1, this.appCode, this.version, this.transaction});
@@ -14,15 +14,15 @@ class ProcessTransactionRequest {
     appCode = json['appCode'];
     version = json['version'];
     transaction = json['transaction'] != null
-        ? new Transaction.fromJson(json['transaction'])
+        ?  TransactionRequest.fromJson(json['transaction'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final data =  <String, dynamic>{};
     data['hashCode'] = this.hashCode;
     data['appCode'] = this.appCode;
-    data['version'] = this.version;
+    data['version'] = version;
     if (this.transaction != null) {
       data['transaction'] = this.transaction.toJson();
     }

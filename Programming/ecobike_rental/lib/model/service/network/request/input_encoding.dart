@@ -1,15 +1,15 @@
-import 'Transaction.dart';
+import 'transaction.dart';
 
 class InputEncoding {
   String secretKey;
-  Transaction transaction;
+  TransactionRequest transaction;
 
   InputEncoding({this.secretKey, this.transaction});
 
   InputEncoding.fromJson(Map<String, dynamic> json) {
     secretKey = json['secretKey'];
     transaction = json['transaction'] != null
-        ? new Transaction.fromJson(json['transaction'])
+        ? new TransactionRequest.fromJson(json['transaction'])
         : null;
   }
 

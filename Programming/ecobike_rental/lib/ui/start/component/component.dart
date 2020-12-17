@@ -95,8 +95,13 @@ Widget buildStationItem(Station station, {Function onPress}) {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       width: 250,
       height: 120,
-      child: Align(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(10),
+        ),
         alignment: Alignment.bottomCenter,
+        padding: const EdgeInsets.only(bottom: 10),
         child: Text(
           '${station.stationName}',
           style: const TextStyle(color: Colors.white),
