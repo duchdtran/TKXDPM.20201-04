@@ -95,8 +95,12 @@ Widget buildStationItem(Station station, {Function onPress}) {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       width: 250,
       height: 120,
-      child: Center(
-        child: Text('${station.stationName}'),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Text(
+          '${station.stationName}',
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     ),
   );

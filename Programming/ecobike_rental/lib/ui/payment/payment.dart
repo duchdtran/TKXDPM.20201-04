@@ -1,13 +1,12 @@
-import 'package:ecobike_rental/ui/start/start.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/core/cores.dart';
 import '../../provider/payment.dart';
 import '../add_payment/add_payment.dart';
 import '../dialog.dart';
+import '../start/start.dart';
 
 class PaymentScreen extends StatelessWidget {
   PaymentScreen._({Key key}) : super(key: key);
@@ -184,47 +183,52 @@ class PaymentScreen extends StatelessWidget {
       onTap: () {
         onPress();
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Center(
-                child: Column(
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    const Text(
-                      'Đặt cọc',
-                      style: TextStyle(fontSize: 10),
-                    ),
-                    const Text(
-                      '100.000đ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
+      child: Selector<PaymentDataSet, bool>(
+        builder: (context, data, child) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(40),
             ),
-            Container(
-              color: Colors.grey,
-              width: 1,
-              height: 25,
-            ),
-            const Expanded(
-                flex: 7,
-                child: Center(
-                  child: Text(
-                    'Xác nhận thanh toán',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Center(
+                    child: Column(
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        const Text(
+                          'Đặt cọc',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        Text(
+                          data?'${context.select<PaymentDataSet, int>((value) => value.bike.deposits)}đ':"--",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
-                )),
-          ],
-        ),
+                ),
+                Container(
+                  color: Colors.grey,
+                  width: 1,
+                  height: 25,
+                ),
+                const Expanded(
+                    flex: 7,
+                    child: Center(
+                      child: Text(
+                        'Xác nhận thanh toán',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )),
+              ],
+            ),
+          );
+        },
+        selector: (buildContext, ds) => ds.init,
       ),
     );
   }

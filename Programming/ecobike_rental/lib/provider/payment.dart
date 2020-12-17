@@ -9,15 +9,18 @@ import '../model/core/cores.dart';
 class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
   PaymentProvider(this._bikeId) : super(PaymentDataSet()) {
     _mPaymentHelper = PaymentHelper();
+    _mBikeHelper = BikeHelper();
   }
 
   final int _bikeId;
 
   PaymentHelper _mPaymentHelper;
+  BikeHelper _mBikeHelper;
 
   Future<void> initDataSet() async {
     final newState = PaymentDataSet()
       ..listCard = state.listCard
+      ..bike = await _mBikeHelper.getBike(_bikeId)
       ..paymentChoose = state.paymentChoose
       ..init = true;
 
@@ -52,5 +55,6 @@ class PaymentDataSet {
 
   bool init;
   List<CardInfo> listCard;
+  Bike bike;
   int paymentChoose;
 }

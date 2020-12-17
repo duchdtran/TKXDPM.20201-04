@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecobike_rental/model/core/cores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -29,6 +30,7 @@ class BikeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.watch<BikeProvider>().initDataSet();
+    final bike = context.select<BikeDataSet, Bike>((value) => value.bike);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -52,8 +54,7 @@ class BikeScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
-                          context.select<BikeDataSet, String>(
-                              (value) => value.bike.bikeName),
+                          bike.bikeName,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -64,9 +65,8 @@ class BikeScreen extends StatelessWidget {
                             RichText(
                               overflow: TextOverflow.ellipsis,
                               text: TextSpan(
-                                text: context.select<BikeDataSet, String>(
-                                    (value) => value.bike.bikeName),
-                                    
+                                text: "Biển số xe: ${bike.licensePlates}",
+
                                 style: const TextStyle(color: Colors.black),
                                 // children: [
                                 //   const TextSpan(
@@ -100,10 +100,10 @@ class BikeScreen extends StatelessWidget {
                           Provider.of<BikeDataSet>(context, listen: false)
                               .setIndicatorImageBike(index);
                         },
-                        items:
-                            context
+                        items: context
                             .select<BikeDataSet, List<String>>(
-                                (value) => value.bike.images).map((imgUrl) {
+                                (value) => value.bike.images)
+                            .map((imgUrl) {
                           return Builder(
                             builder: (context) {
                               return Container(
@@ -178,13 +178,11 @@ class BikeScreen extends StatelessWidget {
                             Expanded(
                               child: InkWell(
                                 onTap: () => showMaterialModalBottomSheet(
-                                  context: context,
-                                  builder: (context, scrollController) =>
-                                      PaymentScreen.withDependency(1
-                                          // context.select<BikeDataSet, int>(
-                                          //     (value) => value.bike.id),
-                                          ),
-                                ),
+                                    context: context,
+                                    builder: (context, scrollController) =>
+                                        PaymentScreen.withDependency(
+                                          bike.id,
+                                        )),
                                 child: const Center(
                                     child: Text(
                                   'Thuê xe này',

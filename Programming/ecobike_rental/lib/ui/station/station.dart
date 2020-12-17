@@ -41,7 +41,7 @@ class StationScreen extends StatelessWidget {
                             centerTitle: true,
                             title: Text(
                                 context.select<StationDataSet, String>(
-                                    (value) => value.station.contactName),
+                                    (value) => value.station.stationName),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -99,7 +99,7 @@ class StationScreen extends StatelessWidget {
 
   Widget _buildBikeItemWidget(BuildContext context, Bike bike) {
     return InkWell(
-      onTap: () {
+      onTap: bike.isRented?null:() {
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -156,7 +156,7 @@ class StationScreen extends StatelessWidget {
                         ],
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap: bike.isRented?null:() {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -177,9 +177,9 @@ class StationScreen extends StatelessWidget {
                             horizontal: 20,
                             vertical: 10,
                           ),
-                          child: const Center(
+                          child:  Center(
                             child: Text(
-                              'Thuê xe',
+                              bike.isRented?'Đã thuê': 'Thuê xe',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
