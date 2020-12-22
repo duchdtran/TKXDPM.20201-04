@@ -93,11 +93,6 @@ class Home extends StatelessWidget {
 }
 
 class ProcessTransactionRequest {
-  String hashCode1;
-  String appCode;
-  String version;
-  Transaction transaction;
-
   ProcessTransactionRequest(
       {this.hashCode1, this.appCode, this.version, this.transaction});
 
@@ -106,17 +101,22 @@ class ProcessTransactionRequest {
     appCode = json['appCode'];
     version = json['version'];
     transaction = json['transaction'] != null
-        ? new Transaction.fromJson(json['transaction'])
+        ? Transaction.fromJson(json['transaction'])
         : null;
   }
 
+  String hashCode1;
+  String appCode;
+  String version;
+  Transaction transaction;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['hashCode'] = this.hashCode;
-    data['appCode'] = this.appCode;
-    data['version'] = this.version;
-    if (this.transaction != null) {
-      data['transaction'] = this.transaction.toJson();
+    final data = <String, dynamic>{};
+    data['hashCode'] = hashCode;
+    data['appCode'] = appCode;
+    data['version'] = version;
+    if (transaction != null) {
+      data['transaction'] = transaction.toJson();
     }
     return data;
   }
@@ -131,12 +131,12 @@ class InputEncoding {
   InputEncoding.fromJson(Map<String, dynamic> json) {
     secretKey = json['secretKey'];
     transaction = json['transaction'] != null
-        ? new Transaction.fromJson(json['transaction'])
+        ? Transaction.fromJson(json['transaction'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final data = new Map<String, dynamic>();
     var s = data['secretKey'] = this.secretKey;
     if (this.transaction != null) {
       var map = data['transaction'] = transaction.toJson();

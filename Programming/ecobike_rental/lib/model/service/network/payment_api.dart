@@ -9,7 +9,7 @@ import 'request/process_transaction.dart';
 import 'request/transaction.dart';
 
 class PaymentApi {
-  Future<String> processTransaction(TransactionRequest transaction) async {
+  Future<void> processTransaction(TransactionRequest transaction) async {
     final md5 = generateMd5(InputEncoding(
       secretKey: 'BcvsSCIF4ho=',
       transaction: transaction,
@@ -35,7 +35,6 @@ class PaymentApi {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       print(jsonDecode(response.body));
-      return jsonDecode(response.body);
       //return InputEncoding.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 200 OK response,

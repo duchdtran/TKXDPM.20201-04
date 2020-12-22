@@ -13,24 +13,8 @@ class BikeHelper implements BikeHelperInterface {
 
     return Future.value(Converter.convertBikeResponse(response));
   }
-
-  @override
-  Future<List<Bike>> getListBike({int stationId, int bikeType}) {
-    final bike = SingleBike(
-      bikeName: 'Xe đạp thể thao DBN',
-      images: [
-        'https://product.hstatic.net/1000119998/product/xe-dap-dia-hinh-fornix-m3-7_347de045d9294fcba1f50f7d54723c88_large.jpg',
-      ],
-      description: 'fsdfgsd',
-      costHourlyRent: 7000,
-    );
-
-    final listBike = <Bike>[bike, bike, bike, bike];
-    return Future.value(listBike);
-  }
 }
 
 abstract class BikeHelperInterface {
   Future<Bike> getBike(int bikeId);
-  Future<List<Bike>> getListBike({int stationId, int bikeType});
 }

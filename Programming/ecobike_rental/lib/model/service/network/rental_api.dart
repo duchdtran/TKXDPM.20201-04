@@ -17,4 +17,40 @@ class RentalApi {
     }
     return rental;
   }
+
+  Future<BikeResponse> checkRentBike(String deviceCode) async {
+    BikeResponse rental;
+    final response = await http.post(
+        'https://tkxdpm-server.herokuapp.com/api/check-rent-bike?deviceCode=$deviceCode');
+    if (response.statusCode == 200) {
+      rental = BikeResponse.fromJson(json.decode(response.body));
+    } else {
+      return null;
+      //throw Exception('Unable to fetch products from the REST API');
+    }
+    return rental;
+  }
+
+  Future<bool> rentBike(String deviceCode, int bikeId, int deposit) async {
+    final response = await http.post(
+        'https://tkxdpm-server.herokuapp.com/api/rent-bike?deviceCode=$deviceCode&bikeId=$bikeId&deposit=$deposit');
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+      //throw Exception('Unable to fetch products from the REST API');
+    }
+  }
+
+  Future<int> returnBike(String deviceCode, int stationId, int bikeId) async {
+    int deposit;
+    final response = await http.post(
+        'https://tkxdpm-server.herokuapp.com/api/return-bike?deviceCode=$deviceCode&stationId=$stationId&bikeId=$bikeId');
+    if (response.statusCode == 200) {
+      deposit = json.decode(response.body);
+    } else {
+      throw Exception('Unable to fetch products from the REST API');
+    }
+    return deposit;
+  }
 }

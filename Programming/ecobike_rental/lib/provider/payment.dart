@@ -11,12 +11,14 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
   PaymentProvider(this._bikeId) : super(PaymentDataSet()) {
     _mPaymentHelper = PaymentHelper();
     _mBikeHelper = BikeHelper();
+    _mRentalHelper = RentalHelper();
   }
 
   final int _bikeId;
 
   PaymentHelper _mPaymentHelper;
   BikeHelper _mBikeHelper;
+  RentalHelper _mRentalHelper;
 
   Future<void> initDataSet() async {
     final newState = PaymentDataSet()
@@ -32,9 +34,13 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
     await _mPaymentHelper.processTransaction(transaction);
   }
 
+   Future<void> rentBike(int bikeId, int deposit) async{
+    await _mRentalHelper.rentBike(bikeId, deposit);
+  }
+
   Future<void> selectPaymentMethod(int index) async {
     if (index < 0 || index >= state.listCard.length) {
-      return Future.error('Code ngu vl');
+      return Future.error('');
     }
     state.paymentChoose = index;
     await initDataSet();

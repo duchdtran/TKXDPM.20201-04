@@ -71,15 +71,21 @@ class PaymentScreen extends StatelessWidget {
           ),
           Selector<PaymentDataSet, bool>(
             builder: (context, data, child) {
-              int deposit = data
-                    ? (context.select<PaymentDataSet, int>(
-                        (value) => value.bike.deposits))
-                    : 0;
+              final deposit = data
+                  ? (context.select<PaymentDataSet, int>(
+                      (value) => value.bike.deposits))
+                  : 0;
+              final bikeId = data
+                  ? (context
+                      .select<PaymentDataSet, int>((value) => value.bike.id))
+                  : 0;
               return _buildConfirmPaymentWidget(
                 context,
                 deposit: data
-                    ? (context.select<PaymentDataSet, int>(
-                        (value) => value.bike.deposits).toString())
+                    ? (context
+                        .select<PaymentDataSet, int>(
+                            (value) => value.bike.deposits)
+                        .toString())
                     : '-',
                 onPress: !data
                     ? null
@@ -97,6 +103,9 @@ class PaymentScreen extends StatelessWidget {
                         context
                             .read<PaymentProvider>()
                             .processTransaction(transaction);
+                        context
+                            .read<PaymentProvider>()
+                            .rentBike(bikeId, deposit);
                         showDialog(
                           context: context,
                           builder: (context) {

@@ -5,11 +5,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/core/cores.dart';
+import '../../../model/service/network/request/transaction.dart';
 import '../../../provider/providers.dart';
+import '../../dialog.dart';
 import '../../scanner/scanner.dart';
 import '../../widget/app_button.dart';
 import '../../widget/bike_info_item.dart';
 import '../component/component.dart';
+import '../start.dart';
 
 // ignore: must_be_immutable
 class RentalScreen extends StatefulWidget {
@@ -64,7 +67,7 @@ class _RentalScreenState extends State<RentalScreen> {
           preferredSize: Size.fromHeight(_isCollapse ? 280 : 0),
           child: Visibility(
             visible: _isCollapse,
-            child: _buildRentBike(),
+            child: _buildRentBike(context),
           ),
         ),
       ),
@@ -116,7 +119,7 @@ class _RentalScreenState extends State<RentalScreen> {
                         width: 10,
                       ),
                       const Text(
-                        'Gần bạn',
+                        'Chọn địa điểm trả xe',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const Spacer(),
@@ -135,10 +138,44 @@ class _RentalScreenState extends State<RentalScreen> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: widget.listStation.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (_, index) {
                         return Builder(
-                          builder: (context) {
-                            return buildStationItem(widget.listStation[index]);
+                          builder: (_) {
+                            return buildStationItem(
+                              widget.listStation[index],
+                              onPress: () async {
+                                final money = await context
+                                    .read<HomeProvider>()
+                                    .returnBike();
+                                final transaction = TransactionRequest(
+                                  owner: 'Group 4',
+                                  createdAt: '2020-11-12 10:55:26',
+                                  amount: money,
+                                  cvvCode: '228',
+                                  dateExpired: '1125',
+                                  cardCode: '118609_group4_2020',
+                                  transactionContent: 'Trả tiền thuê xe',
+                                  command: 'pay',
+                                );
+                                await context
+                                    .read<PaymentProvider>()
+                                    .processTransaction(transaction);
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialogBox(
+                                      title:
+                                          "Chúc mừng bạn đã trả xe thành công",
+                                      onPress: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => StartScreen
+                                                  .withDependency())),
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                         );
                       },
@@ -154,7 +191,8 @@ class _RentalScreenState extends State<RentalScreen> {
     );
   }
 
-  Container _buildRentBike() {
+  Container _buildRentBike(BuildContext context) {
+    final bike = context.select<HomeDataSet, Bike>((value) => value.bike);
     return Container(
       width: double.infinity,
       child: Column(
@@ -170,7 +208,7 @@ class _RentalScreenState extends State<RentalScreen> {
                 Positioned(
                   top: 20,
                   left: 30,
-                  child: _buildContainer('Phí thuê', '15.000/h', Colors.yellow),
+                  child: _buildContainer('Phí thuê', '${bike.costHourlyRent}/h', Colors.yellow),
                 ),
                 Positioned(
                   top: 20,
@@ -183,7 +221,7 @@ class _RentalScreenState extends State<RentalScreen> {
                   left: 0,
                   right: 0,
                   child:
-                      _buildContainer('Thời gian', "1h 45' 27\"", Colors.blue),
+                      _buildContainer('Thời gian', "0h 0' 0\"", Colors.blue),
                 ),
               ],
             ),
@@ -209,9 +247,9 @@ class _RentalScreenState extends State<RentalScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              const BikeInfoItem(
+              BikeInfoItem(
                 label: 'Biển số xe',
-                value: '34M6-9863',
+                value: bike.licensePlates,
               ),
               const BikeInfoItem(
                 label: 'Lượng pin',
