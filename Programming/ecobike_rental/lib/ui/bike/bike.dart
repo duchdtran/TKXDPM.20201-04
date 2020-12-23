@@ -1,21 +1,21 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecobike_rental/model/core/cores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/core/cores.dart';
 import '../../provider/bike.dart';
 import '../payment/payment.dart';
 import '../widget/gradient_icon.dart';
 
 class BikeScreen extends StatelessWidget {
-  BikeScreen._({Key key}) : super(key: key);
+  const BikeScreen._({Key key}) : super(key: key);
 
   static Widget withDependency(int bikeId) {
     return StateNotifierProvider<BikeProvider, BikeDataSet>(
       create: (_) => BikeProvider(bikeId),
-      child: BikeScreen._(),
+      child: const BikeScreen._(),
     );
   }
 
@@ -77,7 +77,7 @@ class BikeScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             _buildRatingBar(context, 3.5),
-                            const Text('(400)'),
+                            const Text('(5)'),
                           ],
                         ),
                       ),
@@ -96,10 +96,6 @@ class BikeScreen extends StatelessWidget {
                             const Duration(milliseconds: 5000),
                         pauseAutoPlayOnTouch: const Duration(seconds: 10),
                         scrollDirection: Axis.horizontal,
-                        onPageChanged: (index) {
-                          Provider.of<BikeDataSet>(context, listen: false)
-                              .setIndicatorImageBike(index);
-                        },
                         items: context
                             .select<BikeDataSet, List<String>>(
                                 (value) => value.bike.images)
@@ -254,7 +250,7 @@ class BikeScreen extends StatelessWidget {
     return RichText(
       text: TextSpan(
           text: 'Giá khởi điểm cho 30 phút đầu là ',
-          style: TextStyle(color: Colors.black87),
+          style: const TextStyle(color: Colors.black87),
           children: [
             TextSpan(
               text:

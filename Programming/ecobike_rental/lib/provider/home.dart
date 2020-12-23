@@ -30,15 +30,7 @@ class HomeProvider extends StateNotifier<HomeDataSet> with LocatorMixin {
 
   Future<void> getRentalInfo() async {}
 
-  Future<int> returnBike() async {
-    try {
-      const stationId = 1001;
-      const bikeId = 100002;
-      await _rentalHelper.returnBike(stationId, bikeId);
-    } on Exception catch (e) {
-      debugPrint(e.toString());
-    }
-  }
+ 
 }
 
 class HomeDataSet {

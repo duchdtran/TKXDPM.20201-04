@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../model/core/cores.dart';
 import '../../station/station.dart';
-import '../../widget/app_button.dart';
 import '../component/component.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -105,13 +104,17 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Builder(
                         builder: (context) {
-                          return buildStationItem(listStation[index],
-                              onPress: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          StationScreen.withDependency(
-                                              listStation[index].id))));
+                          return buildStationItem(
+                            listStation[index],
+                            onPress: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    StationScreen.withDependency(
+                                        listStation[index].id),
+                              ),
+                            ),
+                          );
                         },
                       );
                     },
@@ -122,23 +125,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: _buildBottomWidget(onPress: () {}),
-    );
-  }
-
-  Widget _buildBottomWidget({Function onPress}) {
-    return Container(
-      height: 80,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: AppButton(
-            title: 'Quét mã để thuê xe',
-            icon: Icons.qr_code_scanner,
-            onPress: onPress,
-          ),
-        ),
-      ),
+      bottomNavigationBar: buildBottomWidget(context),
     );
   }
 }

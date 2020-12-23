@@ -1,3 +1,4 @@
+import 'package:ecobike_rental/provider/providers.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../model/core/cores.dart';
@@ -30,11 +31,12 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
     state = newState;
   }
 
-  Future<void> processTransaction(TransactionRequest transaction) async{
-    await _mPaymentHelper.processTransaction(transaction);
+  Future<String> processTransaction(TransactionRequest transaction) async {
+    final message = await _mPaymentHelper.processTransaction(transaction);
+    return Future.value(message);
   }
 
-   Future<void> rentBike(int bikeId, int deposit) async{
+  Future<void> rentBike(int bikeId, int deposit) async {
     await _mRentalHelper.rentBike(bikeId, deposit);
   }
 
@@ -46,7 +48,7 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
     await initDataSet();
   }
 
-  Future<void> addPaymentMethod(CardInfo cardInfo){
+  Future<void> addPaymentMethod(CardInfo cardInfo) {
     final newState = state;
     newState.listCard.add(cardInfo);
     state = newState;
@@ -57,7 +59,13 @@ class PaymentDataSet {
   PaymentDataSet() {
     init = false;
     paymentChoose = 0;
-    listCard = [];
+    listCard = [
+      CardInfo(
+          cardCode: '118609_group4_2020',
+          owner: 'Group 4',
+          cvvCode: 228,
+          dateExpired: 1125)
+    ];
   }
 
   bool init;

@@ -9,7 +9,7 @@ import 'request/process_transaction.dart';
 import 'request/transaction.dart';
 
 class PaymentApi {
-  Future<void> processTransaction(TransactionRequest transaction) async {
+  Future<String> processTransaction(TransactionRequest transaction) async {
     final md5 = generateMd5(InputEncoding(
       secretKey: 'BcvsSCIF4ho=',
       transaction: transaction,
@@ -32,14 +32,10 @@ class PaymentApi {
     );
 
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
       print(jsonDecode(response.body));
-      //return InputEncoding.fromJson(jsonDecode(response.body));
+      return jsonDecode(response.body)['errorCode'];
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      throw Exception('Failed');
     }
   }
 

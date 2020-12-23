@@ -23,26 +23,18 @@ class BikeProvider extends StateNotifier<BikeDataSet> with LocatorMixin {
       ..bike = await _bikeHelper.getBike(
         _bikeId,
       )
-      ..listCard = await _paymentHelper.getListCard()
       ..init = true;
 
     state = newState;
   }
 }
 
-class BikeDataSet extends ChangeNotifier {
+class BikeDataSet {
   BikeDataSet() {
     init = false;
-    indicatorImageBike = 0;
   }
 
-  int indicatorImageBike;
   bool init;
   Bike bike;
   List<CardInfo> listCard;
-
-  void setIndicatorImageBike(int value) {
-    indicatorImageBike = value;
-    notifyListeners();
-  }
 }

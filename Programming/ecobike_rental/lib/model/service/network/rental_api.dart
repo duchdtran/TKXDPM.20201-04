@@ -47,7 +47,7 @@ class RentalApi {
     final response = await http.post(
         'https://tkxdpm-server.herokuapp.com/api/return-bike?deviceCode=$deviceCode&stationId=$stationId&bikeId=$bikeId');
     if (response.statusCode == 200) {
-      deposit = json.decode(response.body);
+      deposit = json.decode(response.body)['returnMoney'];
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
