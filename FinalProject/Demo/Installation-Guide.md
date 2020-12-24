@@ -43,7 +43,20 @@
 Database đã được public 
 trên server https://tkxdpm-server.herokuapp.com/swagger/index.html
 
+# Cài đặt server
 
+Tải và cài đặt rider tại:
+https://www.jetbrains.com/rider/
+
+Tải và cài đặt dotnet core 3.1 sdk tại:
+https://dotnet.microsoft.com/download/dotnet-core/3.1
+
+Tải và cài đặt postgresql tại:
+https://www.postgresql.org/download/
+
+Config **DefaultConnection** của database ở file **appsettings.Development.json**.
+
+Mở thư mục project **ecobike_rental_server** bằng Rider. Chọn project **TKXDPM_API** và build cho server. Chọn Project **TKXDPM_TEST** và run các test.
 
 
 
