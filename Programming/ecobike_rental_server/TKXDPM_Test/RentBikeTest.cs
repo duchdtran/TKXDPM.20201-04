@@ -22,7 +22,7 @@ namespace TKXDPM_Test
             {
                 Type = BikeType.Single
             };
-            var deposit = 550000;
+            var deposit = 400000;
             var result = controller.CheckDeposit(deposit, bike);
             Assert.IsTrue(result);
         }
@@ -35,7 +35,7 @@ namespace TKXDPM_Test
             {
                 Type = BikeType.Double
             };
-            var deposit = 700000;
+            var deposit = 550000;
             var result = controller.CheckDeposit(deposit, bike);
             Assert.IsTrue(result);
         }
@@ -61,7 +61,7 @@ namespace TKXDPM_Test
             {
                 Type = BikeType.Single
             };
-            var deposit = 549999;
+            var deposit = 399999;
             var result = controller.CheckDeposit(deposit, bike);
             Assert.IsFalse(result);
             
@@ -75,7 +75,7 @@ namespace TKXDPM_Test
             {
                 Type = BikeType.Double
             };
-            var deposit = 699999;
+            var deposit = 549999;
             var result = controller.CheckDeposit(deposit, bike);
             Assert.IsFalse(result);
         }

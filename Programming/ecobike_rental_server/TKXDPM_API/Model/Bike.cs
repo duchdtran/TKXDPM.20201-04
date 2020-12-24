@@ -7,7 +7,7 @@ using System.Linq;
 namespace TKXDPM_API.Model
 {
     public class Bike
-    {    
+    {
         [Key] public int BikeId { get; set; }
         [Column(TypeName = "varchar(255)")] public string BikeName { get; set; }
         [Column(TypeName = "varchar(512)")] public string BikeImage { get; set; }
@@ -27,6 +27,15 @@ namespace TKXDPM_API.Model
         {
             var rentals = Rentals.Where(rental => rental.Transaction.BookedEndDateTime == DateTime.MinValue).ToArray();
             return rentals[0];
+        }
+
+        public bool IsRent()
+        {
+            return Rentals != null &&
+                   Rentals.Any(rental =>
+                       rental.Transaction != null && (
+                           rental.Transaction.BookedEndDateTime == DateTime.MinValue ||
+                           rental.Transaction.BookedEndDateTime >= DateTime.Now));
         }
     }
 
@@ -58,6 +67,7 @@ namespace TKXDPM_API.Model
         public int BatterCapacity { get; set; }
         public float PowerDrain { get; set; }
         public int Deposit { get; set; }
+        public bool IsRented { get; set; } = false;
     }
 
     public enum BikeType

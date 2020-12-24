@@ -10,6 +10,7 @@ using TKXDPM_API.Model;
 
 namespace TKXDPM_API.Controllers
 {
+    [Route("api")]
     public class ReturnBikeController : ControllerBase
     {
         private readonly ILogger<ReturnBikeController> _logger;
@@ -33,9 +34,12 @@ namespace TKXDPM_API.Controllers
         {
             public int ReturnMoney { get; set; }
         }
+
         [HttpPost("return-bike")]
-        public async Task<ActionResult<ReturnBikeResponse>> ReturnBike(string deviceCode,
-            int stationId, int bikeId)
+        public async Task<ActionResult<ReturnBikeResponse>> ReturnBike(
+            string deviceCode,
+            int stationId,
+            int bikeId)
         {
             var bikeInStation = await BikeInStation(bikeId, stationId);
             if (bikeInStation)
@@ -79,18 +83,19 @@ namespace TKXDPM_API.Controllers
                 return NotFound($"Renter {deviceCode} didn't have a rental");
             }
 
-            if (renter.Rentals[^1].Transaction == null)
+            var rental = renter.Rentals.Find(r => (r.Transaction != null && r.Transaction.PaymentStatus == PaymentStatus.Deposit));
+            if (rental?.Transaction == null)
             {
                 return NotFound($"Renter {deviceCode} didn't have a transaction");
             }
-
-            if (renter.Rentals[^1].BikeId != bikeId)
+            
+            if (rental.BikeId != bikeId)
             {
                 return BadRequest($"Renter {deviceCode} didn't rent bike {bikeId}");
             }
-
-            var transaction = renter.Rentals[^1].Transaction;
-            var totalMinutes = (bikeStation.DateTimeIn - transaction.BookedStartDateTime).TotalMinutes;
+            
+            var transaction = rental.Transaction;
+            var totalMinutes = (DateTime.Now - transaction.BookedStartDateTime).TotalMinutes;
             var fee = CalculateFee(totalMinutes, bike.Type);
             _logger.LogInformation("Total minutes " + totalMinutes);
 
@@ -100,7 +105,63 @@ namespace TKXDPM_API.Controllers
 
             return new ReturnBikeResponse()
             {
-                ReturnMoney = _condition[bike.Type] - fee
+                ReturnMoney = fee
+            };
+        }
+
+        public struct GetInvoiceResponse
+        {
+            public int Fee { get; set; }
+            public int Minutes { get; set; }
+        }
+
+        [HttpGet("get-invoice")]
+        public async Task<ActionResult<GetInvoiceResponse>> GetInvoice(
+            string deviceCode,
+            int bikeId)
+        {
+            var bike = await _dbContext.Bikes.FindAsync(bikeId);
+            if (bike == null)
+            {
+                return NotFound($"The BikeId {bikeId} Not Found");
+            }
+
+            var renterFind = await _dbContext.FindRenter(deviceCode);
+            if (renterFind == null)
+            {
+                return NotFound($"The Renter with device Code {deviceCode} Not Found");
+            }
+
+            var renter = await _dbContext.Renters
+                .Where(r => r.DeviceCode == deviceCode)
+                .Include(r => r.Rentals)
+                .ThenInclude(rt => rt.Transaction)
+                .FirstOrDefaultAsync();
+            if (renter.Rentals.Count == 0)
+            {
+                return NotFound($"Renter {deviceCode} didn't have a rental");
+            }
+            
+            var rental = renter.Rentals.Find(r => (r.Transaction != null && r.Transaction.PaymentStatus == PaymentStatus.Deposit));
+            if (rental?.Transaction == null)
+            {
+                return NotFound($"Renter {deviceCode} didn't have a transaction");
+            }
+            
+            if (rental.BikeId != bikeId)
+            {
+                return BadRequest($"Renter {deviceCode} didn't rent bike {bikeId}");
+            }
+            
+            var transaction = rental.Transaction;
+            var totalMinutes = (DateTime.Now - transaction.BookedStartDateTime).TotalMinutes;
+            var fee = CalculateFee(totalMinutes, bike.Type);
+            _logger.LogInformation("Total minutes " + totalMinutes);
+
+            return new GetInvoiceResponse()
+            {
+                Fee = fee,
+                Minutes = (int) totalMinutes
             };
         }
 

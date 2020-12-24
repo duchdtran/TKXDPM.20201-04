@@ -13,7 +13,7 @@ namespace TKXDPM_API.Seeder
                 new Transaction()
                 {
                     TransactionId = 100001, RentalId = 100001,
-                    PaymentStatus = PaymentStatus.Deposit,
+                    PaymentStatus = PaymentStatus.Paid,
                     BookedStartDateTime = new DateTime(2020, 12, 3), BookedEndDateTime = new DateTime(2020, 12, 3),
                     ActualStartDateTime = new DateTime(2020, 12, 3, 8, 32, 54),
                     ActualEndDateTime = new DateTime(2020, 12, 3, 10, 14, 54),
@@ -29,7 +29,7 @@ namespace TKXDPM_API.Seeder
                 new Transaction()
                 {
                     TransactionId = 100003, RentalId = 100001,
-                    PaymentStatus = PaymentStatus.NotPay,
+                    PaymentStatus = PaymentStatus.Paid,
                     BookedStartDateTime = new DateTime(2020, 12, 6), BookedEndDateTime = new DateTime(2020, 12, 6),
                     ActualStartDateTime = new DateTime(2020, 12, 3, 8, 32, 54),
                     ActualEndDateTime = new DateTime(2020, 12, 3, 10, 14, 54),
