@@ -23,7 +23,7 @@ namespace TKXDPM_API.Controllers
             _mapper = mapper;
             _dbContext = dbContext;
         }
-        
+
         [HttpGet("get-list-stations")]
         public async Task<ActionResult<List<StationResponse>>> GetListStations()
         {
@@ -91,19 +91,30 @@ namespace TKXDPM_API.Controllers
                     select bikeInStation.Bike
                     into bike
                     where bike.Type == type
-                    select _mapper.Map<BikeResponse>(bike))
+                    select bike)
                 .ToList();
 
-            return listBike;
+            var results = new List<BikeResponse>();
+            foreach (var bike in listBike)
+            {
+                var bikeResponse = _mapper.Map<BikeResponse>(bike);
+                results.Add(bikeResponse);
+            }
+
+            return results;
         }
 
         [HttpGet("get-bike")]
         public async Task<ActionResult<BikeResponse>> GetBike(int bikeId)
         {
-            var bike = await _dbContext.Bikes.FindAsync(bikeId);
+            var bike = await _dbContext.Bikes.Where(b => b.BikeId == bikeId).Include(b => b.Rentals)
+                .ThenInclude(r => r.Transaction)
+                .FirstOrDefaultAsync();
             if (bike != null)
             {
-                return _mapper.Map<BikeResponse>(bike);
+                var bikeResponse = _mapper.Map<BikeResponse>(bike);
+                bikeResponse.IsRented = bike.IsRent();
+                return bikeResponse;
             }
             else
             {

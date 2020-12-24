@@ -7,6 +7,7 @@ using TKXDPM_API.Model;
 
 namespace TKXDPM_API.Controllers
 {
+    [Route("api")]
     public class PaymentController : ControllerBase
     {
         private ILogger<PaymentController> _logger;
