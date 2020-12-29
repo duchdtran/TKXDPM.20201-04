@@ -11,7 +11,7 @@ import '../widget/app_button.dart';
 import '../widget/gradient_icon.dart';
 
 class InvoiceScreen extends StatelessWidget {
-  InvoiceScreen._({Key key, this.stationId, this.bikeId}) : super(key: key);
+  const InvoiceScreen._({Key key, this.stationId, this.bikeId}) : super(key: key);
 
   static Widget withDependency(stationId, bikeId) {
     return StateNotifierProvider<InvoiceProvider, InvoiceDataSet>(
@@ -23,8 +23,8 @@ class InvoiceScreen extends StatelessWidget {
     );
   }
 
-  int stationId;
-  int bikeId;
+  final int stationId;
+  final int bikeId;
   @override
   Widget build(BuildContext context) {
     context.watch<InvoiceProvider>().initDataSet();
