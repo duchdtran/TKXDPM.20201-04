@@ -1,3 +1,4 @@
+import '../constant/bike.dart';
 import '../core/cores.dart';
 import '../service/network/response/responses.dart';
 
@@ -39,7 +40,7 @@ class Converter {
     }
     Bike bike;
     switch (response.type) {
-      case 1:
+      case SINGLE_BIKE:
         bike = SingleBike(
           bikeName: response.bikeName,
           costHourlyRent: response.hourlyRent,
@@ -53,7 +54,7 @@ class Converter {
           licensePlates: response.licensePlates,
         );
         break;
-      case 2:
+      case DOUBLE_BIKE:
         bike = DoubleBike(
           bikeName: response.bikeName,
           costHourlyRent: response.hourlyRent,
@@ -67,7 +68,7 @@ class Converter {
           licensePlates: response.licensePlates,
         );
         break;
-      case 3:
+      case ELECTRIC_BIKE:
         bike = ElectricBike(
           batteryCapacity: response.batterCapacity,
           powerDrain: response.powerDrain, bikeName: response.bikeName,
