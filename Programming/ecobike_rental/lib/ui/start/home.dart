@@ -2,19 +2,53 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
-import '../../../model/cores.dart';
-import '../../station/station.dart';
-import '../component/component.dart';
+import '../../model/bike.dart';
+import '../../model/station.dart';
+import '../../provider/providers.dart';
+import '../station/station.dart';
+import 'component/bottom_nav.dart';
+import 'component/search_bar.dart';
+import 'component/station_item.dart';
 
-class HomeScreen extends StatelessWidget {
+// ignore: must_be_immutable
+class HomeScreen extends StatefulWidget {
   HomeScreen(this.listStation);
 
-  final List<Station> listStation;
+  List<Station> listStation;
+
+  @override
+  State<StatefulWidget> createState() => _HomeScreenState(listStation);
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  _HomeScreenState(this.listStation);
+  List<Station> listStation;
+  bool showSingleBikeOnly = false;
+  bool showDoubleBikeOnly = false;
+  bool showElectricBikeOnly = false;
+
   final Completer<GoogleMapController> _controller = Completer();
 
   @override
   Widget build(BuildContext context) {
+    context.watch<HomeProvider>().initDataSet();
+    final filteredStation = listStation.where((station) {
+      if (!showSingleBikeOnly && !showDoubleBikeOnly && !showElectricBikeOnly) {
+        return true;
+      }
+
+      for (final bike in station.bikes) {
+        if ((showSingleBikeOnly && bike.bikeType == Bike.SINGLE_BIKE) ||
+            (showDoubleBikeOnly && bike.bikeType == Bike.DOUBLE_BIKE) ||
+            (showElectricBikeOnly && bike.bikeType == Bike.ELECTRIC_BIKE)) {
+          return true;
+        }
+      }
+      return false;
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -26,15 +60,6 @@ class HomeScreen extends StatelessWidget {
           Icons.menu,
           color: Colors.black,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Colors.black,
-            ),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Stack(
         children: [
@@ -53,7 +78,36 @@ class HomeScreen extends StatelessWidget {
             top: 10,
             left: 0,
             right: 0,
-            child: buildSearchBarWidget(),
+            child: SearchBar(
+                showSingleBikeOnly: showSingleBikeOnly,
+                showDoubleBikeOnly: showDoubleBikeOnly,
+                showElectricBikeOnly: showElectricBikeOnly,
+                toggleFilter: (bikeType) {
+                  switch (bikeType) {
+                    case Bike.SINGLE_BIKE: {
+                      setState(() {
+                        showSingleBikeOnly = !showSingleBikeOnly;
+                      });
+                    }
+                    break;
+
+                    case Bike.DOUBLE_BIKE: {
+                      setState(() {
+                        showDoubleBikeOnly = !showDoubleBikeOnly;
+                      });
+                    }
+                    break;
+
+                    case Bike.ELECTRIC_BIKE: {
+                      setState(() {
+                        showElectricBikeOnly = !showElectricBikeOnly;
+                      });
+                    }
+                    break;
+                  }
+
+                }
+            ),
           ),
           Positioned(
               bottom: 20,
@@ -100,18 +154,18 @@ class HomeScreen extends StatelessWidget {
                   height: 140,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: listStation.length,
+                    itemCount: filteredStation.length,
                     itemBuilder: (context, index) {
                       return Builder(
                         builder: (context) {
-                          return buildStationItem(
-                            listStation[index],
+                          return StationItem(
+                            filteredStation[index],
                             onPress: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
                                     StationScreen.withDependency(
-                                        listStation[index].id),
+                                        filteredStation[index].id),
                               ),
                             ),
                           );
@@ -125,7 +179,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: buildBottomWidget(context),
+      bottomNavigationBar: BottomNav(context),
     );
   }
 }

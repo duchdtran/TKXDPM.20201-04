@@ -1,24 +1,27 @@
+import 'package:ecobike_rental/model/bike.dart';
+import 'package:ecobike_rental/model/station.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/cores.dart';
-import '../service/helpers.dart';
-import '../service/api/request/transaction.dart';
+import '../helper/payment.dart';
+import '../helper/rental.dart';
+import '../helper/station.dart';
+import '../helper/api/request/transaction.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Return Bike Screen
 /// @author duchdtran
 class ReturnBikeProvider extends StateNotifier<ReturnBikeDataSet>
     with LocatorMixin {
-  ReturnBikeProvider() : super(ReturnBikeDataSet()) {
-    _mPaymentHelper = PaymentHelper();
-    _mStationHelper = StationHelper();
-    _rentalHelper = RentalHelper();
+  ReturnBikeProvider(paymentHelper, stationHelper, rentalHelper) : super(ReturnBikeDataSet()) {
+    _mPaymentHelper = paymentHelper;
+    _mStationHelper = stationHelper;
+    _rentalHelper = rentalHelper;
   }
 
-  PaymentHelper _mPaymentHelper;
+  IPaymentHelper _mPaymentHelper;
 
-  RentalHelper _rentalHelper;
+  IRentalHelper _rentalHelper;
 
-  StationHelper _mStationHelper;
+  IStationHelper _mStationHelper;
 
   /// Khởi tạo dữ liệu cho màn hình return bike screen
   Future<void> initDataSet() async {

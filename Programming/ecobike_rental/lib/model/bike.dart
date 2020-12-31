@@ -1,4 +1,8 @@
 abstract class Bike {
+  static const SINGLE_BIKE = 1;
+  static const DOUBLE_BIKE = 2;
+  static const ELECTRIC_BIKE = 3;
+
   Bike({
     this.id,
     this.bikeName,

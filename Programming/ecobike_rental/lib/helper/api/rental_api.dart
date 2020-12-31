@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:tuple/tuple.dart';
 
 import 'package:ecobike_rental/model/bike.dart';
+import 'package:ecobike_rental/model/invoice.dart';
 import 'package:ecobike_rental/model/rental.dart';
 import '../util/converter.dart';
 import 'response/responses.dart';
@@ -58,17 +58,18 @@ class RentalApi {
     return deposit;
   }
 
-  Future<Tuple2<int, int>> getInvoice(String deviceCode, int bikeId) async{
+  Future<Invoice> getInvoice(String deviceCode, int bikeId) async{
     int totalTime;
-    int returnMoney;
+    int fee;
     final response = await http.get(
         'https://tkxdpm-server.herokuapp.com/api/get-invoice?deviceCode=$deviceCode&bikeId=$bikeId');
     if (response.statusCode == 200) {
       totalTime = json.decode(response.body)['minutes'];
-      returnMoney = json.decode(response.body)['fee'];
+      fee = json.decode(response.body)['fee'];
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
-    return Future.value(Tuple2(totalTime, returnMoney));
+
+    return Future.value(new Invoice(fee, totalTime));
   }
 }

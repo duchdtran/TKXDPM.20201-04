@@ -1,10 +1,11 @@
-import 'package:ecobike_rental/model/cores.dart';
+import '../model/station.dart';
+
 import 'api/station_api.dart';
 
 ///
 /// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Station
 ///
-class StationHelper {
+class ApiStationHelper implements IStationHelper {
   final api = StationApi();
 
   Future<List<Station>> getListStation() async {
@@ -20,4 +21,9 @@ class StationHelper {
     final response = await api.getStation(stationId);
     return Future.value(response);
   }
+}
+
+abstract class IStationHelper {
+  Future<List<Station>> getListStation();
+  Future<Station> getStation(int stationId);
 }

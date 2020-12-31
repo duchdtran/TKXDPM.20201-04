@@ -3,8 +3,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper/api/request/transaction.dart';
+import '../../helper/payment.dart';
+import '../../helper/rental.dart';
 import '../../provider/invoice.dart';
-import '../../service/api/request/transaction.dart';
 import '../dialog.dart';
 import '../start/start.dart';
 import '../widget/app_button.dart';
@@ -15,7 +17,7 @@ class InvoiceScreen extends StatelessWidget {
 
   static Widget withDependency(stationId, bikeId) {
     return StateNotifierProvider<InvoiceProvider, InvoiceDataSet>(
-      create: (_) => InvoiceProvider(),
+      create: (_) => InvoiceProvider(ApiPaymentHelper(), ApiRentalHelper()),
       child: InvoiceScreen._(
         stationId: stationId,
         bikeId: bikeId,

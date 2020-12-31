@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper/api/request/transaction.dart';
+import '../../helper/bike.dart';
+import '../../helper/payment.dart';
+import '../../helper/rental.dart';
 import '../../provider/payment.dart';
-import '../../service/api/request/transaction.dart';
 import '../add_payment/add_payment.dart';
 import '../dialog.dart';
 import '../start/start.dart';
@@ -14,7 +17,7 @@ class PaymentScreen extends StatelessWidget {
 
   static Widget withDependency(int bikeId) {
     return StateNotifierProvider<PaymentProvider, PaymentDataSet>(
-      create: (_) => PaymentProvider(bikeId),
+      create: (_) => PaymentProvider(bikeId, ApiPaymentHelper(), ApiBikeHelper(), ApiRentalHelper()),
       child: PaymentScreen._(),
     );
   }
