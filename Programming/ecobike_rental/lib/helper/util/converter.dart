@@ -1,4 +1,11 @@
-import 'package:ecobike_rental/model/cores.dart';
+import '../../model/address.dart';
+import '../../model/bike.dart';
+import '../../model/double_bike.dart';
+import '../../model/electric_bike.dart';
+import '../../model/rental.dart';
+import '../../model/single_bike.dart';
+import '../../model/station.dart';
+import '../../model/transaction.dart';
 import '../api/response/responses.dart';
 
 class Converter {
@@ -39,7 +46,7 @@ class Converter {
     }
     Bike bike;
     switch (response.type) {
-      case 1:
+      case Bike.SINGLE_BIKE:
         bike = SingleBike(
           bikeName: response.bikeName,
           costHourlyRent: response.hourlyRent,
@@ -53,7 +60,7 @@ class Converter {
           licensePlates: response.licensePlates,
         );
         break;
-      case 2:
+      case Bike.DOUBLE_BIKE:
         bike = DoubleBike(
           bikeName: response.bikeName,
           costHourlyRent: response.hourlyRent,
@@ -67,7 +74,7 @@ class Converter {
           licensePlates: response.licensePlates,
         );
         break;
-      case 3:
+      case Bike.ELECTRIC_BIKE:
         bike = ElectricBike(
           batteryCapacity: response.batterCapacity,
           powerDrain: response.powerDrain, bikeName: response.bikeName,

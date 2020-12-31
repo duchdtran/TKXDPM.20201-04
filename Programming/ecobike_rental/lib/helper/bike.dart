@@ -1,11 +1,12 @@
-import 'package:ecobike_rental/model/cores.dart';
+import '../model/bike.dart';
+
 import 'api/bike_api.dart';
 import 'util/converter.dart';
 
 ///
 /// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Bike
 ///@author duchdtran
-class BikeHelper implements BikeHelperInterface {
+class ApiBikeHelper implements IBikeHelper {
   BikeApi api = BikeApi();
 
   ///Lấy thông tin xe theo id
@@ -19,6 +20,6 @@ class BikeHelper implements BikeHelperInterface {
   }
 }
 
-abstract class BikeHelperInterface {
+abstract class IBikeHelper {
   Future<Bike> getBike(int bikeId);
 }

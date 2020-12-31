@@ -1,19 +1,21 @@
-import 'package:tuple/tuple.dart';
-import 'package:ecobike_rental/model/cores.dart';
-
-import 'package:ecobike_rental/config/device.dart';
+import '../config/device.dart';
+import '../model/bike.dart';
+import '../model/invoice.dart';
+import '../model/rental.dart';
 import 'api/rental_api.dart';
 
-class RentalHelper {
+class ApiRentalHelper implements IRentalHelper {
   final api = RentalApi();
   String deviceCode = DEVICE_CODE;
 
+  @override
   Future<Rental> getRentalInfo() async {
     Rental response;
     response = await api.getRentalInfo(deviceCode);
     return Future.value(response);
   }
 
+  @override
   Future<Bike> checkRentBike() async {
     Bike response;
     response = await api.checkRentBike(deviceCode);
@@ -30,9 +32,17 @@ class RentalHelper {
     await api.returnBike(deviceCode, stationId, bikeId);
   }
 
-  Future<Tuple2<int, int>> getInvoice(int bikeId) async{
-    Tuple2<int, int> response;
-    response = await api.getInvoice(deviceCode, bikeId);
-    return Future.value(response);
+  @override
+  Future<Invoice> getInvoice(int bikeId) async{
+    var invoice = await api.getInvoice(deviceCode, bikeId);
+    return Future.value(invoice);
   }
+}
+
+abstract class IRentalHelper {
+  Future<Rental> getRentalInfo();
+  Future<Bike> checkRentBike();
+  Future<bool> rentBike(int bikeId, int deposit);
+  Future<void> returnBike(int stationId, int bikeId);
+  Future<Invoice> getInvoice(int bikeId);
 }

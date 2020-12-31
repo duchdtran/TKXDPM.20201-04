@@ -4,7 +4,8 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/cores.dart';
+import '../../helper/bike.dart';
+import '../../model/bike.dart';
 import '../../provider/bike.dart';
 import '../payment/payment.dart';
 import '../widget/gradient_icon.dart';
@@ -14,7 +15,7 @@ class BikeScreen extends StatelessWidget {
 
   static Widget withDependency(int bikeId) {
     return StateNotifierProvider<BikeProvider, BikeDataSet>(
-      create: (_) => BikeProvider(bikeId),
+      create: (_) => BikeProvider(bikeId, ApiBikeHelper()),
       child: const BikeScreen._(),
     );
   }

@@ -1,17 +1,14 @@
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/cores.dart';
-import '../service//helpers.dart';
+import '../model/card.dart';
+
+
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Add Payment Screen
 /// @author duchdtran
-class AddPaymentProvider extends StateNotifier<AddPaymentDataSet>
-    with LocatorMixin {
-  AddPaymentProvider() : super(AddPaymentDataSet()) {
-    _mPaymentHelper = PaymentHelper();
+class AddPaymentProvider extends StateNotifier<AddPaymentDataSet> with LocatorMixin {
+  AddPaymentProvider(paymentHelper) : super(AddPaymentDataSet()) {
   }
-
-  PaymentHelper _mPaymentHelper;
 
   /// Khởi tạo dữ liệu cho màn hình add payment screen
   Future<void> initDataSet() async {
