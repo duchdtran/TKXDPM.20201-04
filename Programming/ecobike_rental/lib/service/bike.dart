@@ -1,6 +1,6 @@
-import '../core/cores.dart';
-import '../service/network/bike_api.dart';
-import 'converter.dart';
+import 'package:ecobike_rental/model/cores.dart';
+import 'api/bike_api.dart';
+import 'util/converter.dart';
 
 ///
 /// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Bike

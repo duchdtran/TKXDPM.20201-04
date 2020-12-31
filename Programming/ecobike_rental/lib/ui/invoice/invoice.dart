@@ -1,12 +1,12 @@
-import 'package:ecobike_rental/model/service/network/request/transaction.dart';
-import 'package:ecobike_rental/ui/start/start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/invoice.dart';
+import '../../service/api/request/transaction.dart';
 import '../dialog.dart';
+import '../start/start.dart';
 import '../widget/app_button.dart';
 import '../widget/gradient_icon.dart';
 

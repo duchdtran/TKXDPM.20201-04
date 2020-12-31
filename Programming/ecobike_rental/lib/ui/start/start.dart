@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/core/cores.dart';
+import '../../model/cores.dart';
 import '../../provider/home.dart';
 import '../widget/loading.dart';
 import 'home/home.dart';

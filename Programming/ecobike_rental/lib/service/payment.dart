@@ -1,7 +1,6 @@
-import 'package:ecobike_rental/model/helper/converter.dart';
-
-import '../service/network/payment_api.dart';
-import '../service/network/request/transaction.dart';
+import 'api/payment_api.dart';
+import 'api/request/transaction.dart';
+import 'util/converter.dart';
 
 /// Nơi lưu trữ dữ liệu về các thông tin liên quan đến Payment
 class PaymentHelper {

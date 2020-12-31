@@ -4,32 +4,35 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tuple/tuple.dart';
 
+import 'package:ecobike_rental/model/bike.dart';
+import 'package:ecobike_rental/model/rental.dart';
+import '../util/converter.dart';
 import 'response/responses.dart';
 
 class RentalApi {
-  Future<RentalResponse> getRentalInfo(String deviceCode) async {
-    RentalResponse rental;
+  Future<Rental> getRentalInfo(String deviceCode) async {
+    Rental rental;
     final response = await http.get(
         'https://tkxdpm-server.herokuapp.com/api/get-rental-info?deviceCode=$deviceCode');
     if (response.statusCode == 200) {
-      rental = RentalResponse.fromJson(json.decode(response.body));
+      rental = Converter.convertRentalResponse(RentalResponse.fromJson(json.decode(response.body)));
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
     return rental;
   }
 
-  Future<BikeResponse> checkRentBike(String deviceCode) async {
-    BikeResponse rental;
+  Future<Bike> checkRentBike(String deviceCode) async {
+    Bike bike;
     final response = await http.post(
         'https://tkxdpm-server.herokuapp.com/api/check-rent-bike?deviceCode=$deviceCode');
     if (response.statusCode == 200) {
-      rental = BikeResponse.fromJson(json.decode(response.body));
+      bike = Converter.convertBikeResponse(BikeResponse.fromJson(json.decode(response.body)));
     } else {
       return null;
       //throw Exception('Unable to fetch products from the REST API');
     }
-    return rental;
+    return bike;
   }
 
   Future<bool> rentBike(String deviceCode, int bikeId, int deposit) async {
