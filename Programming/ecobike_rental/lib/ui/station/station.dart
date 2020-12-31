@@ -3,7 +3,7 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/core/bike.dart';
+import '../../model/bike.dart';
 import '../../provider/station.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';

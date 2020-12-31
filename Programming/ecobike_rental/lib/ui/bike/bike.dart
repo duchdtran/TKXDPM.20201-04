@@ -4,7 +4,7 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/core/cores.dart';
+import '../../model/cores.dart';
 import '../../provider/bike.dart';
 import '../payment/payment.dart';
 import '../widget/gradient_icon.dart';

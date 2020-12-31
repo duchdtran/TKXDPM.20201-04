@@ -1,5 +1,5 @@
-import '../core/cores.dart';
-import '../service/network/response/responses.dart';
+import 'package:ecobike_rental/model/cores.dart';
+import '../api/response/responses.dart';
 
 class Converter {
   static Station convertStationResponse(StationResponse response) {

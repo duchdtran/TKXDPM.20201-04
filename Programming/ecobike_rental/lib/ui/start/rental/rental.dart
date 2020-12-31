@@ -1,20 +1,15 @@
 import 'dart:async';
 
-import 'package:ecobike_rental/ui/return_bike/return_bike.dart';
-import 'package:ecobike_rental/ui/station/station.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/core/cores.dart';
-import '../../../model/service/network/request/transaction.dart';
+import '../../../model/cores.dart';
 import '../../../provider/providers.dart';
-import '../../dialog.dart';
-import '../../scanner/scanner.dart';
-import '../../widget/app_button.dart';
+import '../../return_bike/return_bike.dart';
+import '../../station/station.dart';
 import '../../widget/bike_info_item.dart';
 import '../component/component.dart';
-import '../start.dart';
 
 // ignore: must_be_immutable
 class RentalScreen extends StatelessWidget {

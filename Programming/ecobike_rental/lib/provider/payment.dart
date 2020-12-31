@@ -1,8 +1,8 @@
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/core/cores.dart';
-import '../model/helper/helpers.dart';
-import '../model/service/network/request/transaction.dart';
+import '../model/cores.dart';
+import '../service/api/request/transaction.dart';
+import '../service/helpers.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Payment Screen
 /// @author duchdtran

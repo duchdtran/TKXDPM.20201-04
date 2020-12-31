@@ -1,25 +1,23 @@
 import 'package:tuple/tuple.dart';
+import 'package:ecobike_rental/model/cores.dart';
 
-import '../core/cores.dart';
-import '../service/network/rental_api.dart';
-import '../service/network/response/bike.dart';
-import '../service/network/response/rental.dart';
-import 'converter.dart';
+import 'package:ecobike_rental/config/device.dart';
+import 'api/rental_api.dart';
 
 class RentalHelper {
   final api = RentalApi();
-  String deviceCode = 'b89570dd-9ae3-4317-b610-6de2b548764c';
+  String deviceCode = DEVICE_CODE;
 
   Future<Rental> getRentalInfo() async {
-    RentalResponse response;
+    Rental response;
     response = await api.getRentalInfo(deviceCode);
-    return Future.value(Converter.convertRentalResponse(response));
+    return Future.value(response);
   }
 
   Future<Bike> checkRentBike() async {
-    BikeResponse response;
+    Bike response;
     response = await api.checkRentBike(deviceCode);
-    return Future.value(Converter.convertBikeResponse(response));
+    return Future.value(response);
   }
 
   Future<bool> rentBike(int bikeId, int deposit) async{

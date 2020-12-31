@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/core/cores.dart';
-import '../model/helper/helpers.dart';
+import '../model/cores.dart';
+import '../service/helpers.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Start Screen
 /// @author duchdtran

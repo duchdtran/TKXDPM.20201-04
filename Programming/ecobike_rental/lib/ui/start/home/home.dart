@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../model/core/cores.dart';
+import '../../../model/cores.dart';
 import '../../station/station.dart';
 import '../component/component.dart';
 

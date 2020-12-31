@@ -15,9 +15,9 @@ class InputEncoding {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    var s = data['secretKey'] = this.secretKey;
+    data['secretKey'] = this.secretKey;
     if (this.transaction != null) {
-      var map = data['transaction'] = transaction.toJson();
+      data['transaction'] = transaction.toJson();
     }
     return data;
   }
