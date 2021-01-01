@@ -1,11 +1,11 @@
+import 'package:ecobike_rental/controller/station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/bike.dart';
-import '../../controller/station.dart';
-import '../../helper/station.dart';
+import '../../../helper/station.dart';
+import '../../../model/bike.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';
 

@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/controller/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/bike.dart';
-import '../../model/station.dart';
-import '../../controller/providers.dart';
+import '../../../model/bike.dart';
+import '../../../model/station.dart';
 import '../station/station.dart';
 import 'component/bottom_nav.dart';
 import 'component/search_bar.dart';

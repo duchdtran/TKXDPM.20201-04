@@ -1,12 +1,12 @@
+import 'package:ecobike_rental/controller/home.dart';
+import 'package:ecobike_rental/views/widget/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../helper/rental.dart';
-import '../../helper/station.dart';
-import '../../model/station.dart';
-import '../../controller/home.dart';
-import '../widget/loading.dart';
+import '../../../helper/rental.dart';
+import '../../../helper/station.dart';
+import '../../../model/station.dart';
 import 'home.dart';
 import 'rental.dart';
 

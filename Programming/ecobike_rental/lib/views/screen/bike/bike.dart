@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecobike_rental/controller/bike.dart';
+import 'package:ecobike_rental/views/widget/gradient_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../../helper/bike.dart';
-import '../../model/bike.dart';
-import '../../controller/bike.dart';
+import '../../../helper/bike.dart';
+import '../../../model/bike.dart';
 import '../payment/payment.dart';
-import '../widget/gradient_icon.dart';
 
 class BikeScreen extends StatelessWidget {
   const BikeScreen._({Key key}) : super(key: key);

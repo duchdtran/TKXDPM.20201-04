@@ -1,27 +1,30 @@
+import 'package:ecobike_rental/common/exception/payment.dart';
+import 'package:ecobike_rental/common/exception/unrecognized.dart';
+import 'package:ecobike_rental/model/credit_card.dart';
+import 'package:ecobike_rental/subsystem/interbank_interface.dart';
+import 'package:ecobike_rental/subsystem/interbank_subsystem.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../helper/api/request/transaction.dart';
 import '../helper/bike.dart';
-import '../helper/payment.dart';
 import '../helper/rental.dart';
 import '../model/bike.dart';
-import '../model/card.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Payment Screen
 /// @author duchdtran
-class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
-  PaymentProvider(bikeId, paymentHelper, bikeHelper, rentalHelper) : super(PaymentDataSet()) {
+class PaymentController extends StateNotifier<PaymentDataSet>
+    with LocatorMixin {
+  PaymentController(bikeId, bikeHelper, rentalHelper)
+      : super(PaymentDataSet()) {
     _bikeId = bikeId;
-    _mPaymentHelper = paymentHelper;
     _mBikeHelper = bikeHelper;
     _mRentalHelper = rentalHelper;
   }
 
   int _bikeId;
 
-  IPaymentHelper _mPaymentHelper;
   IBikeHelper _mBikeHelper;
   IRentalHelper _mRentalHelper;
+  InterbankInterface _interbank;
 
   /// Khởi tạo dữ liệu cho màn hình payment screen
   Future<void> initDataSet() async {
@@ -37,9 +40,22 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
   /// Thanh toán
   /// @transaction nội dung thanh toán
   /// @return thông báo gửi từ ngân hàng
-  Future<String> processTransaction(TransactionRequest transaction) async {
-    final message = await _mPaymentHelper.processTransaction(transaction);
-    return Future.value(message);
+  Future<Map<String, dynamic>> payOrder(int amount, String contents) async {
+    final result = <String, dynamic>{};
+    result['result'] = false;
+    try {
+      final card = state.listCard[state.paymentChoose];
+      _interbank = InterbankSubsytem();
+      await _interbank.payOrder(card, amount, contents);
+
+      result['result'] = true;
+      result['message'] = 'Thanh toán thành công';
+    } on PaymentException catch (e) {
+      result['message'] = e.toString();
+    } on UnrecognizedException catch (e) {
+      result['message'] = e.toString();
+    }
+    return Future.value(result);
   }
 
   ///Thuê xe
@@ -61,13 +77,12 @@ class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
 
   ///Thêm phương thức thanh toán
   ///@cardInfo thông tin thẻ mới được thêm
-  Future<void> addPaymentMethod(CardInfo cardInfo) {
+  Future<void> addPaymentMethod(CreditCard cardInfo) {
     final newState = state;
     newState.listCard.add(cardInfo);
     state = newState;
   }
 }
-
 
 /// Class chứa dữ liệu cho màn hình Payment Screen
 /// @author duchdtran
@@ -75,17 +90,11 @@ class PaymentDataSet {
   PaymentDataSet() {
     init = false;
     paymentChoose = 0;
-    listCard = [
-      CardInfo(
-          cardCode: '118609_group4_2020',
-          owner: 'Group 4',
-          cvvCode: 228,
-          dateExpired: 1125)
-    ];
+    listCard = [CreditCard('118609_group4_2020', 'Group 4', 228, 1125)];
   }
 
   bool init;
-  List<CardInfo> listCard;
+  List<CreditCard> listCard;
   Bike bike;
   int paymentChoose;
 }

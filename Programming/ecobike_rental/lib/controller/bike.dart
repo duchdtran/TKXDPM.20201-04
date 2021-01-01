@@ -1,13 +1,13 @@
+import 'package:ecobike_rental/model/credit_card.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../helper/bike.dart';
 import '../model/bike.dart';
-import '../model/card.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Bike Screen
 /// @author duchdtran
-class BikeProvider extends StateNotifier<BikeDataSet> with LocatorMixin {
-  BikeProvider(bikeId, bikeHelper) : super(BikeDataSet()) {
+class BikeController extends StateNotifier<BikeDataSet> with LocatorMixin {
+  BikeController(bikeId, bikeHelper) : super(BikeDataSet()) {
     _bikeId = bikeId;
     _bikeHelper = bikeHelper;
   }
@@ -37,5 +37,5 @@ class BikeDataSet {
 
   bool init;
   Bike bike;
-  List<CardInfo> listCard;
+  List<CreditCard> listCard;
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/station.dart';
+import '../../../../model/station.dart';
 
 Widget StationItem(Station station, {Function onPress}) {
   return InkWell(

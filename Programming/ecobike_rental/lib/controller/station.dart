@@ -6,8 +6,8 @@ import '../model/station.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Station Screen
 /// @author duchdtran
-class StationProvider extends StateNotifier<StationDataSet> with LocatorMixin {
-  StationProvider(stationId, stationHelper) : super(StationDataSet()) {
+class StationController extends StateNotifier<StationDataSet> with LocatorMixin {
+  StationController(stationId, stationHelper) : super(StationDataSet()) {
     _stationId = stationId;
     _mStationHelper = stationHelper;
   }

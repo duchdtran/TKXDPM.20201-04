@@ -1,15 +1,13 @@
+import 'package:ecobike_rental/controller/payment.dart';
+import 'package:ecobike_rental/views/dialog/dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../helper/api/request/transaction.dart';
-import '../../helper/bike.dart';
-import '../../helper/payment.dart';
-import '../../helper/rental.dart';
-import '../../controller/payment.dart';
+import '../../../helper/bike.dart';
+import '../../../helper/rental.dart';
 import '../add_payment/add_payment.dart';
-import '../dialog.dart';
 import '../start/start.dart';
 
 class PaymentScreen extends StatelessWidget {
@@ -17,7 +15,8 @@ class PaymentScreen extends StatelessWidget {
 
   static Widget withDependency(int bikeId) {
     return StateNotifierProvider<PaymentController, PaymentDataSet>(
-      create: (_) => PaymentController(bikeId, ApiPaymentHelper(), ApiBikeHelper(), ApiRentalHelper()),
+      create: (_) => PaymentController(
+          bikeId, ApiBikeHelper(), ApiRentalHelper()),
       child: PaymentScreen._(),
     );
   }
@@ -60,7 +59,7 @@ class PaymentScreen extends StatelessWidget {
                     child: _buildPaymentMethodWidget(
                       isCheck: data == index,
                       title: context.select<PaymentDataSet, String>(
-                          (value) => value.listCard[index].cardCode),
+                          (value) => value.listCard[index].toJson()['cardCode']),
                     ),
                   ),
                 ),
@@ -93,33 +92,28 @@ class PaymentScreen extends StatelessWidget {
                 onPress: !data
                     ? null
                     : () async {
-                        final transaction = TransactionRequest(
-                          owner: 'Group 4',
-                          createdAt: '2020-11-12 10:55:26',
-                          amount: deposit,
-                          cvvCode: '228',
-                          dateExpired: '1125',
-                          cardCode: '118609_group4_2020',
-                          transactionContent: 'Tiền đặt cọc',
-                          command: 'pay',
-                        );
                         await showLoadingDialog(context, function: () async {
-                          final message =  await context
+                          final result = await context
                               .read<PaymentController>()
-                              .processTransaction(transaction);
-                         await context
-                              .read<PaymentController>()
-                              .rentBike(bikeId, deposit);
+                              .payOrder(deposit, 'Tiền đặt cọc');
+                          if (result['result']) {
+                            await context
+                                .read<PaymentController>()
+                                .rentBike(bikeId, deposit);
+                          }
+                          Navigator.pop(context);
                           await showDialog(
                             context: context,
                             builder: (context) {
                               return CustomDialogBox(
-                                title: message,
-                                onPress: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            StartScreen.withDependency())),
+                                title: result['message'],
+                                onPress: !result['result']
+                                    ? null
+                                    : () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                StartScreen.withDependency())),
                               );
                             },
                           );

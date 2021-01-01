@@ -1,16 +1,16 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/controller/home.dart';
+import 'package:ecobike_rental/views/widget/bike_info_item.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/bike.dart';
-import '../../model/invoice.dart';
-import '../../model/station.dart';
-import '../../controller/providers.dart';
+import '../../../model/bike.dart';
+import '../../../model/invoice.dart';
+import '../../../model/station.dart';
 import '../return_bike/return_bike.dart';
 import '../station/station.dart';
-import '../widget/bike_info_item.dart';
 import 'component/bottom_nav.dart';
 import 'component/search_bar.dart';
 import 'component/station_item.dart';

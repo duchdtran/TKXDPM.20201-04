@@ -1,23 +1,21 @@
+import 'package:ecobike_rental/controller/invoice.dart';
+import 'package:ecobike_rental/views/dialog/dialog.dart';
+import 'package:ecobike_rental/views/widget/app_button.dart';
+import 'package:ecobike_rental/views/widget/gradient_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
-
-import '../../helper/api/request/transaction.dart';
-import '../../helper/payment.dart';
-import '../../helper/rental.dart';
-import '../../controller/invoice.dart';
-import '../dialog.dart';
+import '../../../helper/rental.dart';
 import '../start/start.dart';
-import '../widget/app_button.dart';
-import '../widget/gradient_icon.dart';
 
 class InvoiceScreen extends StatelessWidget {
-  const InvoiceScreen._({Key key, this.stationId, this.bikeId}) : super(key: key);
+  const InvoiceScreen._({Key key, this.stationId, this.bikeId})
+      : super(key: key);
 
   static Widget withDependency(stationId, bikeId) {
     return StateNotifierProvider<InvoiceController, InvoiceDataSet>(
-      create: (_) => InvoiceController(ApiPaymentHelper(), ApiRentalHelper()),
+      create: (_) => InvoiceController(ApiRentalHelper()),
       child: InvoiceScreen._(
         stationId: stationId,
         bikeId: bikeId,
@@ -30,7 +28,8 @@ class InvoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.watch<InvoiceController>().initDataSet();
-    int returnMoney = context.select<InvoiceDataSet, int>((value) => value.returnMoney);
+    int returnMoney =
+        context.select<InvoiceDataSet, int>((value) => value.returnMoney);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hóa đơn'),
@@ -125,36 +124,31 @@ class InvoiceScreen extends StatelessWidget {
                   ),
                   AppButton(
                     title: 'Xác nhận thanh toán',
-                    onPress: () {
-                      final transactionRefund = TransactionRequest(
-                        owner: 'Group 4',
-                        createdAt: '2020-12-25 10:55:26',
-                        amount: returnMoney,
-                        cvvCode: '228',
-                        dateExpired: '1125',
-                        cardCode: '118609_group4_2020',
-                        transactionContent: 'Trả lại tiền cọc',
-                        command: 'refund',
-                      );
-                      showLoadingDialog(
+                    onPress: () async {
+                      await showLoadingDialog(
                         context,
                         function: () async {
-                          final message = await context
+                          final result = await context
                               .read<InvoiceController>()
-                              .processTransaction(transactionRefund);
-                          await context
-                              .read<InvoiceController>()
-                              .returnBike(stationId, bikeId);
+                              .refund(returnMoney, 'Thanh toán tiền thuê xe');
+                          if (result['result']) {
+                            await context
+                                .read<InvoiceController>()
+                                .returnBike(stationId, bikeId);
+                          }
+                          Navigator.pop(context);
                           await showDialog(
                             context: context,
                             builder: (context) {
                               return CustomDialogBox(
-                                title: message,
-                                onPress: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            StartScreen.withDependency())),
+                                title: result['message'],
+                                onPress: !result['result']
+                                    ? null
+                                    : () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                StartScreen.withDependency())),
                               );
                             },
                           );
@@ -162,6 +156,7 @@ class InvoiceScreen extends StatelessWidget {
                       );
                     },
                   ),
+                  const SizedBox(height: 20,),
                 ],
               ),
             );

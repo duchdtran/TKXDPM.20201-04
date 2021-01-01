@@ -1,13 +1,13 @@
+import 'package:ecobike_rental/model/credit_card.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/card.dart';
 
 
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Add Payment Screen
 /// @author duchdtran
-class AddPaymentProvider extends StateNotifier<AddPaymentDataSet> with LocatorMixin {
-  AddPaymentProvider(paymentHelper) : super(AddPaymentDataSet()) {
+class AddPaymentController extends StateNotifier<AddPaymentDataSet> with LocatorMixin {
+  AddPaymentController(paymentHelper) : super(AddPaymentDataSet()) {
   }
 
   /// Khởi tạo dữ liệu cho màn hình add payment screen
@@ -18,7 +18,7 @@ class AddPaymentProvider extends StateNotifier<AddPaymentDataSet> with LocatorMi
   }
 
   /// Thêm phương thức thanh toán
-  Future<void> addPaymentMethod(CardInfo cardInfo){
+  Future<void> addPaymentMethod(CreditCard cardInfo){
     
   }
 }
@@ -31,6 +31,6 @@ class AddPaymentDataSet {
   }
 
 
-  CardInfo cardInfo;
+  CreditCard cardInfo;
   bool init;
 }

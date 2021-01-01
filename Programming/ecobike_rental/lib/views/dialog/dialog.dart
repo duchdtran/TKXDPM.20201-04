@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'widget/gradient_icon.dart';
+import '../widget/gradient_icon.dart';
 
 class CustomDialogBox extends StatefulWidget {
   CustomDialogBox({this.title, this.onPress});
@@ -82,7 +82,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: widget.onPress,
+            onTap: () {
+              Navigator.of(context).pop();
+              widget.onPress();
+            },
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
               children: [
@@ -116,21 +119,20 @@ Future<void> showLoadingDialog(BuildContext context,
       builder: (context) {
         return WillPopScope(
             onWillPop: () async => false,
-            child: SimpleDialog(
-                backgroundColor: Colors.white,
-                children: <Widget>[
-                  Center(
-                    child: Column(children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(
-                        height: 10,
-                      ), 
-                      const Text(
-                        "Vui lòng đợi...",
-                        style: TextStyle(color: Colors.blueAccent),
-                      )
-                    ]),
+            child:
+                SimpleDialog(backgroundColor: Colors.white, children: <Widget>[
+              Center(
+                child: Column(children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "Vui lòng đợi...",
+                    style: TextStyle(color: Colors.blueAccent),
                   )
-                ]));
+                ]),
+              )
+            ]));
       });
 }

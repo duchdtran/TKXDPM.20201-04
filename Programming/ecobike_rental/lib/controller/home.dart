@@ -8,8 +8,8 @@ import '../model/invoice.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Start Screen
 /// @author duchdtran
-class HomeProvider extends StateNotifier<HomeDataSet> with LocatorMixin {
-  HomeProvider(stationHelper, rentalHelper) : super(HomeDataSet()) {
+class HomeController extends StateNotifier<HomeDataSet> with LocatorMixin {
+  HomeController(stationHelper, rentalHelper) : super(HomeDataSet()) {
     _stationHelper = stationHelper;
     _rentalHelper = rentalHelper;
   }

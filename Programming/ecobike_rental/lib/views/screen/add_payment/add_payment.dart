@@ -1,8 +1,7 @@
+import 'package:ecobike_rental/model/credit_card.dart';
+import 'package:ecobike_rental/views/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../model/card.dart';
-import '../widget/app_button.dart';
 
 class AddPayment extends StatefulWidget {
   @override
@@ -208,23 +207,11 @@ Widget _buildBottomWidget(BuildContext context, _formKey, controller) {
           onPress: () {
             final form = _formKey.currentState;
             if (form.validate()) {
-              // Print all form value
-              // print('Card number: ');
-              // print(controller['number'].value.text);
-              // print('Name: ');
-              // print(controller['name'].value.text);
-              // print('Due date: ');
-              // print(controller['due'].value.text);
-              // print('CVV: ');
-              // print(controller['cvv'].value.text);
-              // print('Save card? ');
-              // print(controller['saveCard']);
-
-              final cardInfo = CardInfo(
-                cardCode: controller['number'].value.text,
-                cvvCode: int.parse(controller['cvv'].value.text),
-                dateExpired: int.parse(controller['due'].value.text),
-                owner: controller['name'].value.text,
+              final cardInfo = CreditCard(
+                controller['number'].value.text,
+                controller['name'].value.text,
+                int.parse(controller['cvv'].value.text),
+                int.parse(controller['due'].value.text),
               );
 
               Navigator.pop(context, cardInfo);

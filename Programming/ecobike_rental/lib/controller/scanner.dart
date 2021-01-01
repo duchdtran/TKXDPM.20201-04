@@ -2,9 +2,9 @@ import 'package:state_notifier/state_notifier.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Scanner Screen
 /// @author duchdtran
-class ScannerProvider extends StateNotifier<ScannerDataSet>
+class ScannerController extends StateNotifier<ScannerDataSet>
     with LocatorMixin {
-  ScannerProvider() : super(ScannerDataSet()) ;
+  ScannerController() : super(ScannerDataSet()) ;
 
   /// Khởi tạo dữ liệu cho màn hình scanner screen
   Future<void> initDataSet() async {

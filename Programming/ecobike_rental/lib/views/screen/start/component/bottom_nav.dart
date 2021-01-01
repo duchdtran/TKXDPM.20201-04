@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../widget/widgets.dart';
 import '../../scanner/scanner.dart';
-import '../../widget/widgets.dart';
 
 Widget BottomNav(BuildContext context) {
   return Container(

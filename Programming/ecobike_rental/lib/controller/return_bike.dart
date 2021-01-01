@@ -2,22 +2,18 @@ import 'package:ecobike_rental/model/bike.dart';
 import 'package:ecobike_rental/model/station.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../helper/payment.dart';
 import '../helper/rental.dart';
 import '../helper/station.dart';
-import '../helper/api/request/transaction.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Return Bike Screen
 /// @author duchdtran
-class ReturnBikeProvider extends StateNotifier<ReturnBikeDataSet>
+class ReturnBikeController extends StateNotifier<ReturnBikeDataSet>
     with LocatorMixin {
-  ReturnBikeProvider(paymentHelper, stationHelper, rentalHelper) : super(ReturnBikeDataSet()) {
-    _mPaymentHelper = paymentHelper;
+  ReturnBikeController(stationHelper, rentalHelper) : super(ReturnBikeDataSet()) {
     _mStationHelper = stationHelper;
     _rentalHelper = rentalHelper;
   }
 
-  IPaymentHelper _mPaymentHelper;
 
   IRentalHelper _rentalHelper;
 
@@ -41,13 +37,6 @@ class ReturnBikeProvider extends StateNotifier<ReturnBikeDataSet>
     await _rentalHelper.returnBike(stationId, bikeId);
   }
 
-  ///Thanh toán
-  ///@transaction nội dung giao dịch
-  ///@return thông điệp trả về từ server ngân hàng
-  Future<String> processTransaction(TransactionRequest transaction) async {
-    final message = await _mPaymentHelper.processTransaction(transaction);
-    return Future.value(message);
-  }
 }
 
 
