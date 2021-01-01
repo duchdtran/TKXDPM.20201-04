@@ -1,7 +1,8 @@
-import 'card.dart';
+import 'credit_card.dart';
+
 
 class Renter {
   int id;
   String renterName;
-  List<CardInfo> cards;
+  List<CreditCard> cards;
 }

@@ -1,1 +1,0 @@
-const DEVICE_CODE = 'b89570dd-9ae3-4317-b610-6de2b548764c';

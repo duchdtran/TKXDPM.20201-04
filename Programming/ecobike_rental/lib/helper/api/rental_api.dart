@@ -3,24 +3,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:ecobike_rental/model/bike.dart';
-import 'package:ecobike_rental/model/invoice.dart';
-import 'package:ecobike_rental/model/rental.dart';
+import '../../model/bike.dart';
+import '../../model/invoice.dart';
 import '../util/converter.dart';
 import 'response/responses.dart';
 
 class RentalApi {
-  Future<Rental> getRentalInfo(String deviceCode) async {
-    Rental rental;
-    final response = await http.get(
-        'https://tkxdpm-server.herokuapp.com/api/get-rental-info?deviceCode=$deviceCode');
-    if (response.statusCode == 200) {
-      rental = Converter.convertRentalResponse(RentalResponse.fromJson(json.decode(response.body)));
-    } else {
-      throw Exception('Unable to fetch products from the REST API');
-    }
-    return rental;
-  }
 
   Future<Bike> checkRentBike(String deviceCode) async {
     Bike bike;

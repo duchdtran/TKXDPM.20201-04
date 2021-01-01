@@ -1,19 +1,11 @@
-import '../config/device.dart';
 import '../model/bike.dart';
 import '../model/invoice.dart';
-import '../model/rental.dart';
+import '../ultils/config.dart';
 import 'api/rental_api.dart';
 
 class ApiRentalHelper implements IRentalHelper {
   final api = RentalApi();
-  String deviceCode = DEVICE_CODE;
-
-  @override
-  Future<Rental> getRentalInfo() async {
-    Rental response;
-    response = await api.getRentalInfo(deviceCode);
-    return Future.value(response);
-  }
+  String deviceCode = Configs.DEVICE_CODE;
 
   @override
   Future<Bike> checkRentBike() async {
@@ -40,7 +32,6 @@ class ApiRentalHelper implements IRentalHelper {
 }
 
 abstract class IRentalHelper {
-  Future<Rental> getRentalInfo();
   Future<Bike> checkRentBike();
   Future<bool> rentBike(int bikeId, int deposit);
   Future<void> returnBike(int stationId, int bikeId);

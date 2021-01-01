@@ -1,10 +1,8 @@
 import 'bike.dart';
 import 'renter.dart';
-import 'transaction.dart';
 
 class Rental {
-  Rental({this.rentedBike, this.renter, this.transactionInfo});
+  Rental({this.rentedBike, this.renter});
   Renter renter;
   Bike rentedBike;
-  Transaction transactionInfo;
 }
