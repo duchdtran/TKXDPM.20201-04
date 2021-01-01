@@ -1,21 +1,23 @@
-import 'package:ecobike_rental/model/service/network/request/transaction.dart';
-import 'package:ecobike_rental/ui/start/start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper/api/request/transaction.dart';
+import '../../helper/payment.dart';
+import '../../helper/rental.dart';
 import '../../provider/invoice.dart';
 import '../dialog.dart';
+import '../start/start.dart';
 import '../widget/app_button.dart';
 import '../widget/gradient_icon.dart';
 
 class InvoiceScreen extends StatelessWidget {
-  InvoiceScreen._({Key key, this.stationId, this.bikeId}) : super(key: key);
+  const InvoiceScreen._({Key key, this.stationId, this.bikeId}) : super(key: key);
 
   static Widget withDependency(stationId, bikeId) {
     return StateNotifierProvider<InvoiceProvider, InvoiceDataSet>(
-      create: (_) => InvoiceProvider(),
+      create: (_) => InvoiceProvider(ApiPaymentHelper(), ApiRentalHelper()),
       child: InvoiceScreen._(
         stationId: stationId,
         bikeId: bikeId,
@@ -23,8 +25,8 @@ class InvoiceScreen extends StatelessWidget {
     );
   }
 
-  int stationId;
-  int bikeId;
+  final int stationId;
+  final int bikeId;
   @override
   Widget build(BuildContext context) {
     context.watch<InvoiceProvider>().initDataSet();

@@ -1,20 +1,21 @@
-import 'package:ecobike_rental/ui/invoice/invoice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/core/cores.dart';
-import '../../model/service/network/request/transaction.dart';
+import '../../helper/payment.dart';
+import '../../helper/rental.dart';
+import '../../helper/station.dart';
+import '../../model/bike.dart';
+import '../../model/station.dart';
 import '../../provider/return_bike.dart';
-import '../dialog.dart';
-import '../start/start.dart';
+import '../invoice/invoice.dart';
 
 class ReturnBikeScreen extends StatelessWidget {
   const ReturnBikeScreen._({Key key}) : super(key: key);
 
   static Widget withDependency() {
     return StateNotifierProvider<ReturnBikeProvider, ReturnBikeDataSet>(
-      create: (_) => ReturnBikeProvider(),
+      create: (_) => ReturnBikeProvider(ApiPaymentHelper(), ApiStationHelper(), ApiRentalHelper()),
       child: const ReturnBikeScreen._(),
     );
   }

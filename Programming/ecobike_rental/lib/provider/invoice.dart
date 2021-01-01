@@ -1,31 +1,32 @@
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/core/cores.dart';
-import '../model/helper/helpers.dart';
-import '../model/service/network/request/transaction.dart';
+import '../helper/api/request/transaction.dart';
+import '../helper/payment.dart';
+import '../helper/rental.dart';
+import '../model/bike.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Return Bike Screen
 /// @author duchdtran
 class InvoiceProvider extends StateNotifier<InvoiceDataSet>
     with LocatorMixin {
-  InvoiceProvider() : super(InvoiceDataSet()) {
-    _mPaymentHelper = PaymentHelper();
-    _rentalHelper = RentalHelper();
+  InvoiceProvider(paymentHelper, rentalHelper) : super(InvoiceDataSet()) {
+    _mPaymentHelper = paymentHelper;
+    _rentalHelper = rentalHelper;
   }
 
-  PaymentHelper _mPaymentHelper;
+  IPaymentHelper _mPaymentHelper;
 
-  RentalHelper _rentalHelper;
+  IRentalHelper _rentalHelper;
 
   /// Khởi tạo dữ liệu cho màn hình return bike screen
   Future<void> initDataSet() async {
     final newState = InvoiceDataSet()
       ..bikeRented = await _rentalHelper.checkRentBike();
 
-    final response = await _rentalHelper.getInvoice(newState.bikeRented.id);
+    final invoice = await _rentalHelper.getInvoice(newState.bikeRented.id);
 
-    newState.totalTime = response.item1;
-    newState.rentalMoney = response.item2;
+    newState.totalTime = invoice.minutes;
+    newState.rentalMoney = invoice.fee;
 
     newState.returnMoney = newState.bikeRented.deposits - newState.rentalMoney;
     newState.init = true;

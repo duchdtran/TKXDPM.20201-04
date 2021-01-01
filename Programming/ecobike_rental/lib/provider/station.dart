@@ -1,18 +1,20 @@
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/core/cores.dart';
-import '../model/helper/helpers.dart';
+import '../helper/station.dart';
+import '../model/bike.dart';
+import '../model/station.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Station Screen
 /// @author duchdtran
 class StationProvider extends StateNotifier<StationDataSet> with LocatorMixin {
-  StationProvider(this._stationId) : super(StationDataSet()) {
-    _mStationHelper = StationHelper();
+  StationProvider(stationId, stationHelper) : super(StationDataSet()) {
+    _stationId = stationId;
+    _mStationHelper = stationHelper;
   }
 
-  final int _stationId;
+  int _stationId;
 
-  StationHelper _mStationHelper;
+  IStationHelper _mStationHelper;
 
   /// Khởi tạo dữ liệu cho màn hình station screen
   Future<void> initDataSet() async {

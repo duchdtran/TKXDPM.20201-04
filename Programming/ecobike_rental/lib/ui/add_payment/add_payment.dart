@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../model/core/card.dart';
+import '../../model/card.dart';
 import '../widget/app_button.dart';
 
 class AddPayment extends StatefulWidget {

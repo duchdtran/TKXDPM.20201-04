@@ -1,19 +1,20 @@
-import 'package:flutter/widgets.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/core/cores.dart';
-import '../model/helper/helpers.dart';
+import '../helper/bike.dart';
+import '../model/bike.dart';
+import '../model/card.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Bike Screen
 /// @author duchdtran
 class BikeProvider extends StateNotifier<BikeDataSet> with LocatorMixin {
-  BikeProvider(this._bikeId) : super(BikeDataSet()) {
-    _bikeHelper = BikeHelper();
+  BikeProvider(bikeId, bikeHelper) : super(BikeDataSet()) {
+    _bikeId = bikeId;
+    _bikeHelper = bikeHelper;
   }
 
-  final int _bikeId;
+  int _bikeId;
 
-  BikeHelper _bikeHelper;
+  IBikeHelper _bikeHelper;
 
   /// Khởi tạo dữ liệu cho màn hình bike screen
   Future<void> initDataSet() async {

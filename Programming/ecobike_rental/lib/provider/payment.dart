@@ -1,23 +1,27 @@
 import 'package:state_notifier/state_notifier.dart';
 
-import '../model/core/cores.dart';
-import '../model/helper/helpers.dart';
-import '../model/service/network/request/transaction.dart';
+import '../helper/api/request/transaction.dart';
+import '../helper/bike.dart';
+import '../helper/payment.dart';
+import '../helper/rental.dart';
+import '../model/bike.dart';
+import '../model/card.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Payment Screen
 /// @author duchdtran
 class PaymentProvider extends StateNotifier<PaymentDataSet> with LocatorMixin {
-  PaymentProvider(this._bikeId) : super(PaymentDataSet()) {
-    _mPaymentHelper = PaymentHelper();
-    _mBikeHelper = BikeHelper();
-    _mRentalHelper = RentalHelper();
+  PaymentProvider(bikeId, paymentHelper, bikeHelper, rentalHelper) : super(PaymentDataSet()) {
+    _bikeId = bikeId;
+    _mPaymentHelper = paymentHelper;
+    _mBikeHelper = bikeHelper;
+    _mRentalHelper = rentalHelper;
   }
 
-  final int _bikeId;
+  int _bikeId;
 
-  PaymentHelper _mPaymentHelper;
-  BikeHelper _mBikeHelper;
-  RentalHelper _mRentalHelper;
+  IPaymentHelper _mPaymentHelper;
+  IBikeHelper _mBikeHelper;
+  IRentalHelper _mRentalHelper;
 
   /// Khởi tạo dữ liệu cho màn hình payment screen
   Future<void> initDataSet() async {
