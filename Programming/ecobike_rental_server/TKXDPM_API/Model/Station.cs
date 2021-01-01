@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using AutoMapper;
 
 namespace TKXDPM_API.Model
 {
@@ -16,29 +18,37 @@ namespace TKXDPM_API.Model
         [Column(TypeName = "varchar(255)")] public string Email { get; set; }
         [Column(TypeName = "varchar(255)")] public string Phone { get; set; }
         public float Area { get; set; }
-
         public List<BikeInStation> BikeInStations { get; set; }
+
+        public IEnumerable<Bike> GetListBikes(BikeType type)
+        {
+            return (from bikeInStation in BikeInStations
+                select bikeInStation.Bike
+                into bike
+                where bike.Type == type
+                select bike);
+        }
     }
 
     public class StationResponse
     {
-        public StationResponse()
+        public static StationResponse CreateByMapper(Station station, IMapper mapper)
         {
-            StationId = 1;
-            AddressId = 1;
-            StationName = "StationName";
-            StationImage = "StationImage";
-            ContactName = "ContactName";
-            Email = "Email";
-            Phone = "Phone";
-            Address = new AddressResponse();
-            ListBike = new List<BikeResponse>()
+            var stationResponse = mapper.Map<StationResponse>(station);
+            if (station.Address != null)
             {
-                new BikeResponse(),
-                new BikeResponse(),
-                new BikeResponse()
-            };
-            Area = 10.5F;
+                stationResponse.Address = mapper.Map<AddressResponse>(station.Address);
+            }
+
+            var listBike = new List<BikeResponse>();
+            foreach (var bikeInStation in station.BikeInStations)
+            {
+                listBike.Add(mapper.Map<BikeResponse>(bikeInStation.Bike));
+            }
+
+            stationResponse.ListBike = listBike;
+
+            return stationResponse;
         }
 
         public int StationId { get; set; }

@@ -16,13 +16,6 @@ namespace TKXDPM_API.Controllers
         private readonly ILogger<ReturnBikeController> _logger;
         private readonly ApplicationDbContext _dbContext;
 
-        private readonly Dictionary<BikeType, int> _condition = new Dictionary<BikeType, int>()
-        {
-            {BikeType.Single, 550000},
-            {BikeType.Double, 700000},
-            {BikeType.Electric, 700000}
-        };
-
         public ReturnBikeController(ILogger<ReturnBikeController> logger,
             ApplicationDbContext dbContext)
         {
@@ -78,29 +71,26 @@ namespace TKXDPM_API.Controllers
                 .Include(r => r.Rentals)
                 .ThenInclude(rt => rt.Transaction)
                 .FirstOrDefaultAsync();
-            if (renter.Rentals.Count == 0)
+            if (renter.HasNoRentals())
             {
                 return NotFound($"Renter {deviceCode} didn't have a rental");
             }
 
-            var rental = renter.Rentals.Find(r => (r.Transaction != null && r.Transaction.PaymentStatus == PaymentStatus.Deposit));
-            if (rental?.Transaction == null)
-            {
-                return NotFound($"Renter {deviceCode} didn't have a transaction");
-            }
-            
-            if (rental.BikeId != bikeId)
+            if (!renter.IsRentBike(bikeId))
             {
                 return BadRequest($"Renter {deviceCode} didn't rent bike {bikeId}");
             }
-            
-            var transaction = rental.Transaction;
-            var totalMinutes = (DateTime.Now - transaction.BookedStartDateTime).TotalMinutes;
+
+            var transaction = renter.GetDepositTransaction();
+            if (transaction == null)
+            {
+                return NotFound($"Renter {deviceCode} didn't have a transaction");
+            }
+
+            var totalMinutes = transaction.GetRentMinutes(DateTime.Now);
             var fee = CalculateFee(totalMinutes, bike.Type);
             _logger.LogInformation("Total minutes " + totalMinutes);
-
-            transaction.BookedEndDateTime = bikeStation.DateTimeIn;
-
+            transaction.UpdateRentInfo(bikeStation.DateTimeIn);
             await _dbContext.SaveChangesAsync();
 
             return new ReturnBikeResponse()
@@ -137,24 +127,23 @@ namespace TKXDPM_API.Controllers
                 .Include(r => r.Rentals)
                 .ThenInclude(rt => rt.Transaction)
                 .FirstOrDefaultAsync();
-            if (renter.Rentals.Count == 0)
+            if (renter.HasNoRentals())
             {
                 return NotFound($"Renter {deviceCode} didn't have a rental");
             }
-            
-            var rental = renter.Rentals.Find(r => (r.Transaction != null && r.Transaction.PaymentStatus == PaymentStatus.Deposit));
-            if (rental?.Transaction == null)
-            {
-                return NotFound($"Renter {deviceCode} didn't have a transaction");
-            }
-            
-            if (rental.BikeId != bikeId)
+
+            if (!renter.IsRentBike(bikeId))
             {
                 return BadRequest($"Renter {deviceCode} didn't rent bike {bikeId}");
             }
-            
-            var transaction = rental.Transaction;
-            var totalMinutes = (DateTime.Now - transaction.BookedStartDateTime).TotalMinutes;
+
+            var transaction = renter.GetDepositTransaction();
+            if (transaction == null)
+            {
+                return NotFound($"Renter {deviceCode} didn't have a transaction");
+            }
+
+            var totalMinutes = transaction.GetRentMinutes(DateTime.Now);
             var fee = CalculateFee(totalMinutes, bike.Type);
             _logger.LogInformation("Total minutes " + totalMinutes);
 
@@ -170,8 +159,7 @@ namespace TKXDPM_API.Controllers
         {
             var bikeInStations
                 = await (from bikeInStation in _dbContext.BikeInStations
-                    where bikeInStation.BikeId == bikeId
-                          && bikeInStation.StationId == stationId
+                    where bikeInStation.BikeIsInStation(bikeId, stationId)
                     select bikeInStation).ToListAsync();
             return bikeInStations.Count != 0;
         }

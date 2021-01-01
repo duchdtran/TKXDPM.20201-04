@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 
 namespace TKXDPM_API.Model
 {
@@ -27,13 +28,11 @@ namespace TKXDPM_API.Model
 
     public class CardResponse
     {
-        public CardResponse()
+        public static CardResponse CreateByRenter(Renter renter, IMapper mapper)
         {
-            CardId = 1;
-            Renter = new RenterResponse();
-            PaymentMethod = "PaymentMethod";
-            Cvv = 700;
-            ExpirationDate = new DateTime(2021, 10, 10).ToShortDateString();
+            var cardResponse = mapper.Map<CardResponse>(renter.Card);
+            cardResponse.Renter = mapper.Map<RenterResponse>(renter);
+            return cardResponse;
         }
 
         public int CardId { get; set; }

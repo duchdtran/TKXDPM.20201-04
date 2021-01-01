@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using AutoMapper;
 
 namespace TKXDPM_API.Model
 {
@@ -37,23 +38,27 @@ namespace TKXDPM_API.Model
                            rental.Transaction.BookedEndDateTime == DateTime.MinValue ||
                            rental.Transaction.BookedEndDateTime >= DateTime.Now));
         }
+
+        public bool CheckDeposit(int deposit)
+        {
+            var condition = new Dictionary<BikeType, int>()
+            {
+                {BikeType.Single, 400000},
+                {BikeType.Double, 550000},
+                {BikeType.Electric, 700000}
+            };
+
+            return deposit >= condition[Type];
+        }
     }
 
     public class BikeResponse
     {
-        public BikeResponse()
+        public static BikeResponse CreateByMapper(Bike bike, IMapper mapper)
         {
-            BikeId = 1;
-            BikeName = "BikeName";
-            BikeImage = "BikeImage";
-            Description = "Address";
-            StartingRent = 10;
-            HourlyRent = 11;
-            Type = BikeType.Double;
-            LicensePlates = "Address";
-            BatterCapacity = 10;
-            PowerDrain = 0.6F;
-            Deposit = 100000;
+            var bikeResponse = mapper.Map<BikeResponse>(bike);
+            bikeResponse.IsRented = bike.IsRent();
+            return bikeResponse;
         }
 
         public int BikeId { get; set; }

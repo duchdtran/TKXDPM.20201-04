@@ -936,7 +936,7 @@ namespace TKXDPM_API.Migrations
                             ActualStartDateTime = new DateTime(2020, 12, 3, 8, 32, 54, 0, DateTimeKind.Unspecified),
                             BookedEndDateTime = new DateTime(2020, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookedStartDateTime = new DateTime(2020, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PaymentStatus = 2,
+                            PaymentStatus = 3,
                             RentalId = 100001
                         },
                         new
@@ -956,7 +956,7 @@ namespace TKXDPM_API.Migrations
                             ActualStartDateTime = new DateTime(2020, 12, 3, 8, 32, 54, 0, DateTimeKind.Unspecified),
                             BookedEndDateTime = new DateTime(2020, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookedStartDateTime = new DateTime(2020, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PaymentStatus = 1,
+                            PaymentStatus = 3,
                             RentalId = 100001
                         },
                         new

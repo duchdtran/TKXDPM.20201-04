@@ -13,5 +13,10 @@ namespace TKXDPM_API.Model
         public Bike Bike { get; set; }
         public DateTime DateTimeIn { get; set; }
         public DateTime DateTimeOut { get; set; }
+
+        public bool BikeIsInStation(int bikeId, int stationId)
+        {
+            return BikeId == bikeId && StationId == stationId;
+        }
     }
 }

@@ -20,6 +20,11 @@ namespace TKXDPM_API.Model
         public string RateContent { get; set; }
         public Transaction Transaction { get; set; }
         public int RateNumber { get; set; }
+        
+        public bool IsInRentingState()
+        {
+            return Transaction != null && Transaction.IsInRentingState();
+        }
     }
 
     public class RentalResponse

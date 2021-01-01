@@ -31,46 +31,22 @@ namespace TKXDPM_API.Controllers
                 .Include(station => station.BikeInStations).ThenInclude(bikeInStation => bikeInStation.Bike)
                 .Include(station => station.Address)
                 .ToListAsync();
-            var listStationResponse = new List<StationResponse>();
-            foreach (var station in listStation)
-            {
-                var stationResponse = _mapper.Map<StationResponse>(station);
-                stationResponse.Address = _mapper.Map<AddressResponse>(station.Address);
-                var listBike = new List<BikeResponse>();
-                foreach (var bikeInStation in station.BikeInStations)
-                {
-                    listBike.Add(_mapper.Map<BikeResponse>(bikeInStation.Bike));
-                }
-
-                stationResponse.ListBike = listBike;
-                listStationResponse.Add(stationResponse);
-            }
-
-            return listStationResponse;
+            return listStation.Select(station => StationResponse.CreateByMapper(station, _mapper)).ToList();
         }
 
         [HttpGet("get-station")]
         public async Task<ActionResult<StationResponse>> GetStation(int id)
         {
-            var stationR = await _dbContext.Stations.Where(s => s.StationId == id)
+            var station = await _dbContext.Stations.Where(s => s.StationId == id)
                 .Include(s => s.BikeInStations).ThenInclude(bikeInStation => bikeInStation.Bike)
                 .Include(s => s.Address)
                 .FirstOrDefaultAsync();
-            if (stationR == null)
+            if (station == null)
             {
                 return NotFound($"Not found station {id}");
             }
 
-            var stationResponse = _mapper.Map<StationResponse>(stationR);
-            stationResponse.Address = _mapper.Map<AddressResponse>(stationR.Address);
-            var listBike = new List<BikeResponse>();
-            foreach (var bikeInStation in stationR.BikeInStations)
-            {
-                listBike.Add(_mapper.Map<BikeResponse>(bikeInStation.Bike));
-            }
-
-            stationResponse.ListBike = listBike;
-            return stationResponse;
+            return StationResponse.CreateByMapper(station, _mapper);
         }
 
         [HttpGet("get-list-bike")]
@@ -86,22 +62,9 @@ namespace TKXDPM_API.Controllers
                 return NotFound($"Not found station {stationId}");
             }
 
-            var listBike = (
-                    from bikeInStation in station.BikeInStations
-                    select bikeInStation.Bike
-                    into bike
-                    where bike.Type == type
-                    select bike)
+            return station.GetListBikes(type)
+                .Select(bike => BikeResponse.CreateByMapper(bike, _mapper))
                 .ToList();
-
-            var results = new List<BikeResponse>();
-            foreach (var bike in listBike)
-            {
-                var bikeResponse = _mapper.Map<BikeResponse>(bike);
-                results.Add(bikeResponse);
-            }
-
-            return results;
         }
 
         [HttpGet("get-bike")]
@@ -112,9 +75,7 @@ namespace TKXDPM_API.Controllers
                 .FirstOrDefaultAsync();
             if (bike != null)
             {
-                var bikeResponse = _mapper.Map<BikeResponse>(bike);
-                bikeResponse.IsRented = bike.IsRent();
-                return bikeResponse;
+                return BikeResponse.CreateByMapper(bike, _mapper);
             }
             else
             {
@@ -132,9 +93,7 @@ namespace TKXDPM_API.Controllers
                 return NotFound($"Not found renter {deviceCode}");
             }
 
-            var card = _mapper.Map<CardResponse>(renter.Card);
-            card.Renter = _mapper.Map<RenterResponse>(renter);
-            return card;
+            return CardResponse.CreateByRenter(renter, _mapper);
         }
 
         [HttpGet("get-rental-info")]

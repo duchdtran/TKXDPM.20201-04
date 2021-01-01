@@ -14,13 +14,6 @@ namespace TKXDPM_API.Model
 
     public class AddressResponse
     {
-        public AddressResponse()
-        {
-            AddressName = "AddressName";
-            Longitude = 10;
-            Latitude = 10;
-        }
-
         public string AddressName { get; set; }
         public float Longitude { get; set; }
         public float Latitude { get; set; }

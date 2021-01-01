@@ -15,8 +15,24 @@ namespace TKXDPM_API.Model
         public DateTime BookedEndDateTime { get; set; } = DateTime.MinValue;
         public DateTime ActualStartDateTime { get; set; } = DateTime.MinValue;
         public DateTime ActualEndDateTime { get; set; } = DateTime.MinValue;
-    }
 
+        public bool IsInRentingState()
+        {
+            return PaymentStatus == PaymentStatus.Deposit;
+        }
+
+        public double GetRentMinutes(DateTime feeTime)
+        {
+            return (feeTime - BookedStartDateTime).TotalMinutes;
+        }
+
+        public void UpdateRentInfo(DateTime timeIn, PaymentStatus status = PaymentStatus.Paid)
+        {
+            BookedEndDateTime = timeIn;
+            PaymentStatus = status;
+        }
+    }
+ 
     public class TransactionResponse
     {
         [Key] public int TransactionId { get; set; }

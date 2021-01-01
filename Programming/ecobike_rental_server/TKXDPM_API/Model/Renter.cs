@@ -6,28 +6,32 @@ namespace TKXDPM_API.Model
 {
     public class Renter
     {
-        public Renter()
-        {
-            RenterId = 20175004;
-            Name = "Nguyen Van Cao";
-        }
-
         [Key] public int RenterId { get; set; }
         [Column(TypeName = "varchar(255)")] public string Name { get; set; }
         [Column(TypeName = "varchar(255)")] public string DeviceCode { get; set; }
         public List<Rental> Rentals { get; set; }
         public Card Card { get; set; }
+
+        public bool HasNoRentals()
+        {
+            return Rentals.Count == 0;
+        }
+
+        public Transaction GetDepositTransaction()
+        {
+            var rental = Rentals.Find(r => (r.Transaction != null && r.Transaction.PaymentStatus == PaymentStatus.Deposit));
+            return rental?.Transaction;
+        }
+
+        public bool IsRentBike(int bikeId)
+        {
+            var rental = Rentals.Find(r => (r.Transaction != null && r.Transaction.PaymentStatus == PaymentStatus.Deposit));
+            return rental?.BikeId == bikeId;
+        }
     }
 
     public class RenterResponse
     {
-        public RenterResponse()
-        {
-            RenterId = 1;
-            DeviceCode = "1011-5004";
-            Name = "Nguyen Van Cao";
-        }
-
         public int RenterId { get; set; }
         public string Name { get; set; }
         public string DeviceCode { get; set; }

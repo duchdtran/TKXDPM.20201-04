@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace TKXDPM_API.Migrations
 {
-    public partial class Test : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -315,7 +315,7 @@ namespace TKXDPM_API.Migrations
                 columns: new[] { "TransactionId", "ActualEndDateTime", "ActualStartDateTime", "BookedEndDateTime", "BookedStartDateTime", "PaymentStatus", "RentalId" },
                 values: new object[,]
                 {
-                    { 100003, new DateTime(2020, 12, 3, 10, 14, 54, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 3, 8, 32, 54, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 100001 },
+                    { 100003, new DateTime(2020, 12, 3, 10, 14, 54, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 3, 8, 32, 54, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 100001 },
                     { 100004, new DateTime(2020, 12, 3, 10, 14, 54, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 3, 8, 32, 54, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 100002 }
                 });
 
