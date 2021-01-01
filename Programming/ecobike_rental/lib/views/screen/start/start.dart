@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../helper/rental.dart';
 import '../../helper/station.dart';
 import '../../model/station.dart';
-import '../../provider/home.dart';
+import '../../controller/home.dart';
 import '../widget/loading.dart';
 import 'home.dart';
 import 'rental.dart';
@@ -14,15 +14,15 @@ class StartScreen extends StatelessWidget {
   const StartScreen._({Key key}) : super(key: key);
 
   static Widget withDependency() {
-    return StateNotifierProvider<HomeProvider, HomeDataSet>(
-      create: (_) => HomeProvider(ApiStationHelper(), ApiRentalHelper()),
+    return StateNotifierProvider<HomeController, HomeDataSet>(
+      create: (_) => HomeController(ApiStationHelper(), ApiRentalHelper()),
       child: const StartScreen._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<HomeProvider>().initDataSet();
+    context.watch<HomeController>().initDataSet();
 
     return Selector<HomeDataSet, bool>(
       builder: (context, data, child) {

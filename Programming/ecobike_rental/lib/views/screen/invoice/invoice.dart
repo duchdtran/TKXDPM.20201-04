@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../helper/api/request/transaction.dart';
 import '../../helper/payment.dart';
 import '../../helper/rental.dart';
-import '../../provider/invoice.dart';
+import '../../controller/invoice.dart';
 import '../dialog.dart';
 import '../start/start.dart';
 import '../widget/app_button.dart';
@@ -16,8 +16,8 @@ class InvoiceScreen extends StatelessWidget {
   const InvoiceScreen._({Key key, this.stationId, this.bikeId}) : super(key: key);
 
   static Widget withDependency(stationId, bikeId) {
-    return StateNotifierProvider<InvoiceProvider, InvoiceDataSet>(
-      create: (_) => InvoiceProvider(ApiPaymentHelper(), ApiRentalHelper()),
+    return StateNotifierProvider<InvoiceController, InvoiceDataSet>(
+      create: (_) => InvoiceController(ApiPaymentHelper(), ApiRentalHelper()),
       child: InvoiceScreen._(
         stationId: stationId,
         bikeId: bikeId,
@@ -29,7 +29,7 @@ class InvoiceScreen extends StatelessWidget {
   final int bikeId;
   @override
   Widget build(BuildContext context) {
-    context.watch<InvoiceProvider>().initDataSet();
+    context.watch<InvoiceController>().initDataSet();
     int returnMoney = context.select<InvoiceDataSet, int>((value) => value.returnMoney);
     return Scaffold(
       appBar: AppBar(
@@ -140,10 +140,10 @@ class InvoiceScreen extends StatelessWidget {
                         context,
                         function: () async {
                           final message = await context
-                              .read<InvoiceProvider>()
+                              .read<InvoiceController>()
                               .processTransaction(transactionRefund);
                           await context
-                              .read<InvoiceProvider>()
+                              .read<InvoiceController>()
                               .returnBike(stationId, bikeId);
                           await showDialog(
                             context: context,

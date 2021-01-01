@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../helper/bike.dart';
 import '../../model/bike.dart';
-import '../../provider/bike.dart';
+import '../../controller/bike.dart';
 import '../payment/payment.dart';
 import '../widget/gradient_icon.dart';
 
@@ -14,8 +14,8 @@ class BikeScreen extends StatelessWidget {
   const BikeScreen._({Key key}) : super(key: key);
 
   static Widget withDependency(int bikeId) {
-    return StateNotifierProvider<BikeProvider, BikeDataSet>(
-      create: (_) => BikeProvider(bikeId, ApiBikeHelper()),
+    return StateNotifierProvider<BikeController, BikeDataSet>(
+      create: (_) => BikeController(bikeId, ApiBikeHelper()),
       child: const BikeScreen._(),
     );
   }
@@ -30,7 +30,7 @@ class BikeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<BikeProvider>().initDataSet();
+    context.watch<BikeController>().initDataSet();
     final bike = context.select<BikeDataSet, Bike>((value) => value.bike);
     return Scaffold(
       appBar: AppBar(

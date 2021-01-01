@@ -7,22 +7,22 @@ import '../../helper/rental.dart';
 import '../../helper/station.dart';
 import '../../model/bike.dart';
 import '../../model/station.dart';
-import '../../provider/return_bike.dart';
+import '../../controller/return_bike.dart';
 import '../invoice/invoice.dart';
 
 class ReturnBikeScreen extends StatelessWidget {
   const ReturnBikeScreen._({Key key}) : super(key: key);
 
   static Widget withDependency() {
-    return StateNotifierProvider<ReturnBikeProvider, ReturnBikeDataSet>(
-      create: (_) => ReturnBikeProvider(ApiPaymentHelper(), ApiStationHelper(), ApiRentalHelper()),
+    return StateNotifierProvider<ReturnBikeController, ReturnBikeDataSet>(
+      create: (_) => ReturnBikeController(ApiPaymentHelper(), ApiStationHelper(), ApiRentalHelper()),
       child: const ReturnBikeScreen._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<ReturnBikeProvider>().initDataSet();
+    context.watch<ReturnBikeController>().initDataSet();
     return Scaffold(
         appBar: AppBar(
           title: const Text('Vui lòng chọn bãi xe để trả'),

@@ -4,7 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/bike.dart';
-import '../../provider/station.dart';
+import '../../controller/station.dart';
 import '../../helper/station.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';
@@ -13,15 +13,15 @@ class StationScreen extends StatelessWidget {
   const StationScreen._({Key key}) : super(key: key);
 
   static Widget withDependency(int stationId) {
-    return StateNotifierProvider<StationProvider, StationDataSet>(
-      create: (_) => StationProvider(stationId, ApiStationHelper()),
+    return StateNotifierProvider<StationController, StationDataSet>(
+      create: (_) => StationController(stationId, ApiStationHelper()),
       child: const StationScreen._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<StationProvider>().initDataSet();
+    context.watch<StationController>().initDataSet();
     return Scaffold(
       body: Selector<StationDataSet, bool>(
         builder: (context, data, child) {
@@ -84,7 +84,7 @@ class StationScreen extends StatelessWidget {
   }
 
   Widget _buildListBikeWidget(BuildContext context, int bikeType) {
-    final listBike = context.watch<StationProvider>().loadListBike(bikeType);
+    final listBike = context.watch<StationController>().loadListBike(bikeType);
 
     return ListView.builder(
       itemCount:

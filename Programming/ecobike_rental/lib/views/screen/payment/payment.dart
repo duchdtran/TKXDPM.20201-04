@@ -7,7 +7,7 @@ import '../../helper/api/request/transaction.dart';
 import '../../helper/bike.dart';
 import '../../helper/payment.dart';
 import '../../helper/rental.dart';
-import '../../provider/payment.dart';
+import '../../controller/payment.dart';
 import '../add_payment/add_payment.dart';
 import '../dialog.dart';
 import '../start/start.dart';
@@ -16,15 +16,15 @@ class PaymentScreen extends StatelessWidget {
   PaymentScreen._({Key key}) : super(key: key);
 
   static Widget withDependency(int bikeId) {
-    return StateNotifierProvider<PaymentProvider, PaymentDataSet>(
-      create: (_) => PaymentProvider(bikeId, ApiPaymentHelper(), ApiBikeHelper(), ApiRentalHelper()),
+    return StateNotifierProvider<PaymentController, PaymentDataSet>(
+      create: (_) => PaymentController(bikeId, ApiPaymentHelper(), ApiBikeHelper(), ApiRentalHelper()),
       child: PaymentScreen._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    context.watch<PaymentProvider>().initDataSet();
+    context.watch<PaymentController>().initDataSet();
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -55,7 +55,7 @@ class PaymentScreen extends StatelessWidget {
                       (value) => value.listCard.length),
                   (index) => InkWell(
                     onTap: () => context
-                        .read<PaymentProvider>()
+                        .read<PaymentController>()
                         .selectPaymentMethod(index),
                     child: _buildPaymentMethodWidget(
                       isCheck: data == index,
@@ -105,10 +105,10 @@ class PaymentScreen extends StatelessWidget {
                         );
                         await showLoadingDialog(context, function: () async {
                           final message =  await context
-                              .read<PaymentProvider>()
+                              .read<PaymentController>()
                               .processTransaction(transaction);
                          await context
-                              .read<PaymentProvider>()
+                              .read<PaymentController>()
                               .rentBike(bikeId, deposit);
                           await showDialog(
                             context: context,
@@ -150,7 +150,7 @@ Widget _buildAddPaymentMethodWidget(BuildContext context) {
       final cardInfo = await Navigator.push(
           context, MaterialPageRoute(builder: (context) => AddPayment()));
       if (cardInfo != null) {
-        await context.read<PaymentProvider>().addPaymentMethod(cardInfo);
+        await context.read<PaymentController>().addPaymentMethod(cardInfo);
       }
     },
     child: Container(

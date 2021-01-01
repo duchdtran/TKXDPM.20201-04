@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../model/bike.dart';
 import '../../model/station.dart';
-import '../../provider/providers.dart';
+import '../../controller/providers.dart';
 import '../station/station.dart';
 import 'component/bottom_nav.dart';
 import 'component/search_bar.dart';
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<HomeProvider>().initDataSet();
+    context.watch<HomeController>().initDataSet();
     final filteredStation = listStation.where((station) {
       if (!showSingleBikeOnly && !showDoubleBikeOnly && !showElectricBikeOnly) {
         return true;

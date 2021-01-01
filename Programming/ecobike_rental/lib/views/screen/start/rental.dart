@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../../model/bike.dart';
 import '../../model/invoice.dart';
 import '../../model/station.dart';
-import '../../provider/providers.dart';
+import '../../controller/providers.dart';
 import '../return_bike/return_bike.dart';
 import '../station/station.dart';
 import '../widget/bike_info_item.dart';
@@ -36,7 +36,7 @@ class _RentalScreenState extends State<RentalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<HomeProvider>().initDataSet();
+    context.watch<HomeController>().initDataSet();
     final filteredStation = listStation.where((station) {
       if (!showSingleBikeOnly && !showDoubleBikeOnly && !showElectricBikeOnly) {
         return true;
