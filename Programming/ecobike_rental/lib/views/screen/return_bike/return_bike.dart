@@ -3,10 +3,8 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/return_bike.dart';
-import '../../../helper/rental.dart';
-import '../../../helper/station.dart';
-import '../../../model/bike.dart';
-import '../../../model/station.dart';
+import '../../../entity/bike/bike.dart';
+import '../../../entity/station/station.dart';
 import '../invoice/invoice.dart';
 
 class ReturnBikeScreen extends StatelessWidget {
@@ -14,7 +12,7 @@ class ReturnBikeScreen extends StatelessWidget {
 
   static Widget withDependency() {
     return StateNotifierProvider<ReturnBikeController, ReturnBikeDataSet>(
-      create: (_) => ReturnBikeController(ApiStationHelper(), ApiRentalHelper()),
+      create: (_) => ReturnBikeController( ),
       child: const ReturnBikeScreen._(),
     );
   }

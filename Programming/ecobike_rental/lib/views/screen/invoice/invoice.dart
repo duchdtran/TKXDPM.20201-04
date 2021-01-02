@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
-import '../../../helper/rental.dart';
 import '../start/start.dart';
 
 class InvoiceScreen extends StatelessWidget {
@@ -15,7 +14,7 @@ class InvoiceScreen extends StatelessWidget {
 
   static Widget withDependency(stationId, bikeId) {
     return StateNotifierProvider<InvoiceController, InvoiceDataSet>(
-      create: (_) => InvoiceController(ApiRentalHelper()),
+      create: (_) => InvoiceController(),
       child: InvoiceScreen._(
         stationId: stationId,
         bikeId: bikeId,
@@ -28,7 +27,7 @@ class InvoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.watch<InvoiceController>().initDataSet();
-    int returnMoney =
+    final returnMoney =
         context.select<InvoiceDataSet, int>((value) => value.returnMoney);
     return Scaffold(
       appBar: AppBar(

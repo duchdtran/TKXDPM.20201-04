@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../../helper/rental.dart';
-import '../../../helper/station.dart';
-import '../../../model/station.dart';
+import '../../../entity/station/station.dart';
 import 'home.dart';
 import 'rental.dart';
 
@@ -15,7 +13,7 @@ class StartScreen extends StatelessWidget {
 
   static Widget withDependency() {
     return StateNotifierProvider<HomeController, HomeDataSet>(
-      create: (_) => HomeController(ApiStationHelper(), ApiRentalHelper()),
+      create: (_) => HomeController(),
       child: const StartScreen._(),
     );
   }

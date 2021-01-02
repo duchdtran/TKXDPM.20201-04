@@ -1,5 +1,6 @@
-import '../model/credit_card.dart';
-import '../model/payment_transaction.dart';
+import 'package:ecobike_rental/entity/payment/credit_card.dart';
+import 'package:ecobike_rental/entity/payment/payment_transaction.dart';
+
 import 'interbank/interbank_subsytem_controller.dart';
 import 'interbank_interface.dart';
 

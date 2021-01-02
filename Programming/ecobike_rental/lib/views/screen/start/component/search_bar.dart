@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../model/bike.dart';
+import '../../../../entity/bike/bike.dart';
 import 'traffic.dart';
 
 Widget SearchBar({Function onTap, Function(int bikeType) toggleFilter, bool showSingleBikeOnly, bool showDoubleBikeOnly, bool showElectricBikeOnly}) {
