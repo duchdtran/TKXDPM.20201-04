@@ -1,36 +1,32 @@
-import 'package:ecobike_rental/common/exception/payment.dart';
-import 'package:ecobike_rental/common/exception/unrecognized.dart';
-import 'package:ecobike_rental/model/credit_card.dart';
-import 'package:ecobike_rental/subsystem/interbank_interface.dart';
-import 'package:ecobike_rental/subsystem/interbank_subsystem.dart';
+import 'package:ecobike_rental/entity/payment/credit_card.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../helper/bike.dart';
-import '../helper/rental.dart';
-import '../model/bike.dart';
+import '../common/exception/payment.dart';
+import '../common/exception/unrecognized.dart';
+import '../entity/bike/bike.dart';
+import '../entity/rental/rental.dart';
+import '../subsystem/interbank_interface.dart';
+import '../subsystem/interbank_subsystem.dart';
+import '../ultils/config.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Payment Screen
 /// @author duchdtran
 class PaymentController extends StateNotifier<PaymentDataSet>
     with LocatorMixin {
-  PaymentController(bikeId, bikeHelper, rentalHelper)
+  PaymentController(bikeId)
       : super(PaymentDataSet()) {
     _bikeId = bikeId;
-    _mBikeHelper = bikeHelper;
-    _mRentalHelper = rentalHelper;
   }
 
   int _bikeId;
 
-  IBikeHelper _mBikeHelper;
-  IRentalHelper _mRentalHelper;
   InterbankInterface _interbank;
 
   /// Khởi tạo dữ liệu cho màn hình payment screen
   Future<void> initDataSet() async {
     final newState = PaymentDataSet()
       ..listCard = state.listCard
-      ..bike = await _mBikeHelper.getBike(_bikeId)
+      ..bike = await Bike().getBike(_bikeId)
       ..paymentChoose = state.paymentChoose
       ..init = true;
 
@@ -62,7 +58,7 @@ class PaymentController extends StateNotifier<PaymentDataSet>
   ///@bikeId mã xe
   ///@deposit tiền đặt cọc
   Future<void> rentBike(int bikeId, int deposit) async {
-    await _mRentalHelper.rentBike(bikeId, deposit);
+    await Rental().rentBike(Configs.DEVICE_CODE, bikeId, deposit);
   }
 
   ///Lựa chọn phương thức thanh toán

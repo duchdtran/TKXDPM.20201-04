@@ -1,42 +1,27 @@
-import 'package:ecobike_rental/model/bike.dart';
-import 'package:ecobike_rental/model/station.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../helper/rental.dart';
-import '../helper/station.dart';
+import '../entity/bike/bike.dart';
+import '../entity/rental/rental.dart';
+import '../entity/station/station.dart';
+import '../ultils/config.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Return Bike Screen
 /// @author duchdtran
 class ReturnBikeController extends StateNotifier<ReturnBikeDataSet>
     with LocatorMixin {
-  ReturnBikeController(stationHelper, rentalHelper) : super(ReturnBikeDataSet()) {
-    _mStationHelper = stationHelper;
-    _rentalHelper = rentalHelper;
-  }
+  ReturnBikeController() : super(ReturnBikeDataSet());
 
 
-  IRentalHelper _rentalHelper;
-
-  IStationHelper _mStationHelper;
 
   /// Khởi tạo dữ liệu cho màn hình return bike screen
   Future<void> initDataSet() async {
     final newState = ReturnBikeDataSet()
-      ..listStation = await _mStationHelper.getListStation()
-      ..bikeRented = await _rentalHelper.checkRentBike()
+      ..listStation = await Station().getListStation()
+      ..bikeRented = await Rental().checkRentBike(Configs.DEVICE_CODE)
       ..init = true;
 
     state = newState;
   }
-
-  ///Trả xe
-  ///@stationId mã trạm xe muốn trả
-  ///@bikeId mã xe đang thuê
-  ///@return số tiền cần trả lại
-  Future<int> returnBike(int stationId, int bikeId) async {
-    await _rentalHelper.returnBike(stationId, bikeId);
-  }
-
 }
 
 

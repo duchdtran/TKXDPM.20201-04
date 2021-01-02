@@ -2,30 +2,29 @@ import 'package:state_notifier/state_notifier.dart';
 
 import '../common/exception/payment.dart';
 import '../common/exception/unrecognized.dart';
-import '../helper/rental.dart';
-import '../model/bike.dart';
-import '../model/credit_card.dart';
+import '../entity/bike/bike.dart';
+import '../entity/invoice/invoice.dart';
+import '../entity/payment/credit_card.dart';
+import '../entity/rental/rental.dart';
 import '../subsystem/interbank_interface.dart';
 import '../subsystem/interbank_subsystem.dart';
+import '../ultils/config.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Return Bike Screen
 /// @author duchdtran
 class InvoiceController extends StateNotifier<InvoiceDataSet>
     with LocatorMixin {
-  InvoiceController(rentalHelper) : super(InvoiceDataSet()) {
-    _rentalHelper = rentalHelper;
-  }
+  InvoiceController() : super(InvoiceDataSet());
 
 
-  IRentalHelper _rentalHelper;
   InterbankInterface _interbank;
 
   /// Khởi tạo dữ liệu cho màn hình return bike screen
   Future<void> initDataSet() async {
     final newState = InvoiceDataSet()
-      ..bikeRented = await _rentalHelper.checkRentBike();
+      ..bikeRented = await Rental().checkRentBike(Configs.DEVICE_CODE);
 
-    final invoice = await _rentalHelper.getInvoice(newState.bikeRented.id);
+    final invoice = await Invoice().getInvoice(Configs.DEVICE_CODE, newState.bikeRented.id);
 
     newState.totalTime = invoice.minutes;
     newState.rentalMoney = invoice.fee;
@@ -38,7 +37,7 @@ class InvoiceController extends StateNotifier<InvoiceDataSet>
 
   ///Lấy hóa đơn
   Future<void> getInvoice() async {
-    await _rentalHelper.getInvoice(state.bikeRented.id);
+    await Invoice().getInvoice(Configs.DEVICE_CODE,state.bikeRented.id);
   }
 
   ///Trả xe
@@ -46,7 +45,7 @@ class InvoiceController extends StateNotifier<InvoiceDataSet>
   ///@bikeId mã xe đang thuê
   ///@return số tiền cần trả lại
   Future<void> returnBike(int stationId, int bikeId) async {
-    await _rentalHelper.returnBike(stationId, bikeId);
+    await Rental().returnBike(Configs.DEVICE_CODE, stationId, bikeId);
   }
 
   ///Thanh toán

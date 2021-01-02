@@ -1,4 +1,5 @@
-import 'credit_card.dart';
+import 'package:ecobike_rental/entity/payment/credit_card.dart';
+
 
 
 class Renter {

@@ -1,4 +1,4 @@
-import 'package:ecobike_rental/model/credit_card.dart';
+import 'package:ecobike_rental/entity/payment/credit_card.dart';
 import 'package:ecobike_rental/views/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,11 +1,10 @@
-import 'package:ecobike_rental/controller/station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../../../helper/station.dart';
-import '../../../model/bike.dart';
+import '../../../controller/station.dart';
+import '../../../entity/bike/bike.dart';
 import '../bike/bike.dart';
 import '../payment/payment.dart';
 
@@ -14,7 +13,7 @@ class StationScreen extends StatelessWidget {
 
   static Widget withDependency(int stationId) {
     return StateNotifierProvider<StationController, StationDataSet>(
-      create: (_) => StationController(stationId, ApiStationHelper()),
+      create: (_) => StationController(stationId),
       child: const StationScreen._(),
     );
   }
