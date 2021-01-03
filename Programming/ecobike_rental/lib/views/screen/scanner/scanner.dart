@@ -132,11 +132,18 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         qrText = scanData;
+        final bikeId = int.parse(qrText);
         debugPrint('QRCode: $qrText');
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => BikeScreen.withDependency(1)));
+          context,
+          MaterialPageRoute(
+            builder: (context) => BikeScreen.withDependency(bikeId),
+          ),
+        );
+        showMaterialModalBottomSheet(
+            context: context,
+            builder: (context, scrollController) =>
+                PaymentScreen.withDependency(bikeId));
       });
     });
   }
@@ -163,16 +170,17 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                 color: Colors.grey),
             submit: (pin) {
               debugPrint('Code pin: $pin');
+              final bikeId = int.parse(pin);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BikeScreen.withDependency(1),
+                  builder: (context) => BikeScreen.withDependency(bikeId),
                 ),
               );
               showMaterialModalBottomSheet(
                   context: context,
                   builder: (context, scrollController) =>
-                      PaymentScreen.withDependency(1));
+                      PaymentScreen.withDependency(bikeId));
             },
           ),
         ],
