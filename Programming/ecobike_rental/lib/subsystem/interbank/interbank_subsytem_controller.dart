@@ -11,8 +11,8 @@ import '../../common/exception/not_enough_balance.dart';
 import '../../common/exception/not_enough_transaction_info.dart';
 import '../../common/exception/suspicious_transaction.dart';
 import '../../common/exception/unrecognized.dart';
-import '../../ultils/config.dart';
-import '../../ultils/ultis.dart';
+import '../../utils/config.dart';
+import '../../utils/utils.dart';
 import 'interbank_boundary.dart';
 
 class InterbankSubsystemController {

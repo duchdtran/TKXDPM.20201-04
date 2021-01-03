@@ -8,7 +8,7 @@ import '../entity/payment/credit_card.dart';
 import '../entity/rental/rental.dart';
 import '../subsystem/interbank_interface.dart';
 import '../subsystem/interbank_subsystem.dart';
-import '../ultils/config.dart';
+import '../utils/config.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Return Bike Screen
 /// @author duchdtran

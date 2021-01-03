@@ -5,7 +5,7 @@ import '../entity/bike/bike.dart';
 import '../entity/invoice/invoice.dart';
 import '../entity/rental/rental.dart';
 import '../entity/station/station.dart';
-import '../ultils/config.dart';
+import '../utils/config.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Start Screen
 /// @author duchdtran

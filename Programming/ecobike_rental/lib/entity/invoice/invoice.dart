@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../ultils/api.dart';
+import '../../utils/api.dart';
 
 class Invoice {
   Invoice({this.fee, this.minutes});

@@ -1,6 +1,6 @@
 
 import '../../common/exception/unrecognized.dart';
-import '../../ultils/api.dart';
+import '../../utils/api.dart';
 
 class InterbankBoundary{
   Future<String> query(String url, String data) async{
