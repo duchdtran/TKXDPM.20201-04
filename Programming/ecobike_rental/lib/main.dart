@@ -1,6 +1,6 @@
+import 'package:ecobike_rental/views/screen/start/start.dart';
 import 'package:flutter/material.dart';
 
-import 'ui/start/start.dart';
 
 void main() {
   runApp(MyApp());
