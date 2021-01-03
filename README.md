@@ -4,7 +4,8 @@ Công việc của mỗi người đã được phân chia trong tab Issues:
 + Dùng filter -> is:open assignee:@me  để lọc ra công việc mình cần làm.
 + Đối với issues làm việc với png hoặc doc thì comment trực tiếp vào issues.
 + Đối với các issues có code thì tạo branch mới có tên "develop <issue>" vd: develop 1.
-Danh sách công việc:
+ 
+## Danh sách công việc:
 + Trần Đình Đức: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Aduchdtran
 + Lê Minh Đức: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3AROROZOA7
 + Nguyễn Trương Định: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Acompimprove
