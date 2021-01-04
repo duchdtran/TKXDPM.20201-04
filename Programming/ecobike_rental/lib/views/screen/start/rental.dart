@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:ecobike_rental/controller/home.dart';
-import 'package:ecobike_rental/entity/invoice/invoice.dart';
-import 'package:ecobike_rental/views/widget/bike_info_item.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controller/home.dart';
 import '../../../entity/bike/bike.dart';
+import '../../../entity/invoice/invoice.dart';
 import '../../../entity/station/station.dart';
+import '../../dialog/dialog.dart';
+import '../../widget/bike_info_item.dart';
 import '../return_bike/return_bike.dart';
-import '../station/station.dart';
 import 'component/bottom_nav.dart';
 import 'component/search_bar.dart';
 import 'component/station_item.dart';
@@ -46,7 +46,7 @@ class _RentalScreenState extends State<RentalScreen> {
         if ((showSingleBikeOnly && bike.bikeType == Bike.SINGLE_BIKE) ||
             (showDoubleBikeOnly && bike.bikeType == Bike.DOUBLE_BIKE) ||
             (showElectricBikeOnly && bike.bikeType == Bike.ELECTRIC_BIKE)) {
-            return true;
+          return true;
         }
       }
       return false;
@@ -74,10 +74,12 @@ class _RentalScreenState extends State<RentalScreen> {
             ),
           ),
         ],
-        bottom: showRentalBike ? PreferredSize(
-          preferredSize: const Size.fromHeight(280),
-          child: _buildRentBike(context),
-        ) : null,
+        bottom: showRentalBike
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(280),
+                child: _buildRentBike(context),
+              )
+            : null,
       ),
       body: Stack(
         children: [
@@ -97,36 +99,36 @@ class _RentalScreenState extends State<RentalScreen> {
             left: 0,
             right: 0,
             child: SearchBar(
-              showSingleBikeOnly: showSingleBikeOnly,
-              showDoubleBikeOnly: showDoubleBikeOnly,
-              showElectricBikeOnly: showElectricBikeOnly,
-              toggleFilter: (int bikeType) {
-                switch (bikeType) {
-                  case Bike.SINGLE_BIKE: {
-                    setState(() {
-                      showSingleBikeOnly = !showSingleBikeOnly;
-                    });
+                showSingleBikeOnly: showSingleBikeOnly,
+                showDoubleBikeOnly: showDoubleBikeOnly,
+                showElectricBikeOnly: showElectricBikeOnly,
+                toggleFilter: (int bikeType) {
+                  switch (bikeType) {
+                    case Bike.SINGLE_BIKE:
+                      {
+                        setState(() {
+                          showSingleBikeOnly = !showSingleBikeOnly;
+                        });
+                      }
+                      break;
+
+                    case Bike.DOUBLE_BIKE:
+                      {
+                        setState(() {
+                          showDoubleBikeOnly = !showDoubleBikeOnly;
+                        });
+                      }
+                      break;
+
+                    case Bike.ELECTRIC_BIKE:
+                      {
+                        setState(() {
+                          showElectricBikeOnly = !showElectricBikeOnly;
+                        });
+                      }
+                      break;
                   }
-                  break;
-
-                  case Bike.DOUBLE_BIKE: {
-                    setState(() {
-                      showDoubleBikeOnly = !showDoubleBikeOnly;
-                    });
-
-                  }
-                  break;
-
-                  case Bike.ELECTRIC_BIKE: {
-                    setState(() {
-                      showElectricBikeOnly = !showElectricBikeOnly;
-                    });
-
-                  }
-                  break;
-                }
-              }
-            ),
+                }),
           ),
           Positioned(
               bottom: 220,
@@ -179,14 +181,11 @@ class _RentalScreenState extends State<RentalScreen> {
                         builder: (_) {
                           return StationItem(
                             filteredStation[index],
-                            onPress: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    StationScreen.withDependency(
-                                        filteredStation[index].id),
-                              ),
-                            ),
+                            onPress: () => showDialog(
+                                context: context,
+                                child: CustomDialogBox(
+                                  title: 'Vui lòng trả lại xe đang thuê',
+                                )),
                           );
                         },
                       );
@@ -198,13 +197,22 @@ class _RentalScreenState extends State<RentalScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNav(context),
+      bottomNavigationBar: BottomNav(
+        context,
+        () => showDialog(
+          context: context,
+          child: CustomDialogBox(
+            title: 'Vui lòng trả lại xe đang thuê',
+          ),
+        ),
+      ),
     );
   }
 
   Container _buildRentBike(BuildContext context) {
     final bike = context.select<HomeDataSet, Bike>((value) => value.bike);
-    final invoice = context.select<HomeDataSet, Invoice>((value) => value.invoice);
+    final invoice =
+        context.select<HomeDataSet, Invoice>((value) => value.invoice);
     return Container(
       width: double.infinity,
       child: Column(
@@ -226,14 +234,15 @@ class _RentalScreenState extends State<RentalScreen> {
                 Positioned(
                   top: 10,
                   right: 30,
-                  child: _buildContainer(
-                      'Tổng tiền', invoice.fee.toString() + " đ", Colors.greenAccent),
+                  child: _buildContainer('Tổng tiền',
+                      "${invoice.fee} đ", Colors.greenAccent),
                 ),
                 Positioned(
                   top: 40,
                   left: 0,
                   right: 0,
-                  child: _buildContainer('Thời gian', invoice.minutes.toString() + "p", Colors.blue),
+                  child: _buildContainer('Thời gian',
+                      '${invoice.minutes}p', Colors.blue),
                 ),
               ],
             ),

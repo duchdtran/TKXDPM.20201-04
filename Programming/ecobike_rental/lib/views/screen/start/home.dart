@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/views/screen/scanner/scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -84,30 +85,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 showElectricBikeOnly: showElectricBikeOnly,
                 toggleFilter: (bikeType) {
                   switch (bikeType) {
-                    case Bike.SINGLE_BIKE: {
-                      setState(() {
-                        showSingleBikeOnly = !showSingleBikeOnly;
-                      });
-                    }
-                    break;
+                    case Bike.SINGLE_BIKE:
+                      {
+                        setState(() {
+                          showSingleBikeOnly = !showSingleBikeOnly;
+                        });
+                      }
+                      break;
 
-                    case Bike.DOUBLE_BIKE: {
-                      setState(() {
-                        showDoubleBikeOnly = !showDoubleBikeOnly;
-                      });
-                    }
-                    break;
+                    case Bike.DOUBLE_BIKE:
+                      {
+                        setState(() {
+                          showDoubleBikeOnly = !showDoubleBikeOnly;
+                        });
+                      }
+                      break;
 
-                    case Bike.ELECTRIC_BIKE: {
-                      setState(() {
-                        showElectricBikeOnly = !showElectricBikeOnly;
-                      });
-                    }
-                    break;
+                    case Bike.ELECTRIC_BIKE:
+                      {
+                        setState(() {
+                          showElectricBikeOnly = !showElectricBikeOnly;
+                        });
+                      }
+                      break;
                   }
-
-                }
-            ),
+                }),
           ),
           Positioned(
               bottom: 20,
@@ -179,7 +181,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNav(context),
+      bottomNavigationBar: BottomNav(context, () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => QRScannerScreen()));
+      }),
     );
   }
 }

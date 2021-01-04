@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../widget/widgets.dart';
-import '../../scanner/scanner.dart';
 
-Widget BottomNav(BuildContext context) {
+Widget BottomNav(BuildContext context, Function onPress) {
   return Container(
     height: 80,
     child: Center(
@@ -12,10 +11,7 @@ Widget BottomNav(BuildContext context) {
         child: AppButton(
           icon: Icons.qr_code_scanner,
           title: 'Quét mã QR để thuê xe',
-          onPress: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => QRScannerScreen()));
-          },
+          onPress: onPress,
         ),
       ),
     ),
