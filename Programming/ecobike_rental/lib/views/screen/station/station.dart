@@ -38,17 +38,32 @@ class StationScreen extends StatelessWidget {
                         pinned: true,
                         flexibleSpace: FlexibleSpaceBar(
                             centerTitle: true,
-                            title: Text(
-                                context.select<StationDataSet, String>(
+                            title: RichText(
+                              text: TextSpan(
+                                text: context.select<StationDataSet, String>(
                                     (value) => value.station.stationName),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
-                                )),
-                            background: Image.network(
-                              context.select<StationDataSet, String>(
-                                    (value) => value.station.image),
-                              fit: BoxFit.fitWidth,
+                                ),
+                                children: [
+                                  TextSpan(text: '(${context.select<StationDataSet, String>(
+                                      (value) => value.station.calculateDistanceRenter().toStringAsFixed(0))}m)'),
+                                ],
+                              ),
+                            ),
+                            background: Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                Image.network(
+                                  context.select<StationDataSet, String>(
+                                      (value) => value.station.image),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                                Container(
+                                  color: Colors.black.withOpacity(0.4),
+                                )
+                              ],
                             )),
                       ),
                       SliverPersistentHeader(
@@ -98,12 +113,15 @@ class StationScreen extends StatelessWidget {
 
   Widget _buildBikeItemWidget(BuildContext context, Bike bike) {
     return InkWell(
-      onTap: bike.isRented?null:() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => BikeScreen.withDependency(bike.id)));
-      },
+      onTap: bike.isRented
+          ? null
+          : () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          BikeScreen.withDependency(bike.id)));
+            },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Row(
@@ -112,7 +130,7 @@ class StationScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Image.network(
                 bike.images[0] ??
-                'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
+                    'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                 width: 150,
                 height: 150,
                 fit: BoxFit.fitWidth,
@@ -155,17 +173,20 @@ class StationScreen extends StatelessWidget {
                         ],
                       ),
                       InkWell(
-                        onTap: bike.isRented?null:() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      BikeScreen.withDependency(bike.id)));
-                          showMaterialModalBottomSheet(
-                              context: context,
-                              builder: (context, scrollController) =>
-                                  PaymentScreen.withDependency(bike.id));
-                        },
+                        onTap: bike.isRented
+                            ? null
+                            : () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BikeScreen.withDependency(
+                                                bike.id)));
+                                showMaterialModalBottomSheet(
+                                    context: context,
+                                    builder: (context, scrollController) =>
+                                        PaymentScreen.withDependency(bike.id));
+                              },
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
@@ -176,9 +197,9 @@ class StationScreen extends StatelessWidget {
                             horizontal: 20,
                             vertical: 10,
                           ),
-                          child:  Center(
+                          child: Center(
                             child: Text(
-                              bike.isRented?'Đã thuê': 'Thuê xe',
+                              bike.isRented ? 'Đã thuê' : 'Thuê xe',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

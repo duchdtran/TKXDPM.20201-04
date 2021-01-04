@@ -27,13 +27,7 @@ class StationController extends StateNotifier<StationDataSet> with LocatorMixin 
   ///@bikeType loại xe
   ///@return Danh sách các xe trong trạm theo loại
   List<Bike> loadListBike(int bikeType) {
-    final listBike = <Bike>[];
-    for (var i = 0; i < state.station.bikes.length; i++) {
-      if (state.station.bikes[i].bikeType == bikeType) {
-        listBike.add(state.station.bikes[i]);
-      }
-    }
-    return listBike;
+    return state.station.getListBikeByType(bikeType);
   }
 }
 

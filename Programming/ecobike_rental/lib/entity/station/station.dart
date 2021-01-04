@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:ecobike_rental/entity/renter/renter.dart';
+
 import '../../utils/api.dart';
 import '../bike/bike.dart';
-import 'address.dart';
+import '../address/address.dart';
 
 const String tableStation = 'station';
 
@@ -81,5 +83,25 @@ class Station {
     station = Station.fromJson(json.decode(response));
 
     return Future.value(station);
+  }
+
+  ///Lấy danh sách xe theo loại
+  ///@bikeType loại xe
+  ///@return Danh sách các xe trong trạm theo loại
+  List<Bike> getListBikeByType(int bikeType) {
+    final listBike = <Bike>[];
+    for (var i = 0; i < bikes.length; i++) {
+      if (bikes[i].bikeType == bikeType) {
+        listBike.add(bikes[i]);
+      }
+    }
+    return listBike;
+  }
+
+  /// Tính khoảng cách của người dùng và trạm xe
+  double calculateDistanceRenter(){
+    final  distance = Address.calculateDistance(Renter().address, address);
+    /// TODO
+    return distance;
   }
 }

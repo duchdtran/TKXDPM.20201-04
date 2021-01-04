@@ -2,8 +2,8 @@ import 'package:state_notifier/state_notifier.dart';
 
 import '../entity/bike/bike.dart';
 import '../entity/rental/rental.dart';
+import '../entity/renter/renter.dart';
 import '../entity/station/station.dart';
-import '../utils/config.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Return Bike Screen
 /// @author duchdtran
@@ -17,7 +17,7 @@ class ReturnBikeController extends StateNotifier<ReturnBikeDataSet>
   Future<void> initDataSet() async {
     final newState = ReturnBikeDataSet()
       ..listStation = await Station().getListStation()
-      ..bikeRented = await Rental().checkRentBike(Configs.DEVICE_CODE)
+      ..bikeRented = await Rental().checkRentBike(Renter().getDeviceCode())
       ..init = true;
 
     state = newState;

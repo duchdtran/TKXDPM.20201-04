@@ -1,3 +1,4 @@
+import 'package:ecobike_rental/entity/renter/renter.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../common/exception/unrecognized.dart';
@@ -19,12 +20,12 @@ class HomeController extends StateNotifier<HomeDataSet> with LocatorMixin {
 
     try {
       newState.listStation = await Station().getListStation();
-      newState.bike = await Rental().checkRentBike(Configs.DEVICE_CODE);
+      newState.bike = await Rental().checkRentBike(Renter().getDeviceCode());
       newState.init = false;
 
       if (newState.bike != null) {
         newState.invoice =
-            await Invoice().getInvoice(Configs.DEVICE_CODE, newState.bike.id);
+            await Invoice().getInvoice(Renter().getDeviceCode(), newState.bike.id);
       }
     } on UnrecognizedException catch (e) {} finally {
       newState.init = true;

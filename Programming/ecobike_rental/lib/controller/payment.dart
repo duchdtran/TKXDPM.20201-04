@@ -1,4 +1,5 @@
 import 'package:ecobike_rental/entity/payment/credit_card.dart';
+import 'package:ecobike_rental/entity/renter/renter.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../common/exception/payment.dart';
@@ -58,7 +59,7 @@ class PaymentController extends StateNotifier<PaymentDataSet>
   ///@bikeId mã xe
   ///@deposit tiền đặt cọc
   Future<void> rentBike(int bikeId, int deposit) async {
-    await Rental().rentBike(Configs.DEVICE_CODE, bikeId, deposit);
+    await Rental().rentBike(Renter().getDeviceCode(), bikeId, deposit);
   }
 
   ///Lựa chọn phương thức thanh toán

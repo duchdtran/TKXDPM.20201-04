@@ -1,3 +1,4 @@
+import 'package:ecobike_rental/entity/renter/renter.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../common/exception/payment.dart';
@@ -22,9 +23,9 @@ class InvoiceController extends StateNotifier<InvoiceDataSet>
   /// Khởi tạo dữ liệu cho màn hình return bike screen
   Future<void> initDataSet() async {
     final newState = InvoiceDataSet()
-      ..bikeRented = await Rental().checkRentBike(Configs.DEVICE_CODE);
+      ..bikeRented = await Rental().checkRentBike(Renter().getDeviceCode());
 
-    final invoice = await Invoice().getInvoice(Configs.DEVICE_CODE, newState.bikeRented.id);
+    final invoice = await Invoice().getInvoice(Renter().getDeviceCode(), newState.bikeRented.id);
 
     newState.totalTime = invoice.minutes;
     newState.rentalMoney = invoice.fee;
@@ -37,7 +38,7 @@ class InvoiceController extends StateNotifier<InvoiceDataSet>
 
   ///Lấy hóa đơn
   Future<void> getInvoice() async {
-    await Invoice().getInvoice(Configs.DEVICE_CODE,state.bikeRented.id);
+    await Invoice().getInvoice(Renter().getDeviceCode(),state.bikeRented.id);
   }
 
   ///Trả xe
@@ -45,7 +46,7 @@ class InvoiceController extends StateNotifier<InvoiceDataSet>
   ///@bikeId mã xe đang thuê
   ///@return số tiền cần trả lại
   Future<void> returnBike(int stationId, int bikeId) async {
-    await Rental().returnBike(Configs.DEVICE_CODE, stationId, bikeId);
+    await Rental().returnBike(Renter().getDeviceCode(), stationId, bikeId);
   }
 
   ///Thanh toán
