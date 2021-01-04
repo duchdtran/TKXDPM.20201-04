@@ -1,6 +1,6 @@
 import 'payment.dart';
 
 class InvalidVersionException extends PaymentException{
-  InvalidVersionException([String message])
-      : super(message, "Invalid Version Exception: ");
+  InvalidVersionException()
+      : super("Thiếu thông tin version");
 }

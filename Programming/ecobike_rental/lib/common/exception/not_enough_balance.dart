@@ -1,6 +1,6 @@
 import 'payment.dart';
 
 class NotEnoughBalanceException extends PaymentException{
-  NotEnoughBalanceException([String message])
-      : super(message, "Not Enough Balance Exception: ");
+  NotEnoughBalanceException()
+      : super("Thẻ không đủ số dư");
 }

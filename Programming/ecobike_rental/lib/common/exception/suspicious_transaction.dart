@@ -1,6 +1,6 @@
 import 'payment.dart';
 
 class SuspiciousTransactionException extends PaymentException{
-  SuspiciousTransactionException([String message])
-      : super(message, "Suspicious Transaction Exception: ");
+  SuspiciousTransactionException()
+      : super("Giao dịch bị nghi ngờ gian lận");
 }
