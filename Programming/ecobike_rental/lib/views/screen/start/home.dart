@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNav(context, () {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => QRScannerScreen()));
+            .push(MaterialPageRoute(builder: (context) => QRScannerScreen.withDependency()));
       }),
     );
   }

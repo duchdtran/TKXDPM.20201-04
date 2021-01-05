@@ -1,3 +1,4 @@
+import 'package:ecobike_rental/entity/bike/bike.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 /// Class giúp xử lí logic và cung cấp dữ liệu cho màn hình Scanner Screen
@@ -11,6 +12,15 @@ class ScannerController extends StateNotifier<ScannerDataSet>
     final newState = ScannerDataSet()..init = true;
 
     state = newState;
+  }
+
+  Future<bool> checkBikeAxist(int bikeId) async{
+    try {
+      await Bike().getBike(bikeId);
+      return Future.value(true);
+    } on Exception{
+      return Future.value(false);
+    }
   }
 }
 
