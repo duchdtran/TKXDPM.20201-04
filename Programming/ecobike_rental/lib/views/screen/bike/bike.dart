@@ -53,9 +53,23 @@ class BikeScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          bike.bikeName,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        child: Row(
+                          children: [
+                            Text(
+                              bike.bikeName,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const Spacer(),
+                            Visibility(
+                              visible: bike.toJson()['batterCapacity'] != null,
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.battery_charging_full_rounded),
+                                  Text(bike.toJson()['batterCapacity'].toString()),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -76,8 +90,13 @@ class BikeScreen extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
-                            _buildRatingBar(context, 3.5),
-                            const Text('(5)'),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              text: TextSpan(
+                                text: "Mã xe: ${bike.id}",
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -249,7 +268,7 @@ class BikeScreen extends StatelessWidget {
   Widget _buildRentCost(BuildContext context) {
     return RichText(
       text: TextSpan(
-          text: 'Giá khởi điểm cho 30 phút đầu là ',
+          text: 'Quý khách được miễn phí 10 phút đầu, Giá khởi điểm cho 30 phút đầu là ',
           style: const TextStyle(color: Colors.black87),
           children: [
             TextSpan(

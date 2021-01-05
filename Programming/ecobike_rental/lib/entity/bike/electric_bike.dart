@@ -43,6 +43,8 @@ class ElectricBike extends Bike {
     licensePlates = json['licensePlates'];
     deposits = json['deposit'];
     isRented = json['isRented'];
+    batteryCapacity = json['batterCapacity'];
+    powerDrain = json['powerDrain'];
   }
 
   @override
@@ -58,6 +60,8 @@ class ElectricBike extends Bike {
     data['licensePlates'] = licensePlates;
     data['deposit'] = deposits;
     data['isRented'] = isRented;
+    data['batterCapacity'] = batteryCapacity;
+    data['powerDrain'] = powerDrain;
     return data;
   }
 }
