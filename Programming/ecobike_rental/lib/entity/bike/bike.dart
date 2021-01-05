@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import '../../utils/api.dart';
+import 'double_bike.dart';
+import 'electric_bike.dart';
+import 'single_bike.dart';
 
 class Bike {
   static const SINGLE_BIKE = 1;
@@ -21,21 +24,22 @@ class Bike {
     this.isRented,
   });
 
-  Bike.fromJson(Map<String, dynamic> json) {
-    id = json['bikeId'];
-    bikeName = json['bikeName'];
-    description = json['description'];
-    costStartingRent = json['startingRent'];
-    costHourlyRent = json['hourlyRent'];
-    bikeType = json['type'];
-    images = [json['bikeImage']];
-    licensePlates = json['licensePlates'];
-    deposits = json['deposit'];
-    isRented = json['isRented'];
+  factory Bike.fromJson(Map<String, dynamic> json) {
+    switch (json['type']) {
+      case Bike.SINGLE_BIKE:
+        return SingleBike.fromJson(json);
+      case Bike.DOUBLE_BIKE:
+        return DoubleBike.fromJson(json);
+      case Bike.ELECTRIC_BIKE:
+        return ElectricBike.fromJson(json);
+      default:
+        break;
+        return null;
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final  data =  <String, dynamic>{};
+    final data = <String, dynamic>{};
     data['bikeId'] = id;
     data['bikeName'] = bikeName;
     data['description'] = description;
@@ -63,9 +67,10 @@ class Bike {
 
   Future<Bike> getBike(int bikeId) async {
     Bike bike;
-    final url = 'https://tkxdpm-server.herokuapp.com/api/get-bike?bikeId=${bikeId}';
+    final url =
+        'https://tkxdpm-server.herokuapp.com/api/get-bike?bikeId=${bikeId}';
     final response = await API.get(url);
-      bike = Bike.fromJson(json.decode(response));
+    bike = Bike.fromJson(json.decode(response));
     return Future.value(bike);
   }
 }
