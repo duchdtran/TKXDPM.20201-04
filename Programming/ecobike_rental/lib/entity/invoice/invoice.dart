@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ecobike_rental/utils/config.dart';
+
 import '../../utils/api.dart';
 
 class Invoice {
@@ -22,7 +24,7 @@ class Invoice {
 
   Future<Invoice> getInvoice(String deviceCode, int bikeId) async{
     Invoice invoice;
-    final url = 'https://tkxdpm-server.herokuapp.com/api/get-invoice?deviceCode=$deviceCode&bikeId=$bikeId';
+    final url = '${Configs.BASE_URL}get-invoice?deviceCode=$deviceCode&bikeId=$bikeId';
     final response = await API.get(url);
     invoice = Invoice.fromJson(json.decode(response));
 

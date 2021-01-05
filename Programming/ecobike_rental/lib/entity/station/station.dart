@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ecobike_rental/entity/renter/renter.dart';
+import 'package:ecobike_rental/utils/config.dart';
 
 import '../../utils/api.dart';
 import '../bike/bike.dart';
@@ -69,7 +70,7 @@ class Station {
 
   Future<List<Station>> getListStation() async {
     List<Station> listStation;
-    const url = 'https://tkxdpm-server.herokuapp.com/api/get-list-stations';
+    const url = '${Configs.BASE_URL}get-list-stations';
     final response = await API.get(url);
     listStation = (json.decode(response) as List).map((i) => Station.fromJson(i)).toList();
     return Future.value(listStation);
@@ -78,7 +79,7 @@ class Station {
   Future<Station> getStation(int stationId) async {
     Station station;
     final url =
-        'https://tkxdpm-server.herokuapp.com/api/get-station?id=${stationId}';
+        '${Configs.BASE_URL}get-station?id=$stationId';
     final response = await API.get(url);
     station = Station.fromJson(json.decode(response));
 

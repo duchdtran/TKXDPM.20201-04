@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ecobike_rental/utils/config.dart';
+
 import '../../utils/api.dart';
 import 'double_bike.dart';
 import 'electric_bike.dart';
@@ -68,7 +70,7 @@ class Bike {
   Future<Bike> getBike(int bikeId) async {
     Bike bike;
     final url =
-        'https://tkxdpm-server.herokuapp.com/api/get-bike?bikeId=${bikeId}';
+        '${Configs.BASE_URL}get-bike?bikeId=${bikeId}';
     final response = await API.get(url);
     bike = Bike.fromJson(json.decode(response));
     return Future.value(bike);
