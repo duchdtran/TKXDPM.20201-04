@@ -40,6 +40,17 @@ Widget StationItem(Station station, {Function onPress}) {
               ),
             ),
             Positioned(
+              left: 10,
+              top: 10,
+              child: Row(
+                children: [
+                  const Icon(Icons.aspect_ratio_sharp, color: Colors.white,),
+                  const SizedBox(width: 4,),
+                  Text('${station.area}m2', style: const TextStyle(color: Colors.white),),
+                ],
+              ),
+            ),
+            Positioned(
               left: 0,
               right: 0,
               bottom: 10,
