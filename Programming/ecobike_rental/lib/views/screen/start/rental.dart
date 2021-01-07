@@ -76,7 +76,7 @@ class _RentalScreenState extends State<RentalScreen> {
         ],
         bottom: showRentalBike
             ? PreferredSize(
-                preferredSize: const Size.fromHeight(280),
+                preferredSize: const Size.fromHeight(290),
                 child: _buildRentBike(context),
               )
             : null,
@@ -247,6 +247,8 @@ class _RentalScreenState extends State<RentalScreen> {
               ],
             ),
           ),
+          Text('Xe đang thuê: ${bike.bikeName}'),
+          const SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -269,7 +271,7 @@ class _RentalScreenState extends State<RentalScreen> {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -279,13 +281,16 @@ class _RentalScreenState extends State<RentalScreen> {
                 label: 'Biển số xe',
                 value: bike.licensePlates,
               ),
-              const BikeInfoItem(
-                label: 'Lượng pin',
-                value: '37%',
+              BikeInfoItem(
+                label: 'Mã xe',
+                value: bike.id.toString(),
               ),
-              const BikeInfoItem(
-                label: 'Thời gian còn lại',
-                value: '37 phút',
+              Visibility(
+                visible: bike.toJson()['batterCapacity'] != null,
+                child: BikeInfoItem(
+                  label: 'Lượng pin',
+                  value: '${bike.toJson()['batterCapacity']}%',
+                ),
               ),
             ],
           ),
