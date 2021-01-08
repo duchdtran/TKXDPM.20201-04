@@ -6,10 +6,10 @@ Công việc của mỗi người đã được phân chia trong tab Issues:
 + Đối với các issues có code thì tạo branch mới có tên "develop <issue>" vd: develop 1.
  
 ## Danh sách công việc:
-+ Trần Đình Đức: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Aduchdtran
-+ Lê Minh Đức: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3AROROZOA7
-+ Nguyễn Trương Định: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Acompimprove
-+ Hoàng Văn Đạt: https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Adathoangnd
++ Trần Đình Đức: Phụ trách use case thanh toán https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Aduchdtran
++ Lê Minh Đức: Phụ trách use case Xem thông tin trạm và xe https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3AROROZOA7
++ Nguyễn Trương Định: Phụ trách use case Trả xe https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Acompimprove
++ Hoàng Văn Đạt: Phụ trách use case thuê xe https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Adathoangnd
 
 ## Revisions
 Mỗi thành viên sẽ comment vào issues để nhận xét các thành viên khác.
