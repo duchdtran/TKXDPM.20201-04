@@ -1,4 +1,7 @@
 import 'package:ecobike_rental/entity/bike/bike.dart';
+import 'package:ecobike_rental/entity/bike/double_bike.dart';
+import 'package:ecobike_rental/entity/bike/electric_bike.dart';
+import 'package:ecobike_rental/entity/bike/single_bike.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../entity/station/station.dart';
@@ -29,13 +32,13 @@ Widget StationItem(Station station, {Function onPress}) {
               child: Column(
                 children: [
                   _buildBikeCountItem(
-                      icon: Icons.directions_bike, countBike: station.getListBikeByType(Bike.SINGLE_BIKE).length),
+                      icon: Icons.directions_bike, countBike: station.getListBikeByType(SingleBike.BIKE_TYPE).length),
                   const SizedBox(height: 4,),
                   _buildBikeCountItem(
-                      icon: Icons.directions_bike, countBike: station.getListBikeByType(Bike.DOUBLE_BIKE).length),
+                      icon: Icons.directions_bike, countBike: station.getListBikeByType(DoubleBike.BIKE_TYPE).length),
                   const SizedBox(height: 4,),
                   _buildBikeCountItem(
-                      icon: Icons.directions_bike, countBike: station.getListBikeByType(Bike.ELECTRIC_BIKE).length),
+                      icon: Icons.directions_bike, countBike: station.getListBikeByType(ElectricBike.BIKE_TYPE).length),
                 ],
               ),
             ),

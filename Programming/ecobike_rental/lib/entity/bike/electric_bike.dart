@@ -1,6 +1,8 @@
 import 'bike.dart';
 
 class ElectricBike extends Bike {
+  static const int BIKE_TYPE = 3;
+
   ElectricBike({
     this.batteryCapacity,
     this.powerDrain,
@@ -49,7 +51,7 @@ class ElectricBike extends Bike {
 
   @override
   Map<String, dynamic> toJson() {
-    final  data =  <String, dynamic>{};
+    final data = <String, dynamic>{};
     data['bikeId'] = id;
     data['bikeName'] = bikeName;
     data['description'] = description;
