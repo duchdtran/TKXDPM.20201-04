@@ -88,7 +88,7 @@ namespace TKXDPM_API.Controllers
             }
 
             var totalMinutes = transaction.GetRentMinutes(DateTime.Now);
-            var fee = CalculateFee(totalMinutes, bike.Type);
+            var fee = bike.CalculateFee(totalMinutes);
             _logger.LogInformation("Total minutes " + totalMinutes);
             transaction.UpdateRentInfo(bikeStation.DateTimeIn);
             await _dbContext.SaveChangesAsync();
@@ -144,7 +144,7 @@ namespace TKXDPM_API.Controllers
             }
 
             var totalMinutes = transaction.GetRentMinutes(DateTime.Now);
-            var fee = CalculateFee(totalMinutes, bike.Type);
+            var fee = bike.CalculateFee(totalMinutes);
             _logger.LogInformation("Total minutes " + totalMinutes);
 
             return new GetInvoiceResponse()

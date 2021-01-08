@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using AutoMapper;
+using TKXDPM_API.Controllers.CalculateFee;
 
 namespace TKXDPM_API.Model
 {
-    public abstract class Bike
+    public class Bike
     {
         [Key] public int BikeId { get; set; }
         [Column(TypeName = "varchar(255)")] public string BikeName { get; set; }
@@ -21,6 +22,7 @@ namespace TKXDPM_API.Model
         public int BatterCapacity { get; set; }
         public float PowerDrain { get; set; }
         public int Deposit { get; set; }
+        public ICalculateFee CalculateBikeFee = new CalculateFeeNormal();
 
         public List<Rental> Rentals { get; set; }
 
@@ -51,7 +53,7 @@ namespace TKXDPM_API.Model
             return deposit >= condition[Type];
         }
 
-        public int CalculateBaseFee(double minutes)
+        private int CalculateBaseFee(double minutes)
         {
             double fee = 0;
             if (minutes < 10)
@@ -70,11 +72,20 @@ namespace TKXDPM_API.Model
             return (int) fee;
         }
 
-        public abstract double CalculateFee(double minutes);
+        public int CalculateFee(double minutes)
+        {
+            return CalculateBikeFee.CalculateFee(minutes, Type);
+        }
 
         public static Bike ConvertByType(Bike bike)
         {
-            
+            return bike.Type switch
+            {
+                BikeType.Single => (SingleBike) bike,
+                BikeType.Double => (DoubleBike) bike,
+                BikeType.Electric => (ElectricBike) bike,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 
@@ -106,5 +117,11 @@ namespace TKXDPM_API.Model
         Single = 1,
         Double = 2,
         Electric = 3,
+    }
+
+    public struct RentFee
+    {
+        public int StartingRent;
+        public int HourlyRent;
     }
 }
