@@ -87,8 +87,10 @@ class Station {
   }
 
   ///Lấy danh sách xe theo loại
-  ///@bikeType loại xe
-  ///@return Danh sách các xe trong trạm theo loại
+  ///
+  ///[bikeType] loại xe
+  ///
+  ///[return] Danh sách các xe trong trạm theo loại
   List<Bike> getListBikeByType(int bikeType) {
     final listBike = <Bike>[];
     for (var i = 0; i < bikes.length; i++) {

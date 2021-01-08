@@ -7,10 +7,9 @@ import 'double_bike.dart';
 import 'electric_bike.dart';
 import 'single_bike.dart';
 
+/// Lớp bike chung, các lớp bike khác kế thừa lớp này
 class Bike {
-  static const SINGLE_BIKE = 1;
-  static const DOUBLE_BIKE = 2;
-  static const ELECTRIC_BIKE = 3;
+
 
   Bike({
     this.id,
@@ -28,11 +27,11 @@ class Bike {
 
   factory Bike.fromJson(Map<String, dynamic> json) {
     switch (json['type']) {
-      case Bike.SINGLE_BIKE:
+      case SingleBike.BIKE_TYPE:
         return SingleBike.fromJson(json);
-      case Bike.DOUBLE_BIKE:
+      case DoubleBike.BIKE_TYPE:
         return DoubleBike.fromJson(json);
-      case Bike.ELECTRIC_BIKE:
+      case ElectricBike.BIKE_TYPE:
         return ElectricBike.fromJson(json);
       default:
         break;
@@ -67,6 +66,8 @@ class Bike {
   int deposits;
   bool isRented;
 
+  /// Lấy thông tin xe theo id
+  /// @param bikeId 
   Future<Bike> getBike(int bikeId) async {
     Bike bike;
     final url =
