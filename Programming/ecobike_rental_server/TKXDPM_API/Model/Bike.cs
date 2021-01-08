@@ -7,7 +7,7 @@ using AutoMapper;
 
 namespace TKXDPM_API.Model
 {
-    public class Bike
+    public abstract class Bike
     {
         [Key] public int BikeId { get; set; }
         [Column(TypeName = "varchar(255)")] public string BikeName { get; set; }
@@ -49,6 +49,32 @@ namespace TKXDPM_API.Model
             };
 
             return deposit >= condition[Type];
+        }
+
+        public int CalculateBaseFee(double minutes)
+        {
+            double fee = 0;
+            if (minutes < 10)
+            {
+                fee = 0;
+            }
+            else if (minutes <= 30)
+            {
+                fee = StartingRent;
+            }
+            else
+            {
+                fee = Math.Ceiling((minutes - 30) / 15) * HourlyRent + StartingRent;
+            }
+
+            return (int) fee;
+        }
+
+        public abstract double CalculateFee(double minutes);
+
+        public static Bike ConvertByType(Bike bike)
+        {
+            
         }
     }
 
