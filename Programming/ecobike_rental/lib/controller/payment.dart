@@ -23,6 +23,8 @@ class PaymentController extends StateNotifier<PaymentDataSet>
 
   InterbankInterface _interbank;
 
+  set interbank(InterbankInterface interbank) => _interbank = interbank;
+
   /// Khởi tạo dữ liệu cho màn hình payment screen
   Future<void> initDataSet() async {
     final newState = PaymentDataSet()
@@ -42,7 +44,6 @@ class PaymentController extends StateNotifier<PaymentDataSet>
     result['result'] = false;
     try {
       final card = state.listCard[state.paymentChoose];
-      _interbank = InterbankSubsytem();
       await _interbank.payOrder(card, amount, contents);
 
       result['result'] = true;

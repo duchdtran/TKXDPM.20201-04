@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecobike_rental/entity/bike/bike_mapper.dart';
 import 'package:ecobike_rental/utils/config.dart';
 
 import '../../utils/api.dart';
@@ -7,10 +8,9 @@ import 'double_bike.dart';
 import 'electric_bike.dart';
 import 'single_bike.dart';
 
+/// Lớp bike chung, các lớp bike khác kế thừa lớp này
 class Bike {
-  static const SINGLE_BIKE = 1;
-  static const DOUBLE_BIKE = 2;
-  static const ELECTRIC_BIKE = 3;
+
 
   Bike({
     this.id,
@@ -26,18 +26,12 @@ class Bike {
     this.isRented,
   });
 
+
+  /// [Contructor] Khởi tạo Bike
+  ///
+  /// Tạo các instance là các lớp con của Bike dựa vào loại xe
   factory Bike.fromJson(Map<String, dynamic> json) {
-    switch (json['type']) {
-      case Bike.SINGLE_BIKE:
-        return SingleBike.fromJson(json);
-      case Bike.DOUBLE_BIKE:
-        return DoubleBike.fromJson(json);
-      case Bike.ELECTRIC_BIKE:
-        return ElectricBike.fromJson(json);
-      default:
-        break;
-        return null;
-    }
+    return BikeMapper.map[json['type']](json);
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +61,9 @@ class Bike {
   int deposits;
   bool isRented;
 
+
+  /// Lấy thông tin xe theo id
+  /// @param bikeId 
   Future<Bike> getBike(int bikeId) async {
     Bike bike;
     final url =

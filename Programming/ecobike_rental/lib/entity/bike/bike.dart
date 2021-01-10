@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecobike_rental/entity/bike/bike_mapper.dart';
 import 'package:ecobike_rental/utils/config.dart';
 
 import '../../utils/api.dart';
@@ -25,18 +26,12 @@ class Bike {
     this.isRented,
   });
 
+
+  /// [Contructor] Khởi tạo Bike
+  ///
+  /// Tạo các instance là các lớp con của Bike dựa vào loại xe
   factory Bike.fromJson(Map<String, dynamic> json) {
-    switch (json['type']) {
-      case SingleBike.BIKE_TYPE:
-        return SingleBike.fromJson(json);
-      case DoubleBike.BIKE_TYPE:
-        return DoubleBike.fromJson(json);
-      case ElectricBike.BIKE_TYPE:
-        return ElectricBike.fromJson(json);
-      default:
-        break;
-        return null;
-    }
+    return BikeMapper.map[json['type']](json);
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +60,7 @@ class Bike {
   String licensePlates;
   int deposits;
   bool isRented;
+
 
   /// Lấy thông tin xe theo id
   /// @param bikeId 

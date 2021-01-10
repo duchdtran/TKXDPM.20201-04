@@ -1,3 +1,6 @@
+import 'package:ecobike_rental/entity/bike/double_bike.dart';
+import 'package:ecobike_rental/entity/bike/electric_bike.dart';
+import 'package:ecobike_rental/entity/bike/single_bike.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../entity/bike/bike.dart';
@@ -52,9 +55,9 @@ Widget SearchBar({Function onTap, Function(int bikeType) toggleFilter, bool show
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            Traffic('Xe đạp đơn', Icons.directions_bike, showSingleBikeOnly, () {toggleFilter(Bike.SINGLE_BIKE);}),
-            Traffic('Xe đạp đôi', Icons.directions_bike, showDoubleBikeOnly, (){toggleFilter(Bike.DOUBLE_BIKE);}),
-            Traffic('Xe đạp điện', Icons.directions_bike, showElectricBikeOnly, (){toggleFilter(Bike.ELECTRIC_BIKE);}),
+            Traffic('Xe đạp đơn', Icons.directions_bike, showSingleBikeOnly, () {toggleFilter(SingleBike.BIKE_TYPE);}),
+            Traffic('Xe đạp đôi', Icons.directions_bike, showDoubleBikeOnly, (){toggleFilter(DoubleBike.BIKE_TYPE);}),
+            Traffic('Xe đạp điện', Icons.directions_bike, showElectricBikeOnly, (){toggleFilter(ElectricBike.BIKE_TYPE);}),
           ],
         ),
       )

@@ -1,4 +1,5 @@
 import 'package:ecobike_rental/controller/payment.dart';
+import 'package:ecobike_rental/subsystem/interbank_subsystem.dart';
 import 'package:ecobike_rental/views/dialog/dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,12 @@ import '../add_payment/add_payment.dart';
 import '../start/start.dart';
 
 class PaymentScreen extends StatelessWidget {
-  PaymentScreen._({Key key}) : super(key: key);
+  const PaymentScreen._({Key key}) : super(key: key);
 
   static Widget withDependency(int bikeId) {
     return StateNotifierProvider<PaymentController, PaymentDataSet>(
-      create: (_) => PaymentController(
-          bikeId),
-      child: PaymentScreen._(),
+      create: (_) => PaymentController(bikeId),
+      child: const PaymentScreen._(),
     );
   }
 
@@ -56,8 +56,8 @@ class PaymentScreen extends StatelessWidget {
                         .selectPaymentMethod(index),
                     child: _buildPaymentMethodWidget(
                       isCheck: data == index,
-                      title: context.select<PaymentDataSet, String>(
-                          (value) => value.listCard[index].toJson()['cardCode']),
+                      title: context.select<PaymentDataSet, String>((value) =>
+                          value.listCard[index].toJson()['cardCode']),
                     ),
                   ),
                 ),
@@ -90,6 +90,7 @@ class PaymentScreen extends StatelessWidget {
                 onPress: !data
                     ? null
                     : () async {
+                        context.read<PaymentController>().interbank = InterbankSubsytem();
                         await showLoadingDialog(context, function: () async {
                           final result = await context
                               .read<PaymentController>()

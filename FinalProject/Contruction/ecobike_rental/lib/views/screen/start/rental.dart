@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/entity/bike/double_bike.dart';
+import 'package:ecobike_rental/entity/bike/electric_bike.dart';
+import 'package:ecobike_rental/entity/bike/single_bike.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -43,9 +46,9 @@ class _RentalScreenState extends State<RentalScreen> {
       }
 
       for (final bike in station.bikes) {
-        if ((showSingleBikeOnly && bike.bikeType == Bike.SINGLE_BIKE) ||
-            (showDoubleBikeOnly && bike.bikeType == Bike.DOUBLE_BIKE) ||
-            (showElectricBikeOnly && bike.bikeType == Bike.ELECTRIC_BIKE)) {
+        if ((showSingleBikeOnly && bike.bikeType == SingleBike.BIKE_TYPE) ||
+            (showDoubleBikeOnly && bike.bikeType == DoubleBike.BIKE_TYPE) ||
+            (showElectricBikeOnly && bike.bikeType == ElectricBike.BIKE_TYPE)) {
           return true;
         }
       }
@@ -76,7 +79,7 @@ class _RentalScreenState extends State<RentalScreen> {
         ],
         bottom: showRentalBike
             ? PreferredSize(
-                preferredSize: const Size.fromHeight(280),
+                preferredSize: const Size.fromHeight(290),
                 child: _buildRentBike(context),
               )
             : null,
@@ -104,7 +107,7 @@ class _RentalScreenState extends State<RentalScreen> {
                 showElectricBikeOnly: showElectricBikeOnly,
                 toggleFilter: (int bikeType) {
                   switch (bikeType) {
-                    case Bike.SINGLE_BIKE:
+                    case SingleBike.BIKE_TYPE:
                       {
                         setState(() {
                           showSingleBikeOnly = !showSingleBikeOnly;
@@ -112,7 +115,7 @@ class _RentalScreenState extends State<RentalScreen> {
                       }
                       break;
 
-                    case Bike.DOUBLE_BIKE:
+                    case DoubleBike.BIKE_TYPE:
                       {
                         setState(() {
                           showDoubleBikeOnly = !showDoubleBikeOnly;
@@ -120,7 +123,7 @@ class _RentalScreenState extends State<RentalScreen> {
                       }
                       break;
 
-                    case Bike.ELECTRIC_BIKE:
+                    case ElectricBike.BIKE_TYPE:
                       {
                         setState(() {
                           showElectricBikeOnly = !showElectricBikeOnly;
@@ -247,6 +250,8 @@ class _RentalScreenState extends State<RentalScreen> {
               ],
             ),
           ),
+          Text('Xe đang thuê: ${bike.bikeName}'),
+          const SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -269,7 +274,7 @@ class _RentalScreenState extends State<RentalScreen> {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -279,13 +284,16 @@ class _RentalScreenState extends State<RentalScreen> {
                 label: 'Biển số xe',
                 value: bike.licensePlates,
               ),
-              const BikeInfoItem(
-                label: 'Lượng pin',
-                value: '37%',
+              BikeInfoItem(
+                label: 'Mã xe',
+                value: bike.id.toString(),
               ),
-              const BikeInfoItem(
-                label: 'Thời gian còn lại',
-                value: '37 phút',
+              Visibility(
+                visible: bike.toJson()['batterCapacity'] != null,
+                child: BikeInfoItem(
+                  label: 'Lượng pin',
+                  value: '${bike.toJson()['batterCapacity']}%',
+                ),
               ),
             ],
           ),

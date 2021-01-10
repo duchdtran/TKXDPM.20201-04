@@ -1,5 +1,5 @@
 import 'package:ecobike_rental/entity/payment/credit_card.dart';
-import 'package:ecobike_rental/entity/payment/payment_transaction.dart';
+import '../entity/payment/payment_transaction.dart';
 
 
 abstract class InterbankInterface{

@@ -1,6 +1,8 @@
 import 'bike.dart';
 
 class SingleBike extends Bike {
+  static const int BIKE_TYPE = 1;
+
   SingleBike({
     id,
     bikeName,

@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:ecobike_rental/entity/bike/double_bike.dart';
+import 'package:ecobike_rental/entity/bike/electric_bike.dart';
+import 'package:ecobike_rental/entity/bike/single_bike.dart';
 import 'package:ecobike_rental/views/screen/scanner/scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -41,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       for (final bike in station.bikes) {
-        if ((showSingleBikeOnly && bike.bikeType == Bike.SINGLE_BIKE) ||
-            (showDoubleBikeOnly && bike.bikeType == Bike.DOUBLE_BIKE) ||
-            (showElectricBikeOnly && bike.bikeType == Bike.ELECTRIC_BIKE)) {
+        if ((showSingleBikeOnly && bike.bikeType == SingleBike.BIKE_TYPE) ||
+            (showDoubleBikeOnly && bike.bikeType == DoubleBike.BIKE_TYPE) ||
+            (showElectricBikeOnly && bike.bikeType == ElectricBike.BIKE_TYPE)) {
           return true;
         }
       }
@@ -85,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 showElectricBikeOnly: showElectricBikeOnly,
                 toggleFilter: (bikeType) {
                   switch (bikeType) {
-                    case Bike.SINGLE_BIKE:
+                    case SingleBike.BIKE_TYPE:
                       {
                         setState(() {
                           showSingleBikeOnly = !showSingleBikeOnly;
@@ -93,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                       break;
 
-                    case Bike.DOUBLE_BIKE:
+                    case DoubleBike.BIKE_TYPE:
                       {
                         setState(() {
                           showDoubleBikeOnly = !showDoubleBikeOnly;
@@ -101,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                       break;
 
-                    case Bike.ELECTRIC_BIKE:
+                    case ElectricBike.BIKE_TYPE:
                       {
                         setState(() {
                           showElectricBikeOnly = !showElectricBikeOnly;

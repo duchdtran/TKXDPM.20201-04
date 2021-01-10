@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart' as crypto;
+import 'package:ecobike_rental/entity/bike/double_bike.dart';
+import 'package:ecobike_rental/entity/bike/electric_bike.dart';
+import 'package:ecobike_rental/entity/bike/single_bike.dart';
 import 'package:intl/intl.dart';
 
 class Utils{
@@ -17,4 +20,7 @@ class Utils{
     final digest = md5.convert(content);
     return hex.encode(digest.bytes);
   }
+
+
+
 }
