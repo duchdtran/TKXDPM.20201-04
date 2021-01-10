@@ -22,7 +22,7 @@ namespace TKXDPM_API.Controllers
             _dbContext = dbContext;
         }
         
-        public class AddPaymentMethodForm
+        public struct AddPaymentMethodForm
         {
             public string DeviceCode { get; set; }
             public string CardCode { get; set; }

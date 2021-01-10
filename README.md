@@ -1,4 +1,12 @@
 # TKXDPM.20201-04
+
+## Comment của cô:
+### Có các loại Bike khác nhau nhưng chưa vẫn truyền type vào Factory
++ https://github.com/duchdtran/TKXDPM.20201-04/issues/75
+
+### Có chút nhầm lẫn khi khởi tạo InterbankSubsystem luôn trong PaymentController
++ https://github.com/duchdtran/TKXDPM.20201-04/issues/79
+
 ## Tasks
 Công việc của mỗi người đã được phân chia trong tab Issues:
 + Dùng filter -> is:open assignee:@me  để lọc ra công việc mình cần làm.
@@ -6,10 +14,14 @@ Công việc của mỗi người đã được phân chia trong tab Issues:
 + Đối với các issues có code thì tạo branch mới có tên "develop <issue>" vd: develop 1.
  
 ## Danh sách công việc:
-+ Trần Đình Đức: Phụ trách use case thanh toán(30%) https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Aduchdtran
-+ Lê Minh Đức: Phụ trách use case Xem thông tin trạm và xe(20%) https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3AROROZOA7
-+ Nguyễn Trương Định: Phụ trách use case Trả xe(30%) https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Acompimprove
-+ Hoàng Văn Đạt: Phụ trách use case thuê xe(20%) https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Adathoangnd
++ Trần Đình Đức: Phụ trách use case thanh toán, quản lí dự án(30%) 
+<br> https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Aduchdtran
++ Lê Minh Đức: Phụ trách use case Xem thông tin trạm và xe(20%) 
+<br> https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3AROROZOA7
++ Nguyễn Trương Định: Phụ trách use case Trả xe, server(30%) 
+<br> https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Acompimprove
++ Hoàng Văn Đạt: Phụ trách use case thuê xe(20%)
+<br> https://github.com/duchdtran/TKXDPM.20201-04/issues?q=is%3Aissue+assignee%3Adathoangnd
 
 ## Revisions
 Mỗi thành viên sẽ comment vào issues để nhận xét các thành viên khác.
