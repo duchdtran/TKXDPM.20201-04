@@ -1,12 +1,5 @@
 # TKXDPM.20201-04
 
-## Comment của cô:
-### Có các loại Bike khác nhau nhưng chưa vẫn truyền type vào Factory
-+ https://github.com/duchdtran/TKXDPM.20201-04/issues/75
-
-### Có chút nhầm lẫn khi khởi tạo InterbankSubsystem luôn trong PaymentController
-+ https://github.com/duchdtran/TKXDPM.20201-04/issues/79
-
 ## Tasks
 Công việc của mỗi người đã được phân chia trong tab Issues:
 + Dùng filter -> is:open assignee:@me  để lọc ra công việc mình cần làm.
